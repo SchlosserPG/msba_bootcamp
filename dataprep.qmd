@@ -5,7 +5,6 @@ date: "2024-08-09"
 output: html_document
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
@@ -32,7 +31,6 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 ### Consider While Reading
 
 -   We often spend a considerable amount of time inspecting and preparing the data for the subsequent analysis. This includes the following:
-    -   Evaluating Data Types
     -   Sorting Data
     -   Selecting Variables
     -   Filtering Data
@@ -41,156 +39,160 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
     -   Summarizing
     -   Grouping Data
 
-# Evaluating Data Types
+# case_when
 
--   A data type of a variable specifies the type of data that is stored inside that variable. R is Called a Dynamically Typed Language, meaning that a variable itself is not declared of any data type. Rather it receives the data type of the R object that is assigned to it. We can change a variable’s data type if we want through coercion, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.
-* Evaluating data types in R is crucial for understanding and managing datasets effectively, as different data types require specific handling and operations. R provides several functions to identify and evaluate data types, such as class() to check an object's class, typeof() to determine its internal storage mode, and is.numeric(), is.character(), or is.factor() to test for specific types. These functions help ensure that data is in the correct format for analysis or modeling tasks. For instance, numeric data types are essential for calculations, while factors or characters are used for categorical data. 
--   There are a number of data types in R that are common to programming and statistical analysis.
-    -   Factor (Nominal or Ordinal)
-    -   Numeric (Real or Discrete (Integer))
-    -   Character
-    -   Logical
-    -   Date
+* The case_when() function from the dplyr package is used to create new variables based on multiple conditions. It works like a series of if...else if...else statements and is especially useful for assigning values based on ranges or logical categories.
+* The case_when() and recode() functions in R both allow you to transform or recode values in a vector, but they differ in flexibility and use cases. recode() is best for straightforward value replacement, where each input value maps directly to a new value—such as turning "good" into 3. 
+* In contrast, case_when() is more flexible and powerful, allowing you to specify complex conditional logic, including comparisons and ranges (e.g., x > 100 ~ "High"). case_when() evaluates conditions in order and is particularly useful when the transformation depends on logical expressions rather than exact matching. For categorical data that maps cleanly one-to-one, recode() is convenient; for anything requiring conditional logic, case_when() is preferred.
 
-# Coercing Data Types
--   In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, "A"), which results in c("1", "A"). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.
--   To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as "numeric" or "factor". Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like "Male" and "Female" would be a categorical (factor) variable.
--   Sometimes when you read in a dataset all the variables are already in the correct type. Other times, you need to force it into the type you need to conduct the analysis through a process called coercion.
+```{r, echo=FALSE, include=TRUE}
+#data <- data %>%
+#  mutate(NewVariable = case_when(
+#    condition1 ~ value1,
+#    condition2 ~ value2,
+#    TRUE ~ default_value  # optional default
+```
 
-### Factor data type:
+* From recoding to ordinal Variables
 
--   Factor data types can be ordinal or nominal. Ordinal and nominal variables are both types of categorical variables but differ in their characteristics. Ordinal variables have a meaningful order or ranking among categories (e.g., "low," "medium," "high"), but the intervals between ranks are not necessarily equal. Nominal variables, on the other hand, represent categories without any inherent order (e.g., "red," "blue," "green"). Understanding this distinction is essential for selecting appropriate statistical methods, as ordinal variables often allow for rank-based analyses, while nominal variables do not.
-    -   Ordinal: Contain categories that have some logical order (e.g. categories of age).
-    -   Nominal: Have categories that have no logical order (e.g., religious affiliation and marital status).
--   R will treat each unique value of a factor as a different level.
-
-#### Ordinal Variable
-
--   Ordinal data may be categorized and ranked with respect to some characteristic or trait.
-    -   For example, instructors are often evaluated on an ordinal scale (excellent, good, fair, poor).
-    -   A scale allows us to code the data based on order, assuming equal distance between scale items (aka likert items).
-    -   You can make an ordinal factor data type in R or you can convert the order to meaningful numbers.
--   To recode numbers in R, we would code poor to excellent = 1, 2, 3, 4 respectively.
--   The recode() function from the dplyr package within the tidyverse ecosystem is used to replace specific values in a vector or variable with new values.
--   It allows you to map old values to new ones in a simple and readable manner.
-
-```{r, tidy=FALSE}
+```{r}
 library(tidyverse)
-# Take a vector representing evaluation scores, named evaluate 
 evaluate <- c("excellent", "good", "fair", "poor", "excellent", "good")
-
 data <- data.frame(evaluate)
-data <- data %>%
+
+dataRecode <- data %>%
      mutate(evaluate = recode(evaluate,
             "excellent" = 4,
             "good" = 3,
             "fair" = 2,
             "poor" = 1))
-data
-
 ```
 
-#### Nominal Variable
+* If we alter this to a case_when, we would include the following. 
+```{r}
+dataCase_When <- data %>%
+  mutate(evaluate = case_when(
+    evaluate == "excellent" ~ 4,
+    evaluate == "good" ~ 3,
+    evaluate == "fair" ~ 2,
+    evaluate == "poor" ~ 1,
+    TRUE ~ NA_real_  # for safety in case of unexpected values
+  ))
+dataCase_When
+```
 
--   With nominal variables, data are simply categories for grouping.
--   For example, coding race/ethnicity might have a category value of White, Black, Native American, Asian/Pacific Islander, Other.
--   Qualitative values may be converted to quantitative values for analysis purposes. + White = 1, Black = 2, etc. This conversion to numerical representation of the category would be needed to run some analysis.
-    -   Sometimes, R does this on our behalf depending on commands used.
--   We can force a variable into a factor data type using the as.factor() command.
--   If we use the read.csv() command, we can sometimes do this by setting an argument $stringsAsFactors=TRUE$. We will do this later in the lesson.
-
-### Numerical data types:
-
--   The as.numeric() function in R is used to convert data into numeric format, allowing for mathematical and statistical operations. It takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c("1", "2", "3")) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric("abc")), it results in NA with a warning.
-
--   A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers.
-
--   Two ways to create:
-
-    -   We can create a numeric variable by ensuring our value we assign is a number!
-    -   We can force a variable into an real number data type by using the as.numeric() command.
-
-    ```{r}
-    # Assign Rhode Island limit for medical marijuana in ounces per person
-    kOuncesRhode <- 2.5
-    #Identify the data type 
-    class(x = kOuncesRhode) 
-    ```
-
--   Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x \<- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant.
-
--   For an example of a discrete variable, we could collect information on the number of children in a family or number of points scored in a basketball game.
+* If we were to give a range, we could do that with case_when using the >, < or >= or <= signs. An example is below.  
 
 ```{r}
-# Assign the value of 4 to a constant called kTestInteger and set as an integer
-kTestInteger <- as.integer(4)
-class(kTestInteger) #Confirm the data type is an integer 
+# Sample vector of numbers
+score <- c(9, 6, 3, 8, 5, 10, 2)
 
-#Use as.integer() to truncate the variable ouncesRhode
-Trunc <- as.integer(kOuncesRhode); Trunc
+# Categorize using case_when
+category <- case_when(
+  score > 8        ~ "High",
+  score >= 5       ~ "Medium",
+  score < 5        ~ "Low"
+)
+
+# Combine into a data frame to view
+df <- data.frame(score, category); df
 
 ```
 
-### Character data type
+* This function is  useful in working with dates. 
 
--   The character data type in R is used to store text or string data, making it essential for handling names, labels, descriptions, or any non-numeric information. Character data is represented as sequences of characters enclosed in quotes (e.g., "hello" or 'world').
--   Character data types can be wrapped in either single or double quotation marks (e.g, "hello" or 'hello').
--   Character data types can include letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).
-    -   A quick example is below that shows how to assign a character value to a variable.
+## Date data type
+
+-   The date data type in R is used to represent calendar dates, allowing for accurate storage and manipulation of time-related data. Dates in R are typically stored as objects of class Date, which internally represent the number of days since January 1, 1970. This format facilitates arithmetic operations, such as calculating differences between dates or adding/subtracting days. Dates can be created and manipulated using functions like as.Date() for converting character strings to date objects, or Sys.Date() for retrieving the current date. Handling dates correctly is essential in time series analysis, scheduling, and any task involving chronological data, as improper formatting or assumptions can lead to errors in analysis.
 
 ```{r}
-# Make string constants 
-Q1 <- "A"
-Q2 <- 'B'
-# Check the data type
-class(x = Q1)
+# Convert date info in format 'mm/dd/yyyy' using as.Date
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y") 
+str(dates)
 ```
 
-### Logical data type
+-   The lubridate package provides additional tools for working with dates, such as parsing and extracting components like year, month, and day. This package makes dates a lot easier to work with.
 
--   Logical data types in R represent values that are either TRUE or FALSE, often used for conditional operations and data filtering. Logical values can be the result of comparisons (e.g., x \> 10) or explicitly assigned. Logical vectors are particularly useful in subsetting data; for instance, data\[data\$column \> 5, \] selects rows where the column values are greater than 5. Logical operators like & (and), \| (or), and ! (not) allow for more complex conditions. Logical data is also essential in control structures such as if, else, and loops. By enabling dynamic and conditional programming, logical types play a key role in efficient data manipulation and analysis.
+```{r}
+# Convert date info in format 'mm/dd/yyyy' using lubridate
+library(lubridate)
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- mdy(strDates) 
+str(dates)
+```
 
-    -   A quick example is below that shows how to assign a logical value to a variable.
+-   If you are only given a year and a month, you can use the ym() command to turn it to a date. But take note that it will add a day to the value as a placeholder.
 
-    ```{r}
-    # Store the result of 6 > 8 in a constant called kSixEight
-    kSixEight <- 6 > 8 
-    # Can use comparison tests with the following == >= <= > < <> != 
-    kSixEight # Print kSixEight
-    # Determine the data type of kSixEight
-    class(x = kSixEight)
-    ```
+```{r}
+# Convert date info in format 'yyyymm' using lubridate
+stryyyymm <- c("202201", "202003", "202204")
+dates <- ym(stryyyymm)
+str(dates)
+```
 
-### Nominal Example with Dataset
+```{r}
+# Convert date info in format 'mm/dd/yyyy' using as.Date
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y") 
+str(dates)
+```
 
-```{r, message=FALSE}
+```{r}
+UseDates <- read.csv("data/Lubridate.csv")
+UseDates$Date <- ym(UseDates$Date)
+
+#You can use the month or year function to access the month or year from the date
+UseDates$month <- month(UseDates$Date)
+UseDates$year <- year(UseDates$Date)
+
+##Now, you can access months or year numerically
+summary(UseDates$month) 
+summary(UseDates$year)
+
+##You could code the seasons using a mutate function making a new variable "season"
 library(tidyverse)
-gss.2016 <- read_csv(file = "data/gss2016.csv") 
+UseDates <- UseDates %>% 
+  mutate(season = case_when(
+    month %in% 3:5 ~ "Spring",
+    month %in% 6:8 ~ "Summer",
+    month %in% 9:11 ~ "Fall",
+    TRUE ~ "Winter"
+  ))
+
+UseDates$season <- as.factor(UseDates$season)
+summary(UseDates$season)
+
+##You could use a filter statement to select a particular year. 
+#In the example below, I save the filtered data into a new data frame UseDate2022. 
+UseDate2022 <- filter(UseDates, year==2022)
+
 ```
 
-```{r}
-#Examine the variable types with summary and class functions.
-summary(gss.2016)
-class(gss.2016$grass) #Check the data type.
-gss.2016$grass <- as.factor(gss.2016$grass) #Turn to a factor.
-class(gss.2016$grass) #Confirming it is now correct.
-```
+* Below lists some common commands using Lubridate. 
 
-### Numerical Example with Dataset
+$$
+\begin{array}{|l|l|}
+\hline
+\textbf{Function} & \textbf{Description} \\
+\hline
+\texttt{ymd("2025-07-08")} & \text{Parse a date in Year-Month-Day format} \\
+\texttt{mdy("July 8, 2025")} & \text{Parse a date in Month-Day-Year format} \\
+\texttt{ym("2025-07")} & \text{Parse Year-Month (no day)} \\
+\texttt{today()} & \text{Get the current date} \\
+\texttt{now()} & \text{Get the current date and time} \\
+\texttt{year(date)} & \text{Extract the year from a date} \\
+\texttt{month(date)} & \text{Extract the month (number)} \\
+\texttt{month(date, label=TRUE)} & \text{Extract the month (name)} \\
+\texttt{day(date)} & \text{Extract the day of the month} \\
+\texttt{wday(date)} & \text{Get weekday (number)} \\
+\texttt{wday(date, label=TRUE)} & \text{Get weekday (name)} \\
+\hline
+\end{array}
+$$
 
--   We need to ensure data can be coded as numeric before using the as.numeric() command. For example, to handle the variable age, it seems like numerical values except one value of "89 OR OLDER". If as.numeric() command was used on this variable, it would put all the 89 and older observations as NAs. To force it to be a numerical variable, and keep that the sample participants were the oldest value, we need to recode it and then use the as.numeric() command to coerce it into a number.
--   Recoding the 89 and older to 89 does cause the data to lack integrity in its current form because it will treat the people over 89 years old as 89. But, we are limited here because this needs to be a numerical variable for us to proceed. We will learn a step later on in this section to transform the age variable into categories so that we bring back our data integrity.
 
-```{r}
-class(gss.2016$age)
-#Recode "89 OR OLDER" into just "89"
-gss.2016$age <- recode(gss.2016$age, "89 OR OLDER" = "89")
-# Convert to numeric data type
-gss.2016$age <- as.numeric(gss.2016$age) 
-summary(gss.2016) #Conduct final check confirming correct data types
-```
-
-## Common dplyr Functions
+# Common dplyr Functions
 
 ### Arrange
 
@@ -667,24 +669,28 @@ summary(gss.2016.cleaned)
 -   Finally, we want to take our numerical variable, age, and cut it at certain breaks to make categories that can be easily analyzed.
 
     -   This also ensures that anyone above 89 is coded correctly in a category instead of as the value 89. This again brings back data integrity.
-    -   The cut() function generates class limits and bins used in frequency distributions (and histograms) for quantitative data.
-    -   Here, we are using it to cut age into a categorical variable.
+    -   Last, we want to recode the age variable into categories. We can use the case_when to do this. 
 
-    ```{r}
-    gss.2016.cleaned <- gss.2016 %>% 
-      mutate(grass = as.factor(grass)) %>% 
-      mutate(grass = na_if(x = grass, y = "DK")) %>% 
-      mutate(grass = na_if(x = grass, y = "IAP")) %>% 
-      mutate(grass = droplevels(grass)) %>% 
-      mutate(age = recode(age, "89 OR OLDER" = "89")) %>% 
-      #Added piping operator
-      mutate(age = as.numeric(age)) %>% 
-      #Cut numeric variable into groupings
-      mutate(age.cat = cut(age, breaks = c(-Inf, 29, 59, 74, Inf),labels = c("< 30", "30 - 59", "60 - 74", "75+" ))) 
-
-    #Check what you just did
-    summary(gss.2016.cleaned) 
-    ```
+```{r}
+gss.2016.cleaned <- gss.2016 %>% 
+     mutate(grass = as.factor(grass)) %>% 
+     mutate(grass = na_if(x = grass, y = "DK")) %>% 
+     mutate(grass = na_if(x = grass, y = "IAP")) %>% 
+     mutate(grass = droplevels(x = grass)) %>% 
+     mutate(age = recode(age, "89 OR OLDER" = "89")) %>% 
+     #Added piping operator
+     mutate(age = as.numeric(x = age)) %>% 
+     #Cut numeric variable into groupings
+     mutate(age.cat = as.factor(case_when(
+          age < 30 ~ "< 30",
+          age >= 30 & age <= 59 ~ "30 - 59",
+          age >= 60 & age <= 74 ~ "60 - 74",
+          age >= 75 ~ "75+",
+          TRUE ~ NA_character_  # Safety net for NAs
+     )))
+#Check what you just did
+summary(gss.2016.cleaned) 
+```
 
 ### brfss Data Cleaning
 

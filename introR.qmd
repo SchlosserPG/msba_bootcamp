@@ -488,44 +488,43 @@ sort(y, decreasing=FALSE)
 
 ```
 
-
 ### Install Packages
-* In R, a package is a collection of functions, data, and documentation bundled together to perform specific tasks. Packages extend the capabilities of base R by providing tools for specialized analyses, graphics, data manipulation, machine learning, and much more. 
-     + Option 1: Run install.packages(“tidyverse") in the Console
-     + Option 2: Go to: Tools → Install Packages 
-          + Type the package name in the dialog box.
-          + Make sure Repository (CRAN) is selected.
-          + Click Install.
-* Once installed, you can load the package with: library(tidyverse). 
-* You only need to install once, but you should load with library() every time you use it in a new session.
+
+-   In R, a package is a collection of functions, data, and documentation bundled together to perform specific tasks. Packages extend the capabilities of base R by providing tools for specialized analyses, graphics, data manipulation, machine learning, and much more.
+    -   Option 1: Run install.packages(“tidyverse") in the Console
+    -   Option 2: Go to: Tools → Install Packages
+        -   Type the package name in the dialog box.
+        -   Make sure Repository (CRAN) is selected.
+        -   Click Install.
+-   Once installed, you can load the package with: library(tidyverse).
+-   You only need to install once, but you should load with library() every time you use it in a new session.
 
 ### Accessing Functions from Libraries
 
-* To use functions from a package like dplyr, you can either:
-     + Load the library
-```{r}
-data(mtcars)
-library(dplyr)
-functionexample <- filter(mtcars, mpg > 20)
-```
+-   To use functions from a package like dplyr, you can either:
 
-     + Use the function explicitly, where explicit use of libraries means calling a function by prefixing it with the package name and ::
+    -   Load the library
+
+    ```{r}
+    data(mtcars)
+    library(dplyr)
+    functionexample <- filter(mtcars, mpg > 20)
+    ```
+
+    -   Use the function explicitly, where explicit use of libraries means calling a function by prefixing it with the package name and ::
 
 ```{r}
 functionexample <- dplyr::filter(mtcars, mpg > 20)
 ```
 
-* In other words, we use :: when you only need one function or want to avoid loading the full package.
+-   In other words, we use :: when you only need one function or want to avoid loading the full package.
 
 ### Note on Libraries
 
-* Some libraries are part of other global libraries:
-     + dplyr and ggplot2 are part of tidyverse, there is actually no need to activate dplyr or ggplot2 if tidyverse is active, however, sometimes it helps when conflicts are present.
-     + An example of a conflict is the use of a select function which shows up in both the dplyr and MASS package. If both libraries are active, R does not know which to use.
-     + tidyverse has many libraries included in it. You can see an list in the console message after you load the library.
-     
-
-
+-   Some libraries are part of other global libraries:
+    -   dplyr and ggplot2 are part of tidyverse, there is actually no need to activate dplyr or ggplot2 if tidyverse is active, however, sometimes it helps when conflicts are present.
+    -   An example of a conflict is the use of a select function which shows up in both the dplyr and MASS package. If both libraries are active, R does not know which to use.
+    -   tidyverse has many libraries included in it. You can see an list in the console message after you load the library.
 
 ## Saving
 
@@ -535,7 +534,6 @@ functionexample <- dplyr::filter(mtcars, mpg > 20)
 -   Be careful with this option because it won’t save what you don’t run.
 
 ![Evalulating Your Environment](Pictures/Ch1/SaveOptions.png "Evalulating Your Environment")
-
 
 ## The Environment
 
@@ -632,23 +630,25 @@ m2
 
 #### Cbind and Rbind
 
-* The rbind() and cbind() functions in R are used to combine vectors, matrices, or data frames by rows (rbind) or columns (cbind), respectively, to form a larger matrix or data frame.
-     + cbind() joins vectors side by side (as columns).
-     + rbind() joins vectors on top of each other (as rows).
-     + Both functions require vectors of equal length.
-```{r}
-# Vectors to use
-a <- c(1, 2, 3)
-b <- c(4, 5, 6)
+-   The rbind() and cbind() functions in R are used to combine vectors, matrices, or data frames by rows (rbind) or columns (cbind), respectively, to form a larger matrix or data frame.
 
-# Combine as columns (column-bind)
-matrix_cbind <- cbind(a, b)
-matrix_cbind
+    -   cbind() joins vectors side by side (as columns).
+    -   rbind() joins vectors on top of each other (as rows).
+    -   Both functions require vectors of equal length.
 
-# Combine as rows (row-bind)
-matrix_rbind <- rbind(a, b)
-matrix_rbind
-```
+    ```{r}
+    # Vectors to use
+    a <- c(1, 2, 3)
+    b <- c(4, 5, 6)
+
+    # Combine as columns (column-bind)
+    matrix_cbind <- cbind(a, b)
+    matrix_cbind
+
+    # Combine as rows (row-bind)
+    matrix_rbind <- rbind(a, b)
+    matrix_rbind
+    ```
 
 #### Differences between Data Frames and Matrices
 
