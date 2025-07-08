@@ -895,7 +895,6 @@ kurtosis(brfss.cleaned$PHYSHLTH)
 
 -   What is the difference between ordinal and nominal variables, and how can you recode these data types in R?
 
--   Explain the steps to coerce a character variable into a factor using the as.factor() function in R.
 
 -   How can you use the filter() function to subset a dataset based on multiple conditions using & and \| in R?
 
