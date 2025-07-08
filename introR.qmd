@@ -19,7 +19,6 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 ####################################
 ```
 
-
 ### At a Glance
 
 -   In order to succeed in this lesson, you will need to start by having both R and RStudio downloaded. Then, the only way to learn R is to use it in various ways and to practice as much as you can.
@@ -176,7 +175,6 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 ![Saving Our Book Files Into a "data" Folder in Your Working Directory](Pictures/Ch0/BookFiles.png "Saving Our Book Files Into a "data" Folder in Your Working Directory")
 
 -   We will use a number of data files plus more for homework/projects, so be prepared to use these files throughout the class.
-
 
 # Using R
 
@@ -490,6 +488,45 @@ sort(y, decreasing=FALSE)
 
 ```
 
+
+### Install Packages
+* In R, a package is a collection of functions, data, and documentation bundled together to perform specific tasks. Packages extend the capabilities of base R by providing tools for specialized analyses, graphics, data manipulation, machine learning, and much more. 
+     + Option 1: Run install.packages(“tidyverse") in the Console
+     + Option 2: Go to: Tools → Install Packages 
+          + Type the package name in the dialog box.
+          + Make sure Repository (CRAN) is selected.
+          + Click Install.
+* Once installed, you can load the package with: library(tidyverse). 
+* You only need to install once, but you should load with library() every time you use it in a new session.
+
+### Accessing Functions from Libraries
+
+* To use functions from a package like dplyr, you can either:
+     + Load the library
+```{r}
+data(mtcars)
+library(dplyr)
+functionexample <- filter(mtcars, mpg > 20)
+```
+
+     + Use the function explicitly, where explicit use of libraries means calling a function by prefixing it with the package name and ::
+
+```{r}
+functionexample <- dplyr::filter(mtcars, mpg > 20)
+```
+
+* In other words, we use :: when you only need one function or want to avoid loading the full package.
+
+### Note on Libraries
+
+* Some libraries are part of other global libraries:
+     + dplyr and ggplot2 are part of tidyverse, there is actually no need to activate dplyr or ggplot2 if tidyverse is active, however, sometimes it helps when conflicts are present.
+     + An example of a conflict is the use of a select function which shows up in both the dplyr and MASS package. If both libraries are active, R does not know which to use.
+     + tidyverse has many libraries included in it. You can see an list in the console message after you load the library.
+     
+
+
+
 ## Saving
 
 -   You can save your work in the file menu or the save shortcut using Ctrl + S or Cmd+S depending on your Operating System.
@@ -499,31 +536,6 @@ sort(y, decreasing=FALSE)
 
 ![Evalulating Your Environment](Pictures/Ch1/SaveOptions.png "Evalulating Your Environment")
 
-## Calling a Library
-
--   In R, a package is a collection of R functions, data and compiled code. The location where the packages are stored is called the library.
--   Libraries need to be activated one time in each new R session.
--   You can access a function from a library one time using library::function()
-
-```{r, message=FALSE}
-#Use to activate library in an R session. 
-library(tidyverse)
-library(dplyr)
-```
-
--   You can access a function from a library one time only using library::function()
-    -   Useful if only using one function from the library.
--   We will return to this in data prep.
-
-```{r, message=FALSE}
-##Below is an example that would use dplyr for one select function to select variable1 from the oldData and save it as a new object NewData. Since we don’t have datasets yet, we will revisit this. 
-#NewData <- dplyr::select(oldData, variable1)
-```
-
--   Some libraries are part of other global libraries:
-    -   dplyr is part of tidyverse, there is actually no need to activate it if tidyverse is active, however, sometimes it helps when conflicts are present
-    -   An example of a conflict is the use of a select function which shows up in both the dplyr and MASS package. If both libraries are active, R does not know which to use.
-    -   tidyverse has many libraries included in it.
 
 ## The Environment
 
@@ -616,6 +628,26 @@ m #Printing the matrix in the console
 ```{r echo=FALSE}
 m2 <- matrix(1:25, nrow=5, byrow=TRUE)
 m2
+```
+
+#### Cbind and Rbind
+
+* The rbind() and cbind() functions in R are used to combine vectors, matrices, or data frames by rows (rbind) or columns (cbind), respectively, to form a larger matrix or data frame.
+     + cbind() joins vectors side by side (as columns).
+     + rbind() joins vectors on top of each other (as rows).
+     + Both functions require vectors of equal length.
+```{r}
+# Vectors to use
+a <- c(1, 2, 3)
+b <- c(4, 5, 6)
+
+# Combine as columns (column-bind)
+matrix_cbind <- cbind(a, b)
+matrix_cbind
+
+# Combine as rows (row-bind)
+matrix_rbind <- rbind(a, b)
+matrix_rbind
 ```
 
 #### Differences between Data Frames and Matrices
@@ -852,7 +884,6 @@ summary(ChickWeight)
 tapply(ChickWeight$weight,ChickWeight$Diet, mean)
 ```
 
-
 # Introduction to RMarkdown
 
 -   R Markdown (RMD) files are a versatile format that combines plain text, code, and output to create dynamic and reproducible documents.
@@ -912,11 +943,11 @@ ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
 
 ```
 
-
 ## Packages Required for RMD to Work
 
 -   RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Blackboard and follow the instructions provided to use RMarkdown.
-* The R file includes the following commands: 
+-   The R file includes the following commands:
+
 ```{r, eval=FALSE}
 install.packages("rmarkdown")
 install.packages("knitr")
@@ -926,7 +957,6 @@ tinytex::install_tinytex()  # Select Y when/if it asks down in the console.
 
 -   To use RMarkdown most efficiently, make sure your version of R is the latest by checking the website. If it is not, then take the time to get the latest version of the software. Second, make sure your files are not on the cloud, including OneDrive. If so, then decouple at least your desktop with OneDrive so you can work off the cloud. Finally, run the lines below one at a time. Once the packages are done installing, then restart your computer. Finally, open RStudio and run a blank RMarkdown file. If this file knits, then your homework should knit as long as there are no other errors.
 -   You may only need to update one of these packages. However, since they are all connected, running these commands ensures that they are all up to date with minimal troubleshooting.
-
 
 ## Troubleshooting RMD FIles
 
@@ -949,8 +979,6 @@ tinytex::install_tinytex()  # Select Y when/if it asks down in the console.
     -   At the beginning of the .Rmd file, load all necessary libraries explicitly using library() calls, e.g., library(tidyverse).
     -   Ensure that all libraries used in the document are installed beforehand by running install.packages() if needed.
     -   Loading libraries early prevents errors during knitting and avoids confusing error messages.
-
-
 
 # Using AI
 
