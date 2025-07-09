@@ -309,19 +309,8 @@ window.Quarto = {
   <li><a href="#read_csv-function" id="toc-read_csv-function" class="nav-link" data-scroll-target="#read_csv-function"><span class="header-section-number">8.4</span> read_csv function</a></li>
   </ul></li>
   <li><a href="#summarize-data" id="toc-summarize-data" class="nav-link" data-scroll-target="#summarize-data"><span class="header-section-number">9</span> Summarize Data</a></li>
-  <li><a href="#explicit-use-of-libraries" id="toc-explicit-use-of-libraries" class="nav-link" data-scroll-target="#explicit-use-of-libraries"><span class="header-section-number">10</span> Explicit Use of Libraries</a></li>
-  <li><a href="#introduction-to-rmarkdown" id="toc-introduction-to-rmarkdown" class="nav-link" data-scroll-target="#introduction-to-rmarkdown"><span class="header-section-number">11</span> Introduction to RMarkdown</a>
-  <ul class="collapse">
-  <li><a href="#yaml-header" id="toc-yaml-header" class="nav-link" data-scroll-target="#yaml-header"><span class="header-section-number">11.1</span> yaml Header</a></li>
-  <li><a href="#markdown-text" id="toc-markdown-text" class="nav-link" data-scroll-target="#markdown-text"><span class="header-section-number">11.2</span> markdown Text</a></li>
-  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks"><span class="header-section-number">11.3</span> Code Chunks</a></li>
-  <li><a href="#output-formats" id="toc-output-formats" class="nav-link" data-scroll-target="#output-formats"><span class="header-section-number">11.4</span> Output Formats</a></li>
-  <li><a href="#visualization-and-plots" id="toc-visualization-and-plots" class="nav-link" data-scroll-target="#visualization-and-plots"><span class="header-section-number">11.5</span> Visualization and Plots</a></li>
-  <li><a href="#packages-required-for-rmd-to-work" id="toc-packages-required-for-rmd-to-work" class="nav-link" data-scroll-target="#packages-required-for-rmd-to-work"><span class="header-section-number">11.6</span> Packages Required for RMD to Work</a></li>
-  <li><a href="#troubleshooting-rmd-files" id="toc-troubleshooting-rmd-files" class="nav-link" data-scroll-target="#troubleshooting-rmd-files"><span class="header-section-number">11.7</span> Troubleshooting RMD FIles</a></li>
-  </ul></li>
-  <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai"><span class="header-section-number">12</span> Using AI</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">13</span> Summary</a></li>
+  <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai"><span class="header-section-number">10</span> Using AI</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">11</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -1621,196 +1610,8 @@ b    4    5    6</code></pre>
 </div>
 </div>
 </section>
-<section id="explicit-use-of-libraries" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Explicit Use of Libraries</h1>
-<ul>
-<li><p>You can activate a library one time using library::function() format</p></li>
-<li><p>For example, we can use the summarize() function from dplyr which is part of tidyverse installed earlier.</p></li>
-<li><p>Since dplyr is part of tidyverse, there is actually no need to activate it when we have already activated tidyverse in this session, however, it does help when conflicts are present. More on that later.</p>
-<ul>
-<li>The line below says to take the the gss.2016 data object and summarize the length of age using the dplyr library.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">summarize</span>(gss<span class="fl">.2016</span>, <span class="at">length.age =</span> <span class="fu">length</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  length.age
-1       2867</code></pre>
-</div>
-</div></li>
-<li><p>In the line of code above, we see package::function(). If we initiate the library like below, we do not need the beginning of the statement. The code below provides the same answer as the way written above.</p></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(gss<span class="fl">.2016</span>, <span class="at">length.age =</span> <span class="fu">length</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  length.age
-1       2867</code></pre>
-</div>
-</div>
-<ul>
-<li>You try to access the ChickWeight dataset from the MASS package and summarize it generally using summary() and str() functions.</li>
-<li>Earlier, we looked up the tapply() function in the help bar and found that the format is tapply(x, index, and fun), where x is a continuous variable, index is a grouping variable or factor, and fun is a function like mean. Use the tapply() function to take the mean weight of Chicks based on Diet. See the answer below.</li>
-<li>While there are a few ways to get group means in R. I like the tapply() function which is used to apply a function over subsets of a vector. The function splits the data into subsets based on a given factor or factors, applies a specified function to each subset, and then returns the results in a convenient form. Here, we are applying the mean function.</li>
-<li>To access a variable, use dataset$variable or you can also attach a dataset to your code so you can just use the variable name later on. So use ChickWeight$weight and ChickWeight$Diet appropriately in the function alongside the FUN mean.</li>
-</ul>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>     weight           Time           Chick     Diet   
- Min.   : 35.0   Min.   : 0.00   13     : 12   1:220  
- 1st Qu.: 63.0   1st Qu.: 4.00   9      : 12   2:120  
- Median :103.0   Median :10.00   20     : 12   3:120  
- Mean   :121.8   Mean   :10.72   10     : 12   4:118  
- 3rd Qu.:163.8   3rd Qu.:16.00   17     : 12          
- Max.   :373.0   Max.   :21.00   19     : 12          
-                                 (Other):506          </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       1        2        3        4 
-102.6455 122.6167 142.9500 135.2627 </code></pre>
-</div>
-</div>
-</section>
-<section id="introduction-to-rmarkdown" class="level1" data-number="11">
-<h1 data-number="11"><span class="header-section-number">11</span> Introduction to RMarkdown</h1>
-<ul>
-<li>R Markdown (RMD) files are a versatile format that combines plain text, code, and output to create dynamic and reproducible documents.</li>
-<li>Benefits of Using RMD Files:
-<ul>
-<li>Reproducibility: Combining code and output ensures that the document is reproducible. Any changes in the data or analysis can be quickly updated.</li>
-<li>Integration: RMD files seamlessly integrate with R, allowing you to run and display results from your analysis within the same document.</li>
-<li>Flexibility: You can produce various types of reports, including static documents and dynamic documents.</li>
-<li>Collaboration: Being that RMD files are plain text, they are easy to share and version control with tools like Git.</li>
-</ul></li>
-<li>RMD files have many options, but generally are composed of the following:
-<ul>
-<li>yaml Header</li>
-<li>markdown Text</li>
-<li>Code Chunks</li>
-<li>Output Formats</li>
-<li>Visualization and Plots</li>
-</ul></li>
-</ul>
-<section id="yaml-header" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="yaml-header"><span class="header-section-number">11.1</span> yaml Header</h2>
-<ul>
-<li>The YAML header is located at the beginning of the RMD file and contains metadata about the document, such as the title, author, date, and output format. Here is an example of a YAML header:</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Pictures/Ch0/ymlHeader.png" title="YAML Header Example" class="img-fluid figure-img"></p>
-<figcaption>YAML Header Example</figcaption>
-</figure>
-</div>
-</section>
-<section id="markdown-text" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="markdown-text"><span class="header-section-number">11.2</span> markdown Text</h2>
-<ul>
-<li>Markdown is a lightweight markup language with plain text formatting syntax. In an RMD file, you use Markdown to format the text, create lists, headers, links, and more. For example:</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Pictures/RMD/markdownStyles.png" title="Styles" class="img-fluid figure-img"></p>
-<figcaption>Styles Example</figcaption>
-</figure>
-</div>
-</section>
-<section id="code-chunks" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">11.3</span> Code Chunks</h2>
-<ul>
-<li>Code chunks allow you to embed R (or other languages) code within the document. These chunks are executed when the document is rendered, and their output is included in the final document. Code chunks are defined with triple backticks and the language, like this:</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Pictures/RMD/codechunk.png" title="Code Chunk" class="img-fluid figure-img"></p>
-<figcaption>Code Chunk Example</figcaption>
-</figure>
-</div>
-<ul>
-<li>Chunk output can be customized with knitr options, arguments set in the {} of a chunk header.
-<ul>
-<li>include = FALSE prevents code and results from appearing in the finished file. R Markdown still runs the code in the chunk, and the results can be used by other chunks.</li>
-<li>echo = FALSE prevents code, but not the results from appearing in the finished file. This is a useful way to embed figures.</li>
-<li>message = FALSE prevents messages that are generated by code from appearing in the finished file.</li>
-<li>warning = FALSE prevents warnings that are generated by code from appearing in the finished.</li>
-<li>fig.cap = “…” adds a caption to graphical results.</li>
-</ul></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Pictures/RMD/message.png" title="Arguments of Chunk" class="img-fluid figure-img"></p>
-<figcaption>Arguments of Chunk</figcaption>
-</figure>
-</div>
-</section>
-<section id="output-formats" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="output-formats"><span class="header-section-number">11.4</span> Output Formats</h2>
-<ul>
-<li>RMD files can be rendered into various output formats including HTML, PDF, and Word documents. The output format is specified in the YAML header. To generate the final document, you use the knit function in RStudio or call rmarkdown::render() in your R script.</li>
-</ul>
-</section>
-<section id="visualization-and-plots" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="visualization-and-plots"><span class="header-section-number">11.5</span> Visualization and Plots</h2>
-<ul>
-<li>RMD files can include visualizations and plots. For example, you can create and embed a plot using the ggplot2 package.</li>
-</ul>
-<p>library(ggplot2) ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="introR_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="packages-required-for-rmd-to-work" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="packages-required-for-rmd-to-work"><span class="header-section-number">11.6</span> Packages Required for RMD to Work</h2>
-<ul>
-<li>RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Blackboard and follow the instructions provided to use RMarkdown.</li>
-<li>The R file includes the following commands:</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
-<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"knitr"</span>)</span>
-<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"formatR"</span>)</span>
-<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()  <span class="co"># Select Y when/if it asks down in the console.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>To use RMarkdown most efficiently, make sure your version of R is the latest by checking the website. If it is not, then take the time to get the latest version of the software. Second, make sure your files are not on the cloud, including OneDrive. If so, then decouple at least your desktop with OneDrive so you can work off the cloud. Finally, run the lines below one at a time. Once the packages are done installing, then restart your computer. Finally, open RStudio and run a blank RMarkdown file. If this file knits, then your homework should knit as long as there are no other errors.</li>
-<li>You may only need to update one of these packages. However, since they are all connected, running these commands ensures that they are all up to date with minimal troubleshooting.</li>
-</ul>
-</section>
-<section id="troubleshooting-rmd-files" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="troubleshooting-rmd-files"><span class="header-section-number">11.7</span> Troubleshooting RMD FIles</h2>
-<ul>
-<li><p>Lack of Syntax Errors:</p>
-<ul>
-<li>R Markdown files may fail to knit without providing clear syntax error messages.</li>
-<li>To troubleshoot, run each code chunk interactively in RStudio to identify and fix errors before knitting.</li>
-<li>Pay attention to any warnings or messages in the console as they may indicate potential issues.</li>
-</ul></li>
-<li><p>Using Relative Links to Datasets:</p>
-<ul>
-<li>If the .Rmd file relies on external datasets, ensure that file paths are specified using relative links.</li>
-<li>Relative links ensure portability, allowing the .Rmd file to work on different systems without modification.</li>
-<li>For example, if a dataset is in a subfolder, use a path like data &lt;- read.csv(“data/my_dataset.csv”).</li>
-<li>Always verify that the dataset exists in the specified location relative to the working directory.</li>
-</ul></li>
-<li><p>Including Necessary Libraries:</p>
-<ul>
-<li>Functions from external libraries will fail if the required libraries are not loaded.</li>
-<li>At the beginning of the .Rmd file, load all necessary libraries explicitly using library() calls, e.g., library(tidyverse).</li>
-<li>Ensure that all libraries used in the document are installed beforehand by running install.packages() if needed.</li>
-<li>Loading libraries early prevents errors during knitting and avoids confusing error messages.</li>
-</ul></li>
-</ul>
-</section>
-</section>
-<section id="using-ai" class="level1" data-number="12">
-<h1 data-number="12"><span class="header-section-number">12</span> Using AI</h1>
+<section id="using-ai" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Using AI</h1>
 <p>Use the following prompts on a generative AI, like chatGPT, to learn more about introductory topics.</p>
 <ul>
 <li><p>Explain the difference between descriptive and inferential statistics and provide real-life examples of both.</p></li>
@@ -1824,8 +1625,8 @@ b    4    5    6</code></pre>
 <li><p>Explain how to use the summary() function in R to summarize a dataset. Write a script that loads a dataset and runs summary() on it.</p></li>
 </ul>
 </section>
-<section id="summary" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> Summary</h1>
+<section id="summary" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Summary</h1>
 <ul>
 <li>In this lesson, we went over information to make sure you had some basics to really start learning R. There are a lot of ways to get the same things done in R; you have to find the way that works best for you. As we learn R, you will get used to doing things your way to be able to slice and evaluate the data to find rich information from the data sets we look at. As long as the data was handled properly, it does not matter how we reach our goal using R as long as we do it ourselves.</li>
 </ul>

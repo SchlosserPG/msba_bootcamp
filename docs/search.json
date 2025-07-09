@@ -353,8 +353,8 @@
     "objectID": "dataviz.html#summary",
     "href": "dataviz.html#summary",
     "title": "5  Data Visualization",
-    "section": "5.7 Summary",
-    "text": "5.7 Summary\n\nPractice many more examples with the help of ChatGPT and work towards constructing high-quality charts and graphs.",
+    "section": "6.9 Summary",
+    "text": "6.9 Summary\n\nPractice many more examples with the help of ChatGPT and work towards constructing high-quality charts and graphs.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
     ]
@@ -393,8 +393,8 @@
     "objectID": "dataviz.html#using-ai",
     "href": "dataviz.html#using-ai",
     "title": "5  Data Visualization",
-    "section": "5.6 Using AI",
-    "text": "5.6 Using AI\n\nUse the following prompts on a generative AI, like chatGPT, to learn more about data visualization capabilities in ggplot2.\nHow can I modify the appearance of a ggplot bar chart to include custom colors for each bar, and what are the best practices for choosing colors in data visualization?\nWhat is the role of layering in ggplot, and how can adding multiple layers, such as labels, themes, and lines, improve the readability of a plot?\nWhen should a density plot be used instead of a histogram, and how does each visualization help in understanding the distribution of continuous data?\nHow can I use a boxplot in R to identify and visualize outliers in my dataset, and what additional steps should I take to handle these outliers?\nHow can I create a scatter plot in ggplot to explore relationships between two continuous variables, and how do I add a trendline to help interpret the results?\nWhat are the steps for creating a grouped bar chart in ggplot, and how does this visualization help in comparing multiple categories or groups within a dataset?",
+    "section": "6.8 Using AI",
+    "text": "6.8 Using AI\n\nUse the following prompts on a generative AI, like chatGPT, to learn more about data visualization capabilities in ggplot2.\nHow can I modify the appearance of a ggplot bar chart to include custom colors for each bar, and what are the best practices for choosing colors in data visualization?\nWhat is the role of layering in ggplot, and how can adding multiple layers, such as labels, themes, and lines, improve the readability of a plot?\nWhen should a density plot be used instead of a histogram, and how does each visualization help in understanding the distribution of continuous data?\nHow can I use a boxplot in R to identify and visualize outliers in my dataset, and what additional steps should I take to handle these outliers?\nHow can I create a scatter plot in ggplot to explore relationships between two continuous variables, and how do I add a trendline to help interpret the results?\nWhat are the steps for creating a grouped bar chart in ggplot, and how does this visualization help in comparing multiple categories or groups within a dataset?",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
     ]
@@ -1107,6 +1107,76 @@
     "text": "5.1 Date data type\n\nThe date data type in R is used to represent calendar dates, allowing for accurate storage and manipulation of time-related data. Dates in R are typically stored as objects of class Date, which internally represent the number of days since January 1, 1970. This format facilitates arithmetic operations, such as calculating differences between dates or adding/subtracting days. Dates can be created and manipulated using functions like as.Date() for converting character strings to date objects, or Sys.Date() for retrieving the current date. Handling dates correctly is essential in time series analysis, scheduling, and any task involving chronological data, as improper formatting or assumptions can lead to errors in analysis.\n\n\n# Convert date info in format 'mm/dd/yyyy' using as.Date\nstrDates &lt;- c(\"01/05/1965\", \"08/16/1975\")\ndates &lt;- as.Date(strDates, \"%m/%d/%Y\")\nstr(dates)\n\n Date[1:2], format: \"1965-01-05\" \"1975-08-16\"\n\n\n\nThe lubridate package provides additional tools for working with dates, such as parsing and extracting components like year, month, and day. This package makes dates a lot easier to work with.\n\n\n# Convert date info in format 'mm/dd/yyyy' using lubridate\nlibrary(lubridate)\nstrDates &lt;- c(\"01/05/1965\", \"08/16/1975\")\ndates &lt;- mdy(strDates)\nstr(dates)\n\n Date[1:2], format: \"1965-01-05\" \"1975-08-16\"\n\n\n\nIf you are only given a year and a month, you can use the ym() command to turn it to a date. But take note that it will add a day to the value as a placeholder.\n\n\n# Convert date info in format 'yyyymm' using lubridate\nstryyyymm &lt;- c(\"202201\", \"202003\", \"202204\")\ndates &lt;- ym(stryyyymm)\nstr(dates)\n\n Date[1:3], format: \"2022-01-01\" \"2020-03-01\" \"2022-04-01\"\n\n\n\n# Convert date info in format 'mm/dd/yyyy' using as.Date\nstrDates &lt;- c(\"01/05/1965\", \"08/16/1975\")\ndates &lt;- as.Date(strDates, \"%m/%d/%Y\")\nstr(dates)\n\n Date[1:2], format: \"1965-01-05\" \"1975-08-16\"\n\n\n\nUseDates &lt;- read.csv(\"data/Lubridate.csv\")\nUseDates$Date &lt;- ym(UseDates$Date)\n\n# You can use the month or year function to access the month or year\n# from the date\nUseDates$month &lt;- month(UseDates$Date)\nUseDates$year &lt;- year(UseDates$Date)\n\n## Now, you can access months or year numerically\nsummary(UseDates$month)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  1.000   4.000   7.000   6.538   9.000  12.000 \n\nsummary(UseDates$year)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n   2019    2020    2021    2021    2021    2022 \n\n## You could code the seasons using a mutate function making a new\n## variable 'season'\nlibrary(tidyverse)\nUseDates &lt;- UseDates %&gt;%\n    mutate(season = case_when(month %in% 3:5 ~ \"Spring\", month %in% 6:8 ~\n        \"Summer\", month %in% 9:11 ~ \"Fall\", TRUE ~ \"Winter\"))\n\nUseDates$season &lt;- as.factor(UseDates$season)\nsummary(UseDates$season)\n\n  Fall Spring Summer Winter \n     9      9     12      9 \n\n## You could use a filter statement to select a particular year.  In\n## the example below, I save the filtered data into a new data frame\n## UseDate2022.\nUseDate2022 &lt;- filter(UseDates, year == 2022)\n\n\nBelow lists some common commands using Lubridate.\n\n\\[\n\\begin{array}{|l|l|}\n\\hline\n\\textbf{Function} & \\textbf{Description} \\\\\n\\hline\n\\texttt{ymd(\"2025-07-08\")} & \\text{Parse a date in Year-Month-Day format} \\\\\n\\texttt{mdy(\"July 8, 2025\")} & \\text{Parse a date in Month-Day-Year format} \\\\\n\\texttt{ym(\"2025-07\")} & \\text{Parse Year-Month (no day)} \\\\\n\\texttt{today()} & \\text{Get the current date} \\\\\n\\texttt{now()} & \\text{Get the current date and time} \\\\\n\\texttt{year(date)} & \\text{Extract the year from a date} \\\\\n\\texttt{month(date)} & \\text{Extract the month (number)} \\\\\n\\texttt{month(date, label=TRUE)} & \\text{Extract the month (name)} \\\\\n\\texttt{day(date)} & \\text{Extract the day of the month} \\\\\n\\texttt{wday(date)} & \\text{Get weekday (number)} \\\\\n\\texttt{wday(date, label=TRUE)} & \\text{Get weekday (name)} \\\\\n\\hline\n\\end{array}\n\\]",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Data Preparation</span>"
+    ]
+  },
+  {
+    "objectID": "dataviz.html#yaml-header",
+    "href": "dataviz.html#yaml-header",
+    "title": "5  Data Visualization",
+    "section": "6.1 yaml Header",
+    "text": "6.1 yaml Header\n\nThe YAML header is located at the beginning of the RMD file and contains metadata about the document, such as the title, author, date, and output format. Here is an example of a YAML header:\n\n\n\n\nYAML Header Example",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "dataviz.html#markdown-text",
+    "href": "dataviz.html#markdown-text",
+    "title": "5  Data Visualization",
+    "section": "6.2 markdown Text",
+    "text": "6.2 markdown Text\n\nMarkdown is a lightweight markup language with plain text formatting syntax. In an RMD file, you use Markdown to format the text, create lists, headers, links, and more. For example:\n\n\n\n\nStyles Example",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "dataviz.html#code-chunks",
+    "href": "dataviz.html#code-chunks",
+    "title": "5  Data Visualization",
+    "section": "6.3 Code Chunks",
+    "text": "6.3 Code Chunks\n\nCode chunks allow you to embed R (or other languages) code within the document. These chunks are executed when the document is rendered, and their output is included in the final document. Code chunks are defined with triple backticks and the language, like this:\n\n\n\n\nCode Chunk Example\n\n\n\nChunk output can be customized with knitr options, arguments set in the {} of a chunk header.\n\ninclude = FALSE prevents code and results from appearing in the finished file. R Markdown still runs the code in the chunk, and the results can be used by other chunks.\necho = FALSE prevents code, but not the results from appearing in the finished file. This is a useful way to embed figures.\nmessage = FALSE prevents messages that are generated by code from appearing in the finished file.\nwarning = FALSE prevents warnings that are generated by code from appearing in the finished.\nfig.cap = “…” adds a caption to graphical results.\n\n\n\n\n\nArguments of Chunk",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "dataviz.html#output-formats",
+    "href": "dataviz.html#output-formats",
+    "title": "5  Data Visualization",
+    "section": "6.4 Output Formats",
+    "text": "6.4 Output Formats\n\nRMD files can be rendered into various output formats including HTML, PDF, and Word documents. The output format is specified in the YAML header. To generate the final document, you use the knit function in RStudio or call rmarkdown::render() in your R script.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "dataviz.html#visualization-and-plots",
+    "href": "dataviz.html#visualization-and-plots",
+    "title": "5  Data Visualization",
+    "section": "6.5 Visualization and Plots",
+    "text": "6.5 Visualization and Plots\n\nRMD files can include visualizations and plots. For example, you can create and embed a plot using the ggplot2 package.\n\nlibrary(ggplot2) ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()\n\nlibrary(ggplot2)\nggplot(mpg, aes(x = displ, y = hwy)) + geom_point()",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "dataviz.html#packages-required-for-rmd-to-work",
+    "href": "dataviz.html#packages-required-for-rmd-to-work",
+    "title": "5  Data Visualization",
+    "section": "6.6 Packages Required for RMD to Work",
+    "text": "6.6 Packages Required for RMD to Work\n\nRMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Blackboard and follow the instructions provided to use RMarkdown.\nThe R file includes the following commands:\n\n\ninstall.packages(\"rmarkdown\")\ninstall.packages(\"knitr\")\ninstall.packages(\"formatR\")\ntinytex::install_tinytex()  # Select Y when/if it asks down in the console.\n\n\nTo use RMarkdown most efficiently, make sure your version of R is the latest by checking the website. If it is not, then take the time to get the latest version of the software. Second, make sure your files are not on the cloud, including OneDrive. If so, then decouple at least your desktop with OneDrive so you can work off the cloud. Finally, run the lines below one at a time. Once the packages are done installing, then restart your computer. Finally, open RStudio and run a blank RMarkdown file. If this file knits, then your homework should knit as long as there are no other errors.\nYou may only need to update one of these packages. However, since they are all connected, running these commands ensures that they are all up to date with minimal troubleshooting.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
+    ]
+  },
+  {
+    "objectID": "dataviz.html#troubleshooting-rmd-files",
+    "href": "dataviz.html#troubleshooting-rmd-files",
+    "title": "5  Data Visualization",
+    "section": "6.7 Troubleshooting RMD FIles",
+    "text": "6.7 Troubleshooting RMD FIles\n\nLack of Syntax Errors:\n\nR Markdown files may fail to knit without providing clear syntax error messages.\nTo troubleshoot, run each code chunk interactively in RStudio to identify and fix errors before knitting.\nPay attention to any warnings or messages in the console as they may indicate potential issues.\n\nUsing Relative Links to Datasets:\n\nIf the .Rmd file relies on external datasets, ensure that file paths are specified using relative links.\nRelative links ensure portability, allowing the .Rmd file to work on different systems without modification.\nFor example, if a dataset is in a subfolder, use a path like data &lt;- read.csv(“data/my_dataset.csv”).\nAlways verify that the dataset exists in the specified location relative to the working directory.\n\nIncluding Necessary Libraries:\n\nFunctions from external libraries will fail if the required libraries are not loaded.\nAt the beginning of the .Rmd file, load all necessary libraries explicitly using library() calls, e.g., library(tidyverse).\nEnsure that all libraries used in the document are installed beforehand by running install.packages() if needed.\nLoading libraries early prevents errors during knitting and avoids confusing error messages.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Visualization</span>"
     ]
   }
 ]

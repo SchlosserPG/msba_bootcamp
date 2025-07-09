@@ -267,8 +267,18 @@ window.Quarto = {
   <li><a href="#scatterplot-for-two-continuous-variables" id="toc-scatterplot-for-two-continuous-variables" class="nav-link" data-scroll-target="#scatterplot-for-two-continuous-variables"><span class="header-section-number">5.4.3</span> Scatterplot for Two Continuous Variables</a></li>
   </ul></li>
   <li><a href="#full-example-using-nhanes-dataset" id="toc-full-example-using-nhanes-dataset" class="nav-link" data-scroll-target="#full-example-using-nhanes-dataset"><span class="header-section-number">5.5</span> Full Example Using nhanes Dataset</a></li>
-  <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai"><span class="header-section-number">5.6</span> Using AI</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.7</span> Summary</a></li>
+  <li><a href="#introduction-to-rmarkdown" id="toc-introduction-to-rmarkdown" class="nav-link" data-scroll-target="#introduction-to-rmarkdown"><span class="header-section-number">6</span> Introduction to RMarkdown</a>
+  <ul class="collapse">
+  <li><a href="#yaml-header" id="toc-yaml-header" class="nav-link" data-scroll-target="#yaml-header"><span class="header-section-number">6.1</span> yaml Header</a></li>
+  <li><a href="#markdown-text" id="toc-markdown-text" class="nav-link" data-scroll-target="#markdown-text"><span class="header-section-number">6.2</span> markdown Text</a></li>
+  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks"><span class="header-section-number">6.3</span> Code Chunks</a></li>
+  <li><a href="#output-formats" id="toc-output-formats" class="nav-link" data-scroll-target="#output-formats"><span class="header-section-number">6.4</span> Output Formats</a></li>
+  <li><a href="#visualization-and-plots" id="toc-visualization-and-plots" class="nav-link" data-scroll-target="#visualization-and-plots"><span class="header-section-number">6.5</span> Visualization and Plots</a></li>
+  <li><a href="#packages-required-for-rmd-to-work" id="toc-packages-required-for-rmd-to-work" class="nav-link" data-scroll-target="#packages-required-for-rmd-to-work"><span class="header-section-number">6.6</span> Packages Required for RMD to Work</a></li>
+  <li><a href="#troubleshooting-rmd-files" id="toc-troubleshooting-rmd-files" class="nav-link" data-scroll-target="#troubleshooting-rmd-files"><span class="header-section-number">6.7</span> Troubleshooting RMD FIles</a></li>
+  <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai"><span class="header-section-number">6.8</span> Using AI</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.9</span> Summary</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1928,8 +1938,146 @@ TRUE </code></pre>
 <li>That is a few of the charts. See if you can determine anything interesting from them and also try to run the other combinations. You will see that it is easier to see with less categories when you have multiple variables like this.</li>
 </ul>
 </section>
-<section id="using-ai" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="using-ai"><span class="header-section-number">5.6</span> Using AI</h2>
+<section id="introduction-to-rmarkdown" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Introduction to RMarkdown</h1>
+<ul>
+<li>R Markdown (RMD) files are a versatile format that combines plain text, code, and output to create dynamic and reproducible documents.</li>
+<li>Benefits of Using RMD Files:
+<ul>
+<li>Reproducibility: Combining code and output ensures that the document is reproducible. Any changes in the data or analysis can be quickly updated.</li>
+<li>Integration: RMD files seamlessly integrate with R, allowing you to run and display results from your analysis within the same document.</li>
+<li>Flexibility: You can produce various types of reports, including static documents and dynamic documents.</li>
+<li>Collaboration: Being that RMD files are plain text, they are easy to share and version control with tools like Git.</li>
+</ul></li>
+<li>RMD files have many options, but generally are composed of the following:
+<ul>
+<li>yaml Header</li>
+<li>markdown Text</li>
+<li>Code Chunks</li>
+<li>Output Formats</li>
+<li>Visualization and Plots</li>
+</ul></li>
+</ul>
+<section id="yaml-header" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="yaml-header"><span class="header-section-number">6.1</span> yaml Header</h2>
+<ul>
+<li>The YAML header is located at the beginning of the RMD file and contains metadata about the document, such as the title, author, date, and output format. Here is an example of a YAML header:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch0/ymlHeader.png" title="YAML Header Example" class="img-fluid figure-img"></p>
+<figcaption>YAML Header Example</figcaption>
+</figure>
+</div>
+</section>
+<section id="markdown-text" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="markdown-text"><span class="header-section-number">6.2</span> markdown Text</h2>
+<ul>
+<li>Markdown is a lightweight markup language with plain text formatting syntax. In an RMD file, you use Markdown to format the text, create lists, headers, links, and more. For example:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/RMD/markdownStyles.png" title="Styles" class="img-fluid figure-img"></p>
+<figcaption>Styles Example</figcaption>
+</figure>
+</div>
+</section>
+<section id="code-chunks" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">6.3</span> Code Chunks</h2>
+<ul>
+<li>Code chunks allow you to embed R (or other languages) code within the document. These chunks are executed when the document is rendered, and their output is included in the final document. Code chunks are defined with triple backticks and the language, like this:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/RMD/codechunk.png" title="Code Chunk" class="img-fluid figure-img"></p>
+<figcaption>Code Chunk Example</figcaption>
+</figure>
+</div>
+<ul>
+<li>Chunk output can be customized with knitr options, arguments set in the {} of a chunk header.
+<ul>
+<li>include = FALSE prevents code and results from appearing in the finished file. R Markdown still runs the code in the chunk, and the results can be used by other chunks.</li>
+<li>echo = FALSE prevents code, but not the results from appearing in the finished file. This is a useful way to embed figures.</li>
+<li>message = FALSE prevents messages that are generated by code from appearing in the finished file.</li>
+<li>warning = FALSE prevents warnings that are generated by code from appearing in the finished.</li>
+<li>fig.cap = “…” adds a caption to graphical results.</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/RMD/message.png" title="Arguments of Chunk" class="img-fluid figure-img"></p>
+<figcaption>Arguments of Chunk</figcaption>
+</figure>
+</div>
+</section>
+<section id="output-formats" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="output-formats"><span class="header-section-number">6.4</span> Output Formats</h2>
+<ul>
+<li>RMD files can be rendered into various output formats including HTML, PDF, and Word documents. The output format is specified in the YAML header. To generate the final document, you use the knit function in RStudio or call rmarkdown::render() in your R script.</li>
+</ul>
+</section>
+<section id="visualization-and-plots" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="visualization-and-plots"><span class="header-section-number">6.5</span> Visualization and Plots</h2>
+<ul>
+<li>RMD files can include visualizations and plots. For example, you can create and embed a plot using the ggplot2 package.</li>
+</ul>
+<p>library(ggplot2) ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dataviz_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="packages-required-for-rmd-to-work" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="packages-required-for-rmd-to-work"><span class="header-section-number">6.6</span> Packages Required for RMD to Work</h2>
+<ul>
+<li>RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Blackboard and follow the instructions provided to use RMarkdown.</li>
+<li>The R file includes the following commands:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"knitr"</span>)</span>
+<span id="cb140-3"><a href="#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"formatR"</span>)</span>
+<span id="cb140-4"><a href="#cb140-4" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()  <span class="co"># Select Y when/if it asks down in the console.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>To use RMarkdown most efficiently, make sure your version of R is the latest by checking the website. If it is not, then take the time to get the latest version of the software. Second, make sure your files are not on the cloud, including OneDrive. If so, then decouple at least your desktop with OneDrive so you can work off the cloud. Finally, run the lines below one at a time. Once the packages are done installing, then restart your computer. Finally, open RStudio and run a blank RMarkdown file. If this file knits, then your homework should knit as long as there are no other errors.</li>
+<li>You may only need to update one of these packages. However, since they are all connected, running these commands ensures that they are all up to date with minimal troubleshooting.</li>
+</ul>
+</section>
+<section id="troubleshooting-rmd-files" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="troubleshooting-rmd-files"><span class="header-section-number">6.7</span> Troubleshooting RMD FIles</h2>
+<ul>
+<li><p>Lack of Syntax Errors:</p>
+<ul>
+<li>R Markdown files may fail to knit without providing clear syntax error messages.</li>
+<li>To troubleshoot, run each code chunk interactively in RStudio to identify and fix errors before knitting.</li>
+<li>Pay attention to any warnings or messages in the console as they may indicate potential issues.</li>
+</ul></li>
+<li><p>Using Relative Links to Datasets:</p>
+<ul>
+<li>If the .Rmd file relies on external datasets, ensure that file paths are specified using relative links.</li>
+<li>Relative links ensure portability, allowing the .Rmd file to work on different systems without modification.</li>
+<li>For example, if a dataset is in a subfolder, use a path like data &lt;- read.csv(“data/my_dataset.csv”).</li>
+<li>Always verify that the dataset exists in the specified location relative to the working directory.</li>
+</ul></li>
+<li><p>Including Necessary Libraries:</p>
+<ul>
+<li>Functions from external libraries will fail if the required libraries are not loaded.</li>
+<li>At the beginning of the .Rmd file, load all necessary libraries explicitly using library() calls, e.g., library(tidyverse).</li>
+<li>Ensure that all libraries used in the document are installed beforehand by running install.packages() if needed.</li>
+<li>Loading libraries early prevents errors during knitting and avoids confusing error messages.</li>
+</ul></li>
+</ul>
+</section>
+<section id="using-ai" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="using-ai"><span class="header-section-number">6.8</span> Using AI</h2>
 <ul>
 <li><p>Use the following prompts on a generative AI, like chatGPT, to learn more about data visualization capabilities in ggplot2.</p></li>
 <li><p>How can I modify the appearance of a ggplot bar chart to include custom colors for each bar, and what are the best practices for choosing colors in data visualization?</p></li>
@@ -1940,13 +2088,14 @@ TRUE </code></pre>
 <li><p>What are the steps for creating a grouped bar chart in ggplot, and how does this visualization help in comparing multiple categories or groups within a dataset?</p></li>
 </ul>
 </section>
-<section id="summary" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.7</span> Summary</h2>
+<section id="summary" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.9</span> Summary</h2>
 <ul>
 <li>Practice many more examples with the help of ChatGPT and work towards constructing high-quality charts and graphs.</li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
