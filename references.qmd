@@ -1,7 +1,13 @@
 # Recommended Further Reading Materials
 
+Forta, B. (2015, July). Learning SQL [Video]. Pearson / O’Reilly. https://learning.oreilly.com/videos/learning-sql/9780134193700/9780134193700-LSQL_00_Introduction/
+
 Harris, J. K. (2019). Statistics with R: Solving problems using real-world data. SAGE Publications.
 
-James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An introduction to statistical learning: With applications in R. Springer. (Springer Texts in Statistics)
-
 Jaggia, S., & Kelly, A. (2018). Business statistics: Communicating with numbers (3rd ed.). McGraw-Hill Education.
+
+James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An introduction to statistical learning: With applications in R. Springer. Springer Texts in Statistics.
+
+Lutz, M. (2013). *Learning Python* (6th ed.). O'Reilly Media, Inc.
+
+Zhao, A. (2021). *SQL Pocket Guide* (4th ed.). O’Reilly Media. Retrieved from https://learning.oreilly.com/library/view/sql-pocket-guide/9781492090397/ch03.html. 

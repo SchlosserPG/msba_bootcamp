@@ -8,13 +8,13 @@ book:
   author: "Pamela Schlosser"
   date: "11/18/2025"
   chapters:
-    - index.qmd
+    - index.qmd #install before bootcamp
     - introR.qmd
     - descriptives.qmd
     - dataprep.qmd
     - mathnotation.qmd
-    - advmath.qmd
     - pythonsetup.qmd
+    - advmath.qmd
     - datastructures.qmd
     - functions.qmd
     - numpypandas.qmd
