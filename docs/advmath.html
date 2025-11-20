@@ -1,0 +1,2594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Calculus and Linear Algebra – MSBA Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./pythonsetup.html" rel="next">
+<link href="./mathnotation.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-64b801fe9b6685c0a799f7172ecad621.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advmath.html"><span class="chapter-title">Calculus and Linear Algebra</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">MSBA Bootcamp</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Installation Information</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction to R and RStudio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptives.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Descriptive Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataprep.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Visualization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mathnotation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math Notation and Probability in R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./advmath.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Calculus and Linear Algebra</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pythonsetup.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Python and Environment Set up</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datastructures.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Structures</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Files, Functions, and Folders</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./numpypandas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">If Statements and While Loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sql.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction to SQL in Python</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Recommended Further Reading Materials</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-derivative" id="toc-what-is-a-derivative" class="nav-link active" data-scroll-target="#what-is-a-derivative">What Is a Derivative?</a></li>
+  <li><a href="#why-do-we-use-derivatives" id="toc-why-do-we-use-derivatives" class="nav-link" data-scroll-target="#why-do-we-use-derivatives">Why Do We Use Derivatives?</a>
+  <ul class="collapse">
+  <li><a href="#a-simple-function-and-its-slope" id="toc-a-simple-function-and-its-slope" class="nav-link" data-scroll-target="#a-simple-function-and-its-slope">A Simple Function and Its Slope</a></li>
+  </ul></li>
+  <li><a href="#calculating-the-derivative" id="toc-calculating-the-derivative" class="nav-link" data-scroll-target="#calculating-the-derivative">Calculating the Derivative</a></li>
+  <li><a href="#using-r-to-calculate-the-derivative" id="toc-using-r-to-calculate-the-derivative" class="nav-link" data-scroll-target="#using-r-to-calculate-the-derivative">Using R to Calculate the Derivative</a></li>
+  <li><a href="#the-slope-as-a-limit" id="toc-the-slope-as-a-limit" class="nav-link" data-scroll-target="#the-slope-as-a-limit">The Slope as a Limit</a></li>
+  <li><a href="#visualizing-with-secant-line" id="toc-visualizing-with-secant-line" class="nav-link" data-scroll-target="#visualizing-with-secant-line">Visualizing with Secant Line</a></li>
+  <li><a href="#visualizing-with-known-derivative-function" id="toc-visualizing-with-known-derivative-function" class="nav-link" data-scroll-target="#visualizing-with-known-derivative-function">Visualizing with Known Derivative Function</a></li>
+  <li><a href="#tangent-line" id="toc-tangent-line" class="nav-link" data-scroll-target="#tangent-line">Tangent Line</a>
+  <ul class="collapse">
+  <li><a href="#sine-and-its-derivative" id="toc-sine-and-its-derivative" class="nav-link" data-scroll-target="#sine-and-its-derivative">Sine and Its Derivative</a></li>
+  </ul></li>
+  <li><a href="#derivative-of-a-trigonometric-function" id="toc-derivative-of-a-trigonometric-function" class="nav-link" data-scroll-target="#derivative-of-a-trigonometric-function">Derivative of a Trigonometric Function</a></li>
+  <li><a href="#interpreting-the-derivative" id="toc-interpreting-the-derivative" class="nav-link" data-scroll-target="#interpreting-the-derivative">Interpreting the Derivative</a></li>
+  <li><a href="#common-functions-and-their-derivatives" id="toc-common-functions-and-their-derivatives" class="nav-link" data-scroll-target="#common-functions-and-their-derivatives">Common Functions and Their Derivatives</a></li>
+  <li><a href="#trigonometric-and-inverse-trigonometric-derivatives" id="toc-trigonometric-and-inverse-trigonometric-derivatives" class="nav-link" data-scroll-target="#trigonometric-and-inverse-trigonometric-derivatives">Trigonometric and Inverse Trigonometric Derivatives</a>
+  <ul class="collapse">
+  <li><a href="#derivative-rules" id="toc-derivative-rules" class="nav-link" data-scroll-target="#derivative-rules">Derivative Rules</a></li>
+  <li><a href="#chain-rule-variants" id="toc-chain-rule-variants" class="nav-link" data-scroll-target="#chain-rule-variants">Chain Rule Variants</a></li>
+  <li><a href="#from-slopes-to-gradients" id="toc-from-slopes-to-gradients" class="nav-link" data-scroll-target="#from-slopes-to-gradients">From Slopes to Gradients</a></li>
+  <li><a href="#what-is-a-gradient" id="toc-what-is-a-gradient" class="nav-link" data-scroll-target="#what-is-a-gradient">What Is a Gradient?</a></li>
+  <li><a href="#visualizing-gradient-with-a-3d-surface" id="toc-visualizing-gradient-with-a-3d-surface" class="nav-link" data-scroll-target="#visualizing-gradient-with-a-3d-surface">Visualizing Gradient with a 3D Surface</a></li>
+  </ul></li>
+  <li><a href="#gradient-example" id="toc-gradient-example" class="nav-link" data-scroll-target="#gradient-example">Gradient Example</a>
+  <ul class="collapse">
+  <li><a href="#step-1-compute-partial-derivatives" id="toc-step-1-compute-partial-derivatives" class="nav-link" data-scroll-target="#step-1-compute-partial-derivatives">Step 1: Compute Partial Derivatives</a></li>
+  </ul></li>
+  <li><a href="#d-plot" id="toc-d-plot" class="nav-link" data-scroll-target="#d-plot">3d plot</a></li>
+  <li><a href="#probl" id="toc-probl" class="nav-link" data-scroll-target="#probl">probl</a></li>
+  <li><a href="#transpose-a-matrix" id="toc-transpose-a-matrix" class="nav-link" data-scroll-target="#transpose-a-matrix">transpose a matrix</a></li>
+  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors">Vectors</a></li>
+  <li><a href="#why-vectors-matter-in-analytics" id="toc-why-vectors-matter-in-analytics" class="nav-link" data-scroll-target="#why-vectors-matter-in-analytics">Why Vectors Matter in Analytics</a></li>
+  <li><a href="#vector-as-a-directed-segment" id="toc-vector-as-a-directed-segment" class="nav-link" data-scroll-target="#vector-as-a-directed-segment">Vector as a Directed Segment</a></li>
+  <li><a href="#components-of-a-vector" id="toc-components-of-a-vector" class="nav-link" data-scroll-target="#components-of-a-vector">Components of a Vector</a></li>
+  <li><a href="#position-vs.-direction" id="toc-position-vs.-direction" class="nav-link" data-scroll-target="#position-vs.-direction">Position vs.&nbsp;Direction</a></li>
+  <li><a href="#length-of-vector" id="toc-length-of-vector" class="nav-link" data-scroll-target="#length-of-vector">Length of Vector</a></li>
+  <li><a href="#vector-addition" id="toc-vector-addition" class="nav-link" data-scroll-target="#vector-addition">Vector Addition</a></li>
+  <li><a href="#visualizing-vector-addition" id="toc-visualizing-vector-addition" class="nav-link" data-scroll-target="#visualizing-vector-addition">Visualizing Vector Addition</a></li>
+  <li><a href="#vector-multiplication-dot-product" id="toc-vector-multiplication-dot-product" class="nav-link" data-scroll-target="#vector-multiplication-dot-product">Vector Multiplication: Dot Product</a></li>
+  <li><a href="#dot-product-interpretation-and-uses" id="toc-dot-product-interpretation-and-uses" class="nav-link" data-scroll-target="#dot-product-interpretation-and-uses">Dot Product: Interpretation and Uses</a></li>
+  <li><a href="#business-insight" id="toc-business-insight" class="nav-link" data-scroll-target="#business-insight"><strong>Business Insight</strong>:</a></li>
+  <li><a href="#cosine-similarity-definition" id="toc-cosine-similarity-definition" class="nav-link" data-scroll-target="#cosine-similarity-definition">Cosine Similarity: Definition</a></li>
+  <li><a href="#cosine-similarity-applications" id="toc-cosine-similarity-applications" class="nav-link" data-scroll-target="#cosine-similarity-applications">Cosine Similarity: Applications</a></li>
+  <li><a href="#cosine-similarity-simple-example" id="toc-cosine-similarity-simple-example" class="nav-link" data-scroll-target="#cosine-similarity-simple-example">Cosine Similarity: Simple Example</a></li>
+  <li><a href="#from-dot-product-to-cosine-similarity" id="toc-from-dot-product-to-cosine-similarity" class="nav-link" data-scroll-target="#from-dot-product-to-cosine-similarity">From Dot Product to Cosine Similarity</a></li>
+  <li><a href="#cosine-similarity-customer-behavior-example" id="toc-cosine-similarity-customer-behavior-example" class="nav-link" data-scroll-target="#cosine-similarity-customer-behavior-example">Cosine Similarity: Customer Behavior Example</a></li>
+  <li><a href="#introduction-to-gaussian-elimination" id="toc-introduction-to-gaussian-elimination" class="nav-link" data-scroll-target="#introduction-to-gaussian-elimination">Introduction to Gaussian Elimination</a></li>
+  <li><a href="#example-system-of-equations" id="toc-example-system-of-equations" class="nav-link" data-scroll-target="#example-system-of-equations">Example System of Equations</a></li>
+  <li><a href="#step-1-augmented-matrix" id="toc-step-1-augmented-matrix" class="nav-link" data-scroll-target="#step-1-augmented-matrix">Step 1: Augmented Matrix</a></li>
+  <li><a href="#row-operations" id="toc-row-operations" class="nav-link" data-scroll-target="#row-operations">Row Operations</a></li>
+  <li><a href="#step-2-eliminate-below-first-pivot" id="toc-step-2-eliminate-below-first-pivot" class="nav-link" data-scroll-target="#step-2-eliminate-below-first-pivot">Step 2: Eliminate Below First Pivot</a></li>
+  <li><a href="#step-3-eliminate-below-second-pivot" id="toc-step-3-eliminate-below-second-pivot" class="nav-link" data-scroll-target="#step-3-eliminate-below-second-pivot">Step 3: Eliminate Below Second Pivot</a></li>
+  <li><a href="#step-4-back-substitution-and-final-solution" id="toc-step-4-back-substitution-and-final-solution" class="nav-link" data-scroll-target="#step-4-back-substitution-and-final-solution">Step 4: Back-Substitution and Final Solution</a></li>
+  <li><a href="#what-is-a-matrix" id="toc-what-is-a-matrix" class="nav-link" data-scroll-target="#what-is-a-matrix">What Is a Matrix?</a></li>
+  <li><a href="#matrix-notation" id="toc-matrix-notation" class="nav-link" data-scroll-target="#matrix-notation">Matrix Notation</a></li>
+  <li><a href="#types-of-matrices" id="toc-types-of-matrices" class="nav-link" data-scroll-target="#types-of-matrices">Types of Matrices</a></li>
+  <li><a href="#matrix-addition" id="toc-matrix-addition" class="nav-link" data-scroll-target="#matrix-addition">Matrix Addition</a></li>
+  <li><a href="#scalar-multiplication" id="toc-scalar-multiplication" class="nav-link" data-scroll-target="#scalar-multiplication">Scalar Multiplication</a></li>
+  <li><a href="#matrix-multiplication" id="toc-matrix-multiplication" class="nav-link" data-scroll-target="#matrix-multiplication">Matrix Multiplication</a></li>
+  <li><a href="#matrix-multiplication-example" id="toc-matrix-multiplication-example" class="nav-link" data-scroll-target="#matrix-multiplication-example">Matrix Multiplication Example</a></li>
+  <li><a href="#identity-matrix" id="toc-identity-matrix" class="nav-link" data-scroll-target="#identity-matrix">Identity Matrix</a></li>
+  <li><a href="#transpose-of-a-matrix" id="toc-transpose-of-a-matrix" class="nav-link" data-scroll-target="#transpose-of-a-matrix">Transpose of a Matrix</a></li>
+  <li><a href="#matrix-inverse" id="toc-matrix-inverse" class="nav-link" data-scroll-target="#matrix-inverse">Matrix Inverse</a></li>
+  <li><a href="#example-matrix-inverse-22" id="toc-example-matrix-inverse-22" class="nav-link" data-scroll-target="#example-matrix-inverse-22">Example: Matrix Inverse (2×2)</a></li>
+  <li><a href="#what-are-eigenvalues" id="toc-what-are-eigenvalues" class="nav-link" data-scroll-target="#what-are-eigenvalues">What Are Eigenvalues?</a></li>
+  <li><a href="#the-eigenvalue-problem" id="toc-the-eigenvalue-problem" class="nav-link" data-scroll-target="#the-eigenvalue-problem">The Eigenvalue Problem</a></li>
+  <li><a href="#principal-components-analysis" id="toc-principal-components-analysis" class="nav-link" data-scroll-target="#principal-components-analysis">Principal Components Analysis</a></li>
+  <li><a href="#what-pca-tells-us" id="toc-what-pca-tells-us" class="nav-link" data-scroll-target="#what-pca-tells-us">What PCA tells us:</a></li>
+  <li><a href="#identity-matrix-1" id="toc-identity-matrix-1" class="nav-link" data-scroll-target="#identity-matrix-1">Identity Matrix</a></li>
+  <li><a href="#identity-in-multiplication" id="toc-identity-in-multiplication" class="nav-link" data-scroll-target="#identity-in-multiplication">Identity in Multiplication</a></li>
+  <li><a href="#identity-matrix-and-inverse" id="toc-identity-matrix-and-inverse" class="nav-link" data-scroll-target="#identity-matrix-and-inverse">Identity Matrix and Inverse</a></li>
+  <li><a href="#identity-matrix-in-r" id="toc-identity-matrix-in-r" class="nav-link" data-scroll-target="#identity-matrix-in-r">Identity Matrix in R</a>
+  <ul class="collapse">
+  <li><a href="#matrix-multiplication-example-1" id="toc-matrix-multiplication-example-1" class="nav-link" data-scroll-target="#matrix-multiplication-example-1">Matrix Multiplication Example</a></li>
+  </ul></li>
+  <li><a href="#solve" id="toc-solve" class="nav-link" data-scroll-target="#solve">Solve</a></li>
+  <li><a href="#diag" id="toc-diag" class="nav-link" data-scroll-target="#diag">diag</a>
+  <ul class="collapse">
+  <li><a href="#extracting-the-diagonal-from-a-matrix" id="toc-extracting-the-diagonal-from-a-matrix" class="nav-link" data-scroll-target="#extracting-the-diagonal-from-a-matrix">Extracting the Diagonal from a Matrix</a></li>
+  </ul></li>
+  <li><a href="#inverse-with-solve" id="toc-inverse-with-solve" class="nav-link" data-scroll-target="#inverse-with-solve">Inverse with solve</a></li>
+  <li><a href="#singular-value-decomposition-svd" id="toc-singular-value-decomposition-svd" class="nav-link" data-scroll-target="#singular-value-decomposition-svd">Singular Value Decomposition (SVD)</a></li>
+  <li><a href="#why-use-svd" id="toc-why-use-svd" class="nav-link" data-scroll-target="#why-use-svd">Why Use SVD?</a></li>
+  <li><a href="#example-svd-in-r" id="toc-example-svd-in-r" class="nav-link" data-scroll-target="#example-svd-in-r">Example: SVD in R</a></li>
+  <li><a href="#svd-for-low-rank-approximation" id="toc-svd-for-low-rank-approximation" class="nav-link" data-scroll-target="#svd-for-low-rank-approximation">SVD for Low-Rank Approximation</a></li>
+  <li><a href="#uses-of-svd" id="toc-uses-of-svd" class="nav-link" data-scroll-target="#uses-of-svd">Uses of SVD</a></li>
+  <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table">Table</a>
+  <ul class="collapse">
+  <li><a href="#u-contains-the-left-singular-vectors" id="toc-u-contains-the-left-singular-vectors" class="nav-link" data-scroll-target="#u-contains-the-left-singular-vectors">U contains the left singular vectors</a></li>
+  </ul></li>
+  <li><a href="#visualize" id="toc-visualize" class="nav-link" data-scroll-target="#visualize">Visualize</a></li>
+  <li><a href="#image-compression" id="toc-image-compression" class="nav-link" data-scroll-target="#image-compression">Image Compression</a></li>
+  <li><a href="#eigen" id="toc-eigen" class="nav-link" data-scroll-target="#eigen">Eigen</a></li>
+  <li><a href="#pca-example-2" id="toc-pca-example-2" class="nav-link" data-scroll-target="#pca-example-2">PCA Example 2</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Calculus and Linear Algebra</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-a-derivative" class="level1">
+<h1>What Is a Derivative?</h1>
+<ul>
+<li>A <strong>derivative</strong> represents the <strong>rate of change</strong> of a function with respect to a variable.</li>
+<li>It is the <strong>slope</strong> of the tangent line at any point on a function.</li>
+<li>In simple terms: [ = ] Where <span class="math inline">\(\Delta\)</span> = rate of change</li>
+</ul>
+<hr>
+</section>
+<section id="why-do-we-use-derivatives" class="level1">
+<h1>Why Do We Use Derivatives?</h1>
+<ul>
+<li>We use derivatives to:
+<ul>
+<li>Understand <strong>how a quantity changes</strong>.</li>
+<li>Find <strong>maximum</strong> and <strong>minimum</strong> values.</li>
+<li>Model <strong>speed</strong>, <strong>growth</strong>, <strong>decay</strong>, and more.</li>
+</ul></li>
+<li>Examples:
+<ul>
+<li>How fast is revenue increasing?</li>
+<li>When is profit at its maximum?</li>
+</ul></li>
+</ul>
+<hr>
+<section id="a-simple-function-and-its-slope" class="level2">
+<h2 class="anchored" data-anchor-id="a-simple-function-and-its-slope">A Simple Function and Its Slope</h2>
+<ul>
+<li><p>Let’s start with: <span class="math display">\[
+f(x) = x^2
+\]</span></p></li>
+<li><p>We can plot it in R and look at the slope at a few points.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function and its derivative</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>fx <span class="ot">&lt;-</span> <span class="fu">f</span>(df<span class="sc">$</span>x) <span class="co">#applying function x^2</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Key points</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>key_points <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="at">fx =</span> <span class="fu">f</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">2</span>)))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot using ggplot2</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> fx)) <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">2</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> key_points, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> fx), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"f(x)"</span>, <span class="at">title =</span> <span class="st">"Plot of f(x) = x^2"</span>) <span class="sc">+</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="calculating-the-derivative" class="level1">
+<h1>Calculating the Derivative</h1>
+<ul>
+<li>The exact derivative of <span class="math inline">\(f(x) = x^2\)</span> is <span class="math inline">\(f'(x) = 2x\)</span></li>
+<li>The function ( f(x) = x^2 ) is a simple power function where the exponent is 2.</li>
+<li>To find its derivative, we apply the <strong>power rule</strong> from calculus, which states that if ( f(x) = x^n ), then the derivative is ( f’(x) = n x^{n-1} ).</li>
+<li>In this case, ( n = 2 ), so taking the derivative gives ( f’(x) = 2 x^{2-1} = 2x ).</li>
+<li>This derivative represents the slope of the tangent line to the curve at any point ( x ), and it tells us how quickly the value of ( f(x) ) is changing at that point.</li>
+</ul>
+</section>
+<section id="using-r-to-calculate-the-derivative" class="level1">
+<h1>Using R to Calculate the Derivative</h1>
+<ul>
+<li>R can compute symbolic derivatives using expression() and D():</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>expr <span class="ot">&lt;-</span> <span class="fu">expression</span>(x<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">D</span>(expr, <span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2 * x</code></pre>
+</div>
+</div>
+<ul>
+<li>The function <em>D(expr, “x”)</em> then tells R to take the derivative of this expression with respect to ( x ). The output is <em>2 * x</em>, which is the correct symbolic derivative of ( x^2 ) using basic calculus rules.</li>
+</ul>
+</section>
+<section id="the-slope-as-a-limit" class="level1">
+<h1>The Slope as a Limit</h1>
+<ul>
+<li><p>The derivative at a point represents the slope of the tangent line to the function at that point. This slope is found by calculating the <strong>limit of the average rate of change</strong> over a small interval.</p></li>
+<li><p>Specifically, for a function ( f(x) ), the derivative at ( x ) is defined as:</p></li>
+</ul>
+<p><span class="math display">\[f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}\]</span></p>
+<ul>
+<li><p>This expression calculates the slope of the secant line between the points ( x ) and ( x + h ), and as ( h ) approaches zero, the secant line becomes the tangent line. Therefore, the derivative gives the instantaneous rate of change of the function at the point ( x ).</p></li>
+<li><p>From our earlier formula we stated that [ = ]</p>
+<p>Here:</p></li>
+</ul>
+<p>[ h x ] [ f(x + h) - f(x) y ] And therefore, [ = ]</p>
+<ul>
+<li><p>This expression computes the average rate of change of the function over a small interval of length ( h ). As ( h ), this formula becomes the definition of the derivative, giving the instantaneous rate of change of the function at the point ( x ).</p></li>
+<li><p>Let’s approximate the slope of <span class="math inline">\(f(x) = x^2\)</span> at <span class="math inline">\(x = 2\)</span> using a small value of <span class="math inline">\(h\)</span>:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fl">0.0001</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>slope_approx <span class="ot">&lt;-</span> (<span class="fu">f</span>(x <span class="sc">+</span> h) <span class="sc">-</span> <span class="fu">f</span>(x)) <span class="sc">/</span> h</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>slope_approx  <span class="co"># Should be close to 4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.0001</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-with-secant-line" class="level1">
+<h1>Visualizing with Secant Line</h1>
+<ul>
+<li>Why <span class="math inline">\(h\)</span> matters: This graph shows how we estimate the derivative when we don’t yet know the exact derivative. It’s the foundation of the concept of differentiation.</li>
+<li>As we shrink <span class="math inline">\(h\)</span>, the secant line (which connects two points) approaches the tangent line (which touches at just one point).</li>
+<li>As we went up one unit in x, we went up four units in f(x) (i.e., the slope is 4 as measured earlier mathematically).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Choose x and h</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> x0 <span class="sc">+</span> h</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Points on the curve</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>y0 <span class="ot">&lt;-</span> <span class="fu">f</span>(x0)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">f</span>(x1)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Secant slope</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>slope_secant <span class="ot">&lt;-</span> (y1 <span class="sc">-</span> y0) <span class="sc">/</span> (x1 <span class="sc">-</span> x0)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define secant line function</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>secant_line <span class="ot">&lt;-</span> <span class="cf">function</span>(x) slope_secant <span class="sc">*</span> (x <span class="sc">-</span> x0) <span class="sc">+</span> y0</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add secant line to df</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>secant <span class="ot">&lt;-</span> <span class="fu">secant_line</span>(df<span class="sc">$</span>x)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Highlighted points</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>points_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(x0, x1), <span class="at">y =</span> <span class="fu">c</span>(y0, y1))</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fx), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> secant), <span class="at">color =</span> <span class="st">"green"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> points_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> points_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y <span class="sc">+</span> <span class="fl">0.5</span>, </span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"("</span>, <span class="fu">round</span>(x,<span class="dv">1</span>), <span class="st">", "</span>, <span class="fu">round</span>(y,<span class="dv">1</span>), <span class="st">")"</span>))) <span class="sc">+</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Slope as a Limit: Secant Approximates Tangent"</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"f(x) = x²; Secant line between x = 1 and x = 2"</span>,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"f(x)"</span>, <span class="at">x =</span> <span class="st">"x"</span>) <span class="sc">+</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizing-with-known-derivative-function" class="level1">
+<h1>Visualizing with Known Derivative Function</h1>
+<ul>
+<li>Let’s visualize <span class="math inline">\(f(x) = x^2\)</span> and its derivative <span class="math inline">\(f'(x) = 2x\)</span> across a range of values.</li>
+<li>This tells us that for every value of <span class="math inline">\(x\)</span>, we see the value of the slope of the tangent line at that point.</li>
+<li>Because the derivative has already been calculated exactly (analytically) using calculus. For example, for <span class="math inline">\(f(x) = x^2\)</span>, we know <span class="math inline">\(f'(x) = 2x\)</span>, and we just graph both.</li>
+<li>It’s a global look at the whole slope behavior, with no approximation.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>f_prime <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">2</span> <span class="sc">*</span> x</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding to df dataset</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>fpx <span class="ot">&lt;-</span> <span class="fu">f_prime</span>(df<span class="sc">$</span>x) <span class="co">#applying function 2*x</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fx, <span class="at">color =</span> <span class="st">"f(x) = x^2"</span>)) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fpx, <span class="at">color =</span> <span class="st">"f'(x) = 2x"</span>)) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Function and Its Derivative"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Value"</span>, <span class="at">color =</span> <span class="st">"Legend"</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tangent-line" class="level1">
+<h1>Tangent Line</h1>
+<ul>
+<li><p>The tangent line shows the instantaneous rate of change — a more abstract idea, because it involves a limit as the two points get infinitely close. It’s the foundation of derivatives and allows us to talk about velocity at a specific instant, marginal cost, and more.</p></li>
+<li><p>We are essentially shrinking the secant line as the second point moves closer to the first.</p></li>
+<li><p><span class="math inline">\(f(x)=x^2\)</span> at <span class="math inline">\(x=1\)</span></p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Point of tangency</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>y0 <span class="ot">&lt;-</span> <span class="fu">f</span>(x0)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">f_prime</span>(x0)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tangent line function</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>tangent_line <span class="ot">&lt;-</span> <span class="cf">function</span>(x) slope <span class="sc">*</span> (x <span class="sc">-</span> x0) <span class="sc">+</span> y0</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Tangent_line vector to dataset</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>tangent <span class="ot">&lt;-</span> <span class="fu">tangent_line</span>(df<span class="sc">$</span>x)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fx, <span class="at">color =</span> <span class="st">"f(x) = x^2"</span>)) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> tangent, <span class="at">color =</span> <span class="st">"Tangent at x = 1"</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> x0, <span class="at">y =</span> y0), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Tangent Line at x = 1"</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Value"</span>, <span class="at">color =</span> <span class="st">"Legend"</span>) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="sine-and-its-derivative" class="level2">
+<h2 class="anchored" data-anchor-id="sine-and-its-derivative">Sine and Its Derivative</h2>
+<ul>
+<li>We explore the function ( f(x) = (x) ) and its derivative ( f’(x) = (x) ). The derivative of a function tells us the slope of the tangent line at any point. For trigonometric functions like sine, the derivative reveals how the rate of change behaves across the domain.</li>
+</ul>
+<p>[ (x) = (x) ]</p>
+<ul>
+<li>We’ll visualize both ( (x) ) and ( (x) ) to see how the function and its rate of change are related.</li>
+</ul>
+</section>
+</section>
+<section id="derivative-of-a-trigonometric-function" class="level1">
+<h1>Derivative of a Trigonometric Function</h1>
+<ul>
+<li><span class="math inline">\(f(x) = \sin(x) \Rightarrow f'(x) = \cos(x)\)</span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_trig <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span> <span class="sc">*</span> pi, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df_trig<span class="sc">$</span>fx <span class="ot">&lt;-</span> <span class="fu">sin</span>(df_trig<span class="sc">$</span>x)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>df_trig<span class="sc">$</span>fpx <span class="ot">&lt;-</span> <span class="fu">cos</span>(df_trig<span class="sc">$</span>x)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot sin(x) and cos(x)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_trig, <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fx, <span class="at">color =</span> <span class="st">"f(x) = sin(x)"</span>), <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fpx, <span class="at">color =</span> <span class="st">"f'(x) = cos(x)"</span>), <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sine and Its Derivative"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Value"</span>, <span class="at">color =</span> <span class="st">"Legend"</span>) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interpreting-the-derivative" class="level1">
+<h1>Interpreting the Derivative</h1>
+<ul>
+<li><p>Observe that the peaks and valleys of ( (x) ) occur where the slope (i.e., derivative) is zero — which is exactly where ( (x) ) crosses the x-axis.</p>
+<ul>
+<li>When ( (x) ) is <strong>increasing</strong>, ( (x) ) is <strong>positive</strong>.</li>
+<li>When ( (x) ) is <strong>decreasing</strong>, ( (x) ) is <strong>negative</strong>.</li>
+<li>The maximum and minimum of ( (x) ) align with zeros of ( (x) ), reinforcing that a derivative is zero at extrema.</li>
+</ul></li>
+<li><p>This visually confirms that: [ (x) = (x) ]</p></li>
+</ul>
+</section>
+<section id="common-functions-and-their-derivatives" class="level1">
+<h1>Common Functions and Their Derivatives</h1>
+<!-- $$ -->
+<!-- \begin{array}{|l|l|l|} -->
+<!-- \hline -->
+<!-- \textbf{Function Type} & \textbf{Function} & \textbf{Derivative} \\ -->
+<!-- \hline -->
+<!-- \text{Constant} & c & 0 \\ -->
+<!-- \text{Line} & x & 1 \\ -->
+<!--            & ax & a \\ -->
+<!-- \text{Square} & x^2 & 2x \\ -->
+<!-- \text{Square Root} & \sqrt{x} & \frac{1}{2}x^{-1/2} \\ -->
+<!-- \text{Exponential} & e^x & e^x \\ -->
+<!--                   & a^x & \ln(a) \cdot a^x \\ -->
+<!-- \text{Logarithms} & \ln(x) & \frac{1}{x} \\ -->
+<!--                   & \log_a(x) & \frac{1}{x \ln(a)} \\ -->
+<!-- \hline -->
+<!-- \end{array} -->
+<!-- $$ -->
+</section>
+<section id="trigonometric-and-inverse-trigonometric-derivatives" class="level1">
+<h1>Trigonometric and Inverse Trigonometric Derivatives</h1>
+<p>Assume ( x ) is in radians.</p>
+<!-- $$ -->
+<!-- \begin{array}{|l|l|l|} -->
+<!-- \hline -->
+<!-- \textbf{Function Type} & \textbf{Function} & \textbf{Derivative} \\ -->
+<!-- \hline -->
+<!-- \text{Trigonometric} & \sin(x) & \cos(x) \\ -->
+<!--                      & \cos(x) & -\sin(x) \\ -->
+<!--                      & \tan(x) & \sec^2(x) \\ -->
+<!-- \text{Inverse Trig} & \sin^{-1}(x) & \frac{1}{\sqrt{1 - x^2}} \\ -->
+<!--                     & \cos^{-1}(x) & -\frac{1}{\sqrt{1 - x^2}} \\ -->
+<!--                     & \tan^{-1}(x) & \frac{1}{1 + x^2} \\ -->
+<!-- \hline -->
+<!-- \end{array} -->
+<!-- $$ -->
+<section id="derivative-rules" class="level2">
+<h2 class="anchored" data-anchor-id="derivative-rules">Derivative Rules</h2>
+<p><span class="math display">\[
+\begin{array}{|l|l|l|}
+\hline
+\textbf{Rule} &amp; \textbf{Function} &amp; \textbf{Derivative} \\
+\hline
+\text{Multiplication by Constant} &amp; c f &amp; c f' \\
+\text{Power Rule} &amp; x^n &amp; n x^{n-1} \\
+\text{Sum Rule} &amp; f + g &amp; f' + g' \\
+\text{Difference Rule} &amp; f - g &amp; f' - g' \\
+\text{Product Rule} &amp; fg &amp; f g' + f' g \\
+\text{Quotient Rule} &amp; \frac{f}{g} &amp; \frac{f' g - g' f}{g^2} \\
+\text{Reciprocal Rule} &amp; \frac{1}{f} &amp; -\frac{f'}{f^2} \\
+\hline
+\end{array}
+\]</span></p>
+</section>
+<section id="chain-rule-variants" class="level2">
+<h2 class="anchored" data-anchor-id="chain-rule-variants">Chain Rule Variants</h2>
+<!-- $$ -->
+<!-- \begin{array}{|l|l|l|} -->
+<!-- \hline -->
+<!-- \textbf{Form} & \textbf{Expression} & \textbf{Derivative} \\ -->
+<!-- \hline -->
+<!-- \text{Prime Notation} & f(g(x)) & f'(g(x)) \cdot g'(x) \\ -->
+<!-- \text{Composition Notation} & f \circ g & (f' \circ g) \cdot g' \\ -->
+<!-- \text{Leibniz Notation} & \frac{dy}{dx} & \frac{dy}{du} \cdot \frac{du}{dx} \\ -->
+<!-- \hline -->
+<!-- \end{array} -->
+<!-- $$ -->
+</section>
+<section id="from-slopes-to-gradients" class="level2">
+<h2 class="anchored" data-anchor-id="from-slopes-to-gradients">From Slopes to Gradients</h2>
+<ul>
+<li>In one variable, the <strong>slope</strong> of a function tells us how steeply the function increases or decreases: [ = ]</li>
+<li>For example, if ( f(x) = x^2 ), the slope at any point is: [ f’(x) = 2x ]</li>
+<li>This slope tells us the direction and steepness of the curve at a specific point.</li>
+</ul>
+<hr>
+</section>
+<section id="what-is-a-gradient" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-gradient">What Is a Gradient?</h2>
+<ul>
+<li>In multiple dimensions, we generalize the idea of slope to the <strong>gradient</strong>.</li>
+<li>The <strong>gradient</strong> is a vector of partial derivatives:</li>
+</ul>
+<p>[ f(x, y) = ]</p>
+<ul>
+<li>It points in the direction of <strong>steepest ascent</strong> of a function.</li>
+<li>The gradient gives us the rate of change in each direction.</li>
+</ul>
+<hr>
+</section>
+<section id="visualizing-gradient-with-a-3d-surface" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-gradient-with-a-3d-surface">Visualizing Gradient with a 3D Surface</h2>
+<p>Let’s take a simple surface:</p>
+<p>[ f(x, y) = x^2 + y^2 ]</p>
+<ul>
+<li>The gradient is:</li>
+</ul>
+<p>[ f(x, y) = [2x, 2y] ]</p>
+<ul>
+<li>It always points <strong>away from the origin</strong>, where the minimum is.</li>
+<li>This is important because many optimization methods (like gradient descent) use the gradient to <strong>navigate the surface</strong>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">20</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">20</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z =</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">dx =</span> <span class="dv">2</span> <span class="sc">*</span> x,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">dy =</span> <span class="dv">2</span> <span class="sc">*</span> y)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="fu">aes</span>(<span class="at">z =</span> z), <span class="at">bins =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend =</span> x <span class="sc">+</span> dx <span class="sc">*</span> <span class="fl">0.1</span>, <span class="at">yend =</span> y <span class="sc">+</span> dy <span class="sc">*</span> <span class="fl">0.1</span>), </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>)), </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gradient Vectors on f(x, y) = x² + y²"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"x"</span>, <span class="at">y =</span> <span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Gradients are used to — to find minimum cost, maximum profit, or best-fit models.
+<ul>
+<li>In machine learning, we use an algorithm called gradient descent:</li>
+<li>Move in the opposite direction of the gradient to reduce error.</li>
+<li>Repeat until the algorithm converges on a minimum.</li>
+</ul>
+[ <em>{} = </em>{} - f() ]</li>
+<li><span class="math inline">\(\alpha\)</span> is the learning rate, and ( f() ) is the gradient.</li>
+<li>This powers tools like , , and neural networks.</li>
+</ul>
+</section>
+</section>
+<section id="gradient-example" class="level1">
+<h1>Gradient Example</h1>
+<p>( f(x, y) = x^2 + y^2 )</p>
+<p>We are given the function:</p>
+<p>[ f(x, y) = x^2 + y^2 ]</p>
+<section id="step-1-compute-partial-derivatives" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-compute-partial-derivatives">Step 1: Compute Partial Derivatives</h3>
+<p>[ = 2x, = 2y ]</p>
+<p>At the point ( (1, 2) ):</p>
+<p>[ f(1, 2) = = [2, 4] ]</p>
+<p>The gradient vector at this point is:</p>
+<p>[ f(1, 2) = [2, 4] ]</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grid of x and y values</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">20</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">20</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function and gradients</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>z <span class="ot">&lt;-</span> <span class="fu">with</span>(df, x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>dx <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="dv">2</span> <span class="sc">*</span> x)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>dy <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="dv">2</span> <span class="sc">*</span> y)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Highlight point (1, 2)</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>point <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">2</span>, <span class="at">dx =</span> <span class="dv">2</span>, <span class="at">dy =</span> <span class="dv">4</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="fu">aes</span>(<span class="at">z =</span> z), <span class="at">bins =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> point, <span class="fu">aes</span>(<span class="at">xend =</span> x <span class="sc">+</span> dx <span class="sc">*</span> <span class="fl">0.2</span>, <span class="at">yend =</span> y <span class="sc">+</span> dy <span class="sc">*</span> <span class="fl">0.2</span>),</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"inches"</span>)),</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> point, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gradient Vector at (1, 2)"</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Function: f(x, y) = x² + y²"</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"x"</span>, <span class="at">y =</span> <span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="d-plot" class="level1">
+<h1>3d plot</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># # Generate grid</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># grid &lt;- expand.grid(x = seq(-3, 3, length.out = 30),</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                     y = seq(-3, 3, length.out = 30)) %&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#      mutate(z = x^2 + y^2,</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#             dx = 2 * x,</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#             dy = 2 * y)</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># # Highlight point (1, 2)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># pt &lt;- data.frame(x = 1, y = 2, dx = 2, dy = 4)</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create 3D surface using plotly</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># x &lt;- seq(-3, 3, length.out = 50)</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- seq(-3, 3, length.out = 50)</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># z &lt;- outer(x, y, function(x, y) x^2 + y^2)</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_ly(x = ~x, y = ~y, z = ~z) %&gt;%</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">#      add_surface(colorscale = "Viridis") %&gt;%</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">#      layout(title = "3D Surface of f(x, y) = x^2 and y^2",</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co">#             scene = list(xaxis = list(title = "x"),</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">#                          yaxis = list(title = "y"),</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">#                          zaxis = list(title = "f(x, y)")))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function as a symbolic expression</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">expression</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Partial derivative with respect to x</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">D</span>(f, <span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2 * x</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: 2 * x</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Partial derivative with respect to y</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">D</span>(f, <span class="st">"y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2 * y</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Output: 2 * y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="probl" class="level1">
+<h1>probl</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P(X &lt; 78)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">78</span>, <span class="at">mean =</span> <span class="dv">80</span>, <span class="at">sd =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3694413</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#There is approximately a 36.9% chance that a single student scores below 78.</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#P(Xbar &lt; 78) given 4 repititions</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Suppose a school selects a random sample of 4 students and computes their average score on the same exam. #What is the probability that the average score of the 4 students is less than 78?</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">78</span>, <span class="at">mean =</span> <span class="dv">80</span>, <span class="at">sd =</span> <span class="dv">6</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2524925</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#There is approximately a 25.2% chance that the average score of 4 students is below 78.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="transpose-a-matrix" class="level1">
+<h1>transpose a matrix</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="at">byrow=</span>T); A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    2
+[2,]    3    4
+[3,]    5    6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6</code></pre>
+</div>
+</div>
+</section>
+<section id="vectors" class="level1">
+<h1>Vectors</h1>
+<ul>
+<li>In linear algebra, a vector is a quantity that has both magnitude and direction. More formally:
+<ul>
+<li>A vector is an ordered list of numbers, which can represent a point in space or a direction from the origin. Vectors are often written as a column (or row) of numbers and belong to a vector space.</li>
+<li>Vectors can represent data points, directions, velocities, or coefficients in systems of equations, and they are subject to operations like addition, scalar multiplication, and dot or cross products.</li>
+</ul></li>
+</ul>
+</section>
+<section id="why-vectors-matter-in-analytics" class="level1">
+<h1>Why Vectors Matter in Analytics</h1>
+<ul>
+<li>Vectors form the foundation of:
+<ul>
+<li>Linear models</li>
+<li>Gradient-based optimization</li>
+<li>PCA and dimensionality reduction</li>
+</ul></li>
+<li>In business analytics:
+<ul>
+<li>Vectors describe customer profiles, asset returns, feature weights, etc.</li>
+</ul></li>
+<li>Understanding vectors helps in understanding directional change and relationships</li>
+</ul>
+</section>
+<section id="vector-as-a-directed-segment" class="level1">
+<h1>Vector as a Directed Segment</h1>
+<ul>
+<li>Let A and B be two points. A directed line segment from A to B is denoted by:</li>
+</ul>
+<p><span class="math display">\[\overrightarrow{AB}\]</span></p>
+<ul>
+<li>This directed line segment constitutes a vector. If you can move the line segment to another line segment with the same direction and length, they constitute the same vector.</li>
+<li>Notation emphasizes direction, not just location</li>
+</ul>
+</section>
+<section id="components-of-a-vector" class="level1">
+<h1>Components of a Vector</h1>
+<ul>
+<li>Vectors can be expressed as ordered pairs/triples:</li>
+<li>For example, the vector <span class="math display">\[\mathbf{v} = \begin{bmatrix} 2 \\ -1 \\ 3 \end{bmatrix}\]</span></li>
+</ul>
+<p>is a 3-dimensional vector, <span class="math inline">\(\mathbb{R}^3\)</span> where each entry is a component along one of the coordinate axes.</p>
+</section>
+<section id="position-vs.-direction" class="level1">
+<h1>Position vs.&nbsp;Direction</h1>
+<ul>
+<li>Important distinction:
+<ul>
+<li>A point: <span class="math inline">\(B=(2,3)\)</span></li>
+<li>A vector: <span class="math inline">\(\overrightarrow{AB}\)</span></li>
+</ul></li>
+<li>Shows direction and displacement</li>
+<li>Many vectors can have the same direction and magnitude but start from different locations</li>
+</ul>
+</section>
+<section id="length-of-vector" class="level1">
+<h1>Length of Vector</h1>
+<ul>
+<li><p>The length of a vector <span class="math inline">\(\vec{v}\)</span> is denoted by <span class="math inline">\(\|\vec{v}\|\)</span>, or in shorthand by <span class="math inline">\(|\vec{v}|\)</span>. <span class="math display">\[\begin{equation}
+\|\vec{v}\|
+\tag{2.3}
+\end{equation}\]</span></p></li>
+<li><p>The length of a vector is a <strong>scalar</strong>, which just means that it is a regular number, such as <span class="math inline">\(5\)</span> or <span class="math inline">\(3.2\)</span>. The term <em>scalar</em> is used to emphasize that it is just a number and not a vector or a point.</p></li>
+<li><p>Note that the order of the points is important. That is, if you change the order of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, another vector, <span class="math inline">\(\vec{BA}\)</span>, is obtained. It has the <strong>opposite direction</strong>, but the <strong>same length</strong>, i.e., <span class="math display">\[
+\|\vec{AB}\| = \|\vec{BA}\|.
+\]</span></p></li>
+</ul>
+<p>Even <span class="math inline">\(\vec{AA}\)</span> is a vector, which is called the <strong>zero vector</strong>, as shown in the definition below.</p>
+</section>
+<section id="vector-addition" class="level1">
+<h1>Vector Addition</h1>
+<ul>
+<li><p>Vector addition combines two vectors to form a third vector.</p></li>
+<li><p>If <span class="math display">\[
+\vec{u} = \begin{bmatrix} u_1 \\ u_2 \end{bmatrix}, \quad \vec{v} = \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}
+\]</span> then their sum is:<br>
+<span class="math display">\[
+\vec{u} + \vec{v} = \begin{bmatrix} u_1 + v_1 \\ u_2 + v_2 \end{bmatrix}
+\]</span></p></li>
+<li><p>Addition is <strong>component-wise</strong>: each element is added separately.</p></li>
+<li><p>Think of it as moving in one direction, then continuing in another.</p></li>
+</ul>
+</section>
+<section id="visualizing-vector-addition" class="level1">
+<h1>Visualizing Vector Addition</h1>
+<ul>
+<li><p>Graphically, vectors are added using the <strong>tip-to-tail method</strong>:</p>
+<ul>
+<li>Place the tail of <span class="math inline">\(\vec{v}\)</span> at the tip of <span class="math inline">\(\vec{u}\)</span></li>
+<li>The resulting vector <span class="math inline">\(\vec{u} + \vec{v}\)</span> goes from the tail of <span class="math inline">\(\vec{u}\)</span> to the tip of <span class="math inline">\(\vec{v}\)</span></li>
+</ul></li>
+<li><p>Example:<br>
+<span class="math display">\[
+\vec{u} = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad \vec{v} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}
+\]</span> <span class="math display">\[
+\vec{u} + \vec{v} = \begin{bmatrix} 3 \\ 4 \end{bmatrix}
+\]</span></p></li>
+<li><p>Vector addition is <strong>commutative</strong>: <span class="math display">\[
+\vec{u} + \vec{v} = \vec{v} + \vec{u}
+\]</span></p></li>
+</ul>
+</section>
+<section id="vector-multiplication-dot-product" class="level1">
+<h1>Vector Multiplication: Dot Product</h1>
+<ul>
+<li><p>The <strong>dot product</strong> (or scalar product) of two vectors <span class="math inline">\(\vec{u}\)</span> and <span class="math inline">\(\vec{v}\)</span> is: <span class="math display">\[
+\vec{u} \cdot \vec{v} = u_1v_1 + u_2v_2 + \dots + u_nv_n
+\]</span></p></li>
+<li><p>For example, if<br>
+<span class="math display">\[
+\vec{u} = \begin{bmatrix} 2 \\ 3 \end{bmatrix}, \quad \vec{v} = \begin{bmatrix} 4 \\ 1 \end{bmatrix}
+\]</span> then:<br>
+<span class="math display">\[
+\vec{u} \cdot \vec{v} = 2 \cdot 4 + 3 \cdot 1 = 8 + 3 = 11
+\]</span></p></li>
+<li><p>The result is a <strong>scalar</strong>, not a vector.</p></li>
+</ul>
+</section>
+<section id="dot-product-interpretation-and-uses" class="level1">
+<h1>Dot Product: Interpretation and Uses</h1>
+<ul>
+<li><p>The dot product also equals: <span class="math display">\[
+\vec{u} \cdot \vec{v} = \|\vec{u}\| \, \|\vec{v}\| \cos(\theta)
+\]</span> where <span class="math inline">\(\theta\)</span> is the angle between the vectors.</p></li>
+<li><p>Interpretation:</p>
+<ul>
+<li>If <span class="math inline">\(\theta = 0^\circ\)</span> (vectors in same direction), <span class="math inline">\(\vec{u} \cdot \vec{v}\)</span> is <strong>positive and maximal</strong></li>
+<li>If <span class="math inline">\(\theta = 90^\circ\)</span> (vectors are perpendicular), <span class="math inline">\(\vec{u} \cdot \vec{v} = 0\)</span></li>
+<li>If <span class="math inline">\(\theta = 180^\circ\)</span> (opposite directions), <span class="math inline">\(\vec{u} \cdot \vec{v}\)</span> is <strong>negative</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="business-insight" class="level1">
+<h1><strong>Business Insight</strong>:</h1>
+<ul>
+<li>Dot product is used in projections, cosine similarity, and determining alignment between data vectors (e.g., in recommendation systems).</li>
+</ul>
+</section>
+<section id="cosine-similarity-definition" class="level1">
+<h1>Cosine Similarity: Definition</h1>
+<ul>
+<li><p><strong>Cosine similarity</strong> measures the <strong>cosine of the angle</strong> between two non-zero vectors.</p></li>
+<li><p>It captures <strong>directional similarity</strong>, regardless of magnitude.</p></li>
+<li><p>The formula is: <span class="math display">\[
+\text{Cosine Similarity} = \cos(\theta) = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \, \|\vec{v}\|}
+\]</span></p></li>
+<li><p>Where:</p>
+<ul>
+<li><span class="math inline">\(\vec{u} \cdot \vec{v}\)</span> is the <strong>dot product</strong></li>
+<li><span class="math inline">\(\|\vec{u}\|\)</span> and <span class="math inline">\(\|\vec{v}\|\)</span> are the <strong>magnitudes (lengths)</strong> of the vectors</li>
+<li><span class="math inline">\(\theta\)</span> is the <strong>angle</strong> between the vectors</li>
+</ul></li>
+<li><p>Result is a value between <strong>-1 and 1</strong>:</p>
+<ul>
+<li><strong>1</strong>: same direction (high similarity)</li>
+<li><strong>0</strong>: orthogonal (no similarity)</li>
+<li><strong>-1</strong>: opposite direction</li>
+</ul></li>
+</ul>
+</section>
+<section id="cosine-similarity-applications" class="level1">
+<h1>Cosine Similarity: Applications</h1>
+<ul>
+<li><p><strong>Why use it?</strong><br>
+Magnitude may not matter — just the <strong>orientation</strong> (pattern) matters.</p></li>
+<li><p><strong>Common uses:</strong></p>
+<ul>
+<li><strong>Text mining / NLP</strong>: compare documents represented as word vectors (TF-IDF)</li>
+<li><strong>Recommendation systems</strong>: match user preferences or item features</li>
+<li><strong>Clustering</strong>: group similar observations based on direction in high-dimensional space</li>
+</ul></li>
+<li><p><strong>Example:</strong> Two customers have these purchase patterns: <span class="math display">\[
+\vec{u} = \begin{bmatrix} 3 &amp; 0 &amp; 1 \end{bmatrix}, \quad
+\vec{v} = \begin{bmatrix} 6 &amp; 0 &amp; 2 \end{bmatrix}
+\]</span> Then: <span class="math display">\[
+\cos(\theta) = \frac{(3)(6) + (0)(0) + (1)(2)}{\sqrt{3^2 + 0^2 + 1^2} \cdot \sqrt{6^2 + 0^2 + 2^2}} = \frac{20}{\sqrt{10} \cdot \sqrt{40}} \approx 1
+\]</span> → Nearly identical pattern of behavior, though one bought more.</p></li>
+<li><p>Cosine similarity focuses on <strong>behavioral pattern</strong>, not quantity.</p></li>
+</ul>
+</section>
+<section id="cosine-similarity-simple-example" class="level1">
+<h1>Cosine Similarity: Simple Example</h1>
+<ul>
+<li>Let two vectors be: <span class="math display">\[
+\vec{u} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}, \quad
+\vec{v} = \begin{bmatrix} 2 \\ 3 \end{bmatrix}
+\]</span></li>
+</ul>
+<p><strong>Step 1: Compute the dot product</strong> <span class="math display">\[
+\vec{u} \cdot \vec{v} = 1 \cdot 2 + 2 \cdot 3 = 2 + 6 = 8
+\]</span></p>
+<p><strong>Step 2: Compute the magnitudes</strong> <span class="math display">\[
+\|\vec{u}\| = \sqrt{1^2 + 2^2} = \sqrt{5}, \quad
+\|\vec{v}\| = \sqrt{2^2 + 3^2} = \sqrt{13}
+\]</span></p>
+<p><strong>Step 3: Plug into the cosine similarity formula</strong> <span class="math display">\[
+\cos(\theta) = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \cdot \|\vec{v}\|} =
+\frac{8}{\sqrt{5} \cdot \sqrt{13}} \approx \frac{8}{8.062} \approx 0.993
+\]</span></p>
+<ul>
+<li>The result is <strong>close to 1</strong>, indicating that the vectors point in <strong>almost the same direction</strong>.</li>
+</ul>
+</section>
+<section id="from-dot-product-to-cosine-similarity" class="level1">
+<h1>From Dot Product to Cosine Similarity</h1>
+<ul>
+<li><p>The <strong>dot product</strong> of two vectors is: <span class="math display">\[
+\vec{u} \cdot \vec{v} = u_1v_1 + u_2v_2 + \dots + u_nv_n
+\]</span></p></li>
+<li><p>But the dot product also tells us something <strong>geometric</strong>: <span class="math display">\[
+\vec{u} \cdot \vec{v} = \|\vec{u}\| \, \|\vec{v}\| \cos(\theta)
+\]</span> where:</p>
+<ul>
+<li><span class="math inline">\(\|\vec{u}\|\)</span> and <span class="math inline">\(\|\vec{v}\|\)</span> are the <strong>lengths</strong> (magnitudes) of the vectors</li>
+<li><span class="math inline">\(\theta\)</span> is the <strong>angle</strong> between them</li>
+</ul></li>
+<li><p>Rearranging this gives us the formula for <strong>cosine similarity</strong>: <span class="math display">\[
+\cos(\theta) = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \cdot \|\vec{v}\|}
+\]</span></p></li>
+<li><p><strong>Cosine similarity</strong> focuses on <strong>direction</strong>, while the dot product combines both direction and magnitude.</p></li>
+</ul>
+</section>
+<section id="cosine-similarity-customer-behavior-example" class="level1">
+<h1>Cosine Similarity: Customer Behavior Example</h1>
+<p>Let two customers have these purchase vectors: <span class="math display">\[
+\vec{u} = \begin{bmatrix} 3 \\ 0 \\ 1 \end{bmatrix}, \quad
+\vec{v} = \begin{bmatrix} 6 \\ 0 \\ 2 \end{bmatrix}
+\]</span></p>
+<p><strong>Step 1: Dot Product</strong> <span class="math display">\[
+\vec{u} \cdot \vec{v} = (3)(6) + (0)(0) + (1)(2) = 18 + 0 + 2 = 20
+\]</span></p>
+<p><strong>Step 2: Magnitudes</strong> <span class="math display">\[
+\|\vec{u}\| = \sqrt{3^2 + 0^2 + 1^2} = \sqrt{10}, \quad
+\|\vec{v}\| = \sqrt{6^2 + 0^2 + 2^2} = \sqrt{40}
+\]</span></p>
+<p><strong>Step 3: Cosine Similarity</strong> <span class="math display">\[
+\cos(\theta) = \frac{20}{\sqrt{10} \cdot \sqrt{40}} = \frac{20}{\sqrt{400}} = \frac{20}{20} = 1
+\]</span></p>
+<ul>
+<li>*Interpretation<strong>:<br>
+Although one customer purchased more, the cosine similarity is </strong>1<strong>, indicating their </strong>purchase patterns are directionally identical**.</li>
+</ul>
+</section>
+<section id="introduction-to-gaussian-elimination" class="level1">
+<h1>Introduction to Gaussian Elimination</h1>
+<ul>
+<li><strong>Gaussian Elimination</strong> is a method for solving systems of linear equations.</li>
+<li>The process converts a system into a simpler <strong>row echelon form</strong> using:
+<ul>
+<li><strong>Row swapping</strong></li>
+<li><strong>Scaling rows</strong></li>
+<li><strong>Row replacement</strong></li>
+</ul></li>
+<li>Final goal: solve the system using <strong>back-substitution</strong>.</li>
+</ul>
+</section>
+<section id="example-system-of-equations" class="level1">
+<h1>Example System of Equations</h1>
+<p>We want to solve the system: <span class="math display">\[
+\begin{aligned}
+x + 2y + z &amp;= 6 \\
+2x + 3y + 3z &amp;= 14 \\
+x + y + z &amp;= 8
+\end{aligned}
+\]</span></p>
+<p>We’ll use <strong>Gaussian Elimination</strong> to find the solution.</p>
+</section>
+<section id="step-1-augmented-matrix" class="level1">
+<h1>Step 1: Augmented Matrix</h1>
+<p>Write the system as an augmented matrix: <span class="math display">\[
+\left[
+\begin{array}{ccc|c}
+1 &amp; 2 &amp; 1 &amp; 6 \\
+2 &amp; 3 &amp; 3 &amp; 14 \\
+1 &amp; 1 &amp; 1 &amp; 8
+\end{array}
+\right]
+\]</span></p>
+<p>Our goal is to use row operations to make this into <strong>row echelon form</strong>.</p>
+</section>
+<section id="row-operations" class="level1">
+<h1>Row Operations</h1>
+<p>There are 3 valid operations in Gaussian Elimination:</p>
+<ol type="1">
+<li>Swap two rows: <span class="math inline">\(R_i \leftrightarrow R_j\)</span></li>
+<li>Multiply a row by a scalar: <span class="math inline">\(k \cdot R_i\)</span></li>
+<li>Replace a row: <span class="math inline">\(R_j \leftarrow R_j - k \cdot R_i\)</span></li>
+</ol>
+<p>These operations do <strong>not change the solution</strong> of the system.</p>
+</section>
+<section id="step-2-eliminate-below-first-pivot" class="level1">
+<h1>Step 2: Eliminate Below First Pivot</h1>
+<p>Start with pivot in row 1, column 1 (value = 1):</p>
+<p>Use <span class="math inline">\(R_2 \leftarrow R_2 - 2 \cdot R_1\)</span> and <span class="math inline">\(R_3 \leftarrow R_3 - R_1\)</span>: <span class="math display">\[
+\left[
+\begin{array}{ccc|c}
+1 &amp; 2 &amp; 1 &amp; 6 \\
+0 &amp; -1 &amp; 1 &amp; 2 \\
+0 &amp; -1 &amp; 0 &amp; 2
+\end{array}
+\right]
+\]</span></p>
+</section>
+<section id="step-3-eliminate-below-second-pivot" class="level1">
+<h1>Step 3: Eliminate Below Second Pivot</h1>
+<p>Use the second pivot in row 2, column 2 (value = -1):</p>
+<p>Make <span class="math inline">\(R_3 \leftarrow R_3 - R_2\)</span>: <span class="math display">\[
+\left[
+\begin{array}{ccc|c}
+1 &amp; 2 &amp; 1 &amp; 6 \\
+0 &amp; -1 &amp; 1 &amp; 2 \\
+0 &amp; 0 &amp; -1 &amp; 0
+\end{array}
+\right]
+\]</span></p>
+<ul>
+<li>Now we have <strong>row echelon form</strong>.</li>
+</ul>
+</section>
+<section id="step-4-back-substitution-and-final-solution" class="level1">
+<h1>Step 4: Back-Substitution and Final Solution</h1>
+<ul>
+<li><p>Start from the bottom row: <span class="math display">\[
+-1z = 0 \Rightarrow z = 0
+\]</span></p></li>
+<li><p>Move to the second row: <span class="math display">\[
+-1y + 1z = 2 \Rightarrow -y = 2 \Rightarrow y = -2
+\]</span></p></li>
+<li><p>Top row: <span class="math display">\[
+x + 2y + z = 6 \Rightarrow x + 2(-2) + 0 = 6 \Rightarrow x = 10
+\]</span></p></li>
+<li><p>The final solution to the system is: <span class="math display">\[
+x = 10, \quad y = -2, \quad z = 0
+\]</span></p></li>
+</ul>
+</section>
+<section id="what-is-a-matrix" class="level1">
+<h1>What Is a Matrix?</h1>
+<ul>
+<li><p>A <strong>matrix</strong> is a rectangular array of numbers arranged in <strong>rows</strong> and <strong>columns</strong>.</p></li>
+<li><p>Example: <span class="math display">\[
+A = \begin{bmatrix}
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6
+\end{bmatrix}
+\]</span></p></li>
+<li><p>This is a <strong>2 × 3 matrix</strong> (2 rows, 3 columns).</p></li>
+<li><p>Matrices are used to represent systems, datasets, and transformations.</p></li>
+</ul>
+</section>
+<section id="matrix-notation" class="level1">
+<h1>Matrix Notation</h1>
+<ul>
+<li><p>A matrix is typically denoted by uppercase letters (e.g., <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(M\)</span>).</p></li>
+<li><p>The element in the <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column is written as <span class="math inline">\(a_{ij}\)</span>.</p></li>
+<li><p>For matrix <span class="math inline">\(A\)</span>: <span class="math display">\[
+A = \begin{bmatrix}
+a_{11} &amp; a_{12} \\
+a_{21} &amp; a_{22}
+\end{bmatrix}
+\]</span></p></li>
+<li><p>Dimensions are often written as <span class="math inline">\(m \times n\)</span>, where:</p>
+<ul>
+<li><span class="math inline">\(m\)</span> = number of rows</li>
+<li><span class="math inline">\(n\)</span> = number of columns</li>
+</ul></li>
+</ul>
+</section>
+<section id="types-of-matrices" class="level1">
+<h1>Types of Matrices</h1>
+<ul>
+<li><strong>Square matrix</strong>: same number of rows and columns</li>
+<li><strong>Zero matrix</strong>: all elements are zero</li>
+<li><strong>Identity matrix</strong>: diagonal of 1s, zeros elsewhere</li>
+<li><strong>Diagonal matrix</strong>: only diagonal elements may be non-zero</li>
+<li><strong>Column matrix</strong>: only one column</li>
+<li><strong>Row matrix</strong>: only one row</li>
+</ul>
+</section>
+<section id="matrix-addition" class="level1">
+<h1>Matrix Addition</h1>
+<ul>
+<li><p>Two matrices can be added if they have the <strong>same dimensions</strong>.</p></li>
+<li><p>Example: <span class="math display">\[
+A = \begin{bmatrix}
+1 &amp; 2 \\
+3 &amp; 4
+\end{bmatrix}, \quad
+B = \begin{bmatrix}
+5 &amp; 6 \\
+7 &amp; 8
+\end{bmatrix}
+\]</span> <span class="math display">\[
+A + B = \begin{bmatrix}
+6 &amp; 8 \\
+10 &amp; 12
+\end{bmatrix}
+\]</span></p></li>
+</ul>
+</section>
+<section id="scalar-multiplication" class="level1">
+<h1>Scalar Multiplication</h1>
+<ul>
+<li><p>Multiply each element of a matrix by a scalar (single number).</p></li>
+<li><p>Example: <span class="math display">\[
+3 \cdot \begin{bmatrix}
+2 &amp; -1 \\
+0 &amp; 4
+\end{bmatrix}
+= \begin{bmatrix}
+6 &amp; -3 \\
+0 &amp; 12
+\end{bmatrix}
+\]</span></p></li>
+</ul>
+</section>
+<section id="matrix-multiplication" class="level1">
+<h1>Matrix Multiplication</h1>
+<ul>
+<li><p>You can multiply <span class="math inline">\(A \cdot B\)</span> if <strong>columns of A = rows of B</strong></p></li>
+<li><p>If <span class="math inline">\(A\)</span> is <span class="math inline">\(m \times n\)</span> and <span class="math inline">\(B\)</span> is <span class="math inline">\(n \times p\)</span>, the result is <span class="math inline">\(m \times p\)</span></p></li>
+<li><p>Multiply <strong>rows of A</strong> by <strong>columns of B</strong></p></li>
+<li><p>Example: <span class="math display">\[
+\begin{bmatrix}
+1 &amp; 2 \\
+3 &amp; 4
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+5 \\
+6
+\end{bmatrix}
+=
+\begin{bmatrix}
+17 \\
+39
+\end{bmatrix}
+\]</span></p></li>
+</ul>
+</section>
+<section id="matrix-multiplication-example" class="level1">
+<h1>Matrix Multiplication Example</h1>
+<p>Let: <span class="math display">\[
+A = \begin{bmatrix} 2 &amp; 1 \\ 0 &amp; 3 \end{bmatrix}, \quad
+B = \begin{bmatrix} 4 \\ 5 \end{bmatrix}
+\]</span></p>
+<p>Matrix <span class="math inline">\(A\)</span> is <span class="math inline">\(2 \times 2\)</span> and matrix <span class="math inline">\(B\)</span> is <span class="math inline">\(2 \times 1\)</span> → result is <span class="math inline">\(2 \times 1\)</span></p>
+<p><strong>Step 1: Multiply rows of A by the column of B</strong></p>
+<p>Top row: <span class="math display">\[
+(2)(4) + (1)(5) = 8 + 5 = 13
+\]</span></p>
+<p>Bottom row: <span class="math display">\[
+(0)(4) + (3)(5) = 0 + 15 = 15
+\]</span></p>
+<p><strong>Final result:</strong> <span class="math display">\[
+AB = \begin{bmatrix} 13 \\ 15 \end{bmatrix}
+\]</span></p>
+<ul>
+<li>his shows how a <strong>2×2</strong> matrix multiplied by a <strong>2×1</strong> column vector gives a <strong>2×1</strong> result.</li>
+</ul>
+</section>
+<section id="identity-matrix" class="level1">
+<h1>Identity Matrix</h1>
+<ul>
+<li><p>The identity matrix <span class="math inline">\(I\)</span> is a <strong>square matrix</strong> with 1s on the diagonal: <span class="math display">\[
+I = \begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; 1
+\end{bmatrix}
+\]</span></p></li>
+<li><p>For any matrix <span class="math inline">\(A\)</span> of compatible size: <span class="math display">\[
+AI = IA = A
+\]</span></p></li>
+<li><p>Acts like multiplying by 1 for matrices.</p></li>
+</ul>
+</section>
+<section id="transpose-of-a-matrix" class="level1">
+<h1>Transpose of a Matrix</h1>
+<ul>
+<li><p>The <strong>transpose</strong> of a matrix <span class="math inline">\(A\)</span>, denoted <span class="math inline">\(A^T\)</span>, flips rows and columns.</p></li>
+<li><p>Example: <span class="math display">\[
+A = \begin{bmatrix}
+1 &amp; 2 \\
+3 &amp; 4 \\
+5 &amp; 6
+\end{bmatrix} \quad
+A^T = \begin{bmatrix}
+1 &amp; 3 &amp; 5 \\
+2 &amp; 4 &amp; 6
+\end{bmatrix}
+\]</span></p></li>
+<li><p>Useful in solving equations and for symmetric matrices.</p></li>
+</ul>
+</section>
+<section id="matrix-inverse" class="level1">
+<h1>Matrix Inverse</h1>
+<ul>
+<li><p>If <span class="math inline">\(A\)</span> is a <strong>square matrix</strong>, its <strong>inverse</strong> <span class="math inline">\(A^{-1}\)</span> satisfies: <span class="math display">\[
+AA^{-1} = A^{-1}A = I
+\]</span></p></li>
+<li><p>Not all matrices are invertible (must be <strong>nonsingular</strong> with non-zero determinant).</p></li>
+<li><p>Used to solve systems:<br>
+<span class="math display">\[
+AX = B \Rightarrow X = A^{-1}B
+\]</span></p></li>
+</ul>
+</section>
+<section id="example-matrix-inverse-22" class="level1">
+<h1>Example: Matrix Inverse (2×2)</h1>
+<p>Let: <span class="math display">\[
+A = \begin{bmatrix} 4 &amp; 7 \\ 2 &amp; 6 \end{bmatrix}
+\]</span></p>
+<p>We use the formula for the inverse of a 2×2 matrix: <span class="math display">\[
+A^{-1} = \frac{1}{ad - bc} \begin{bmatrix} d &amp; -b \\ -c &amp; a \end{bmatrix}
+\]</span></p>
+<p><strong>Step 1: Compute the determinant</strong> <span class="math display">\[
+\det(A) = (4)(6) - (7)(2) = 24 - 14 = 10
+\]</span></p>
+<p><strong>Step 2: Plug into the inverse formula</strong> <span class="math display">\[
+A^{-1} = \frac{1}{10} \begin{bmatrix} 6 &amp; -7 \\ -2 &amp; 4 \end{bmatrix}
+= \begin{bmatrix} 0.6 &amp; -0.7 \\ -0.2 &amp; 0.4 \end{bmatrix}
+\]</span></p>
+<ul>
+<li>This is the inverse of matrix ( A ).</li>
+</ul>
+</section>
+<section id="what-are-eigenvalues" class="level1">
+<h1>What Are Eigenvalues?</h1>
+<ul>
+<li><p>Eigenvalues arise from solving: <span class="math display">\[
+A\vec{v} = \lambda\vec{v}
+\]</span></p></li>
+<li><p>Where:</p>
+<ul>
+<li>( A ) is a square matrix</li>
+<li>( ) is a nonzero vector (eigenvector)</li>
+<li>( ) is the <strong>eigenvalue</strong></li>
+</ul></li>
+<li><p>The equation means:<br>
+Applying ( A ) to ( ) <strong>scales</strong> it, without changing direction.</p></li>
+</ul>
+</section>
+<section id="the-eigenvalue-problem" class="level1">
+<h1>The Eigenvalue Problem</h1>
+<p>To find eigenvalues, we solve: <span class="math display">\[
+A\vec{v} = \lambda\vec{v}
+\Rightarrow (A - \lambda I)\vec{v} = 0
+\]</span></p>
+<p>This is a <strong>homogeneous system</strong> that has a nontrivial solution only when: <span class="math display">\[
+\det(A - \lambda I) = 0
+\]</span></p>
+<p>This is called the <strong>characteristic equation</strong>.</p>
+<!-- # Example Matrix -->
+<!-- Let: -->
+<!-- $$ -->
+<!-- A = \begin{bmatrix} 4 & 2 \\ 1 & 3 \end{bmatrix} -->
+<!-- $$ -->
+<!-- We want to find the eigenvalues of matrix \( A \) using the characteristic equation. -->
+<!-- # Step 1: Subtract $\lambda I$ -->
+<!-- * Form $A - \lambda I$ -->
+<!-- # Step 2: Compute the Determinant -->
+<!-- Set up the characteristic equation: -->
+<!-- $$ -->
+<!-- \det(A - \lambda I) =  -->
+<!-- (4 - \lambda)(3 - \lambda) - (2)(1) = 0 -->
+<!-- $$ -->
+<!-- Simplify: -->
+<!-- $$ -->
+<!-- (4 - \lambda)(3 - \lambda) - 2 = \lambda^2 - 7\lambda + 10 = 0 -->
+<!-- $$ -->
+<!-- # Step 3: Solve the Characteristic Polynomial -->
+<!-- Solve: -->
+<!-- $$ -->
+<!-- \lambda^2 - 7\lambda + 10 = 0 -->
+<!-- $$ -->
+<!-- Factor: -->
+<!-- $$ -->
+<!-- (\lambda - 5)(\lambda - 2) = 0 -->
+<!-- $$ -->
+<!-- * So, the eigenvalues are: -->
+<!-- $$ -->
+<!-- \lambda_1 = 5, \quad \lambda_2 = 2 -->
+<!-- $$ -->
+<!-- # Step 4: Find Eigenvectors (λ = 5) -->
+<!-- Plug into \( (A - 5I)\vec{v} = 0 \): -->
+<!-- $$ -->
+<!-- A - 5I = \begin{bmatrix} -1 & 2 \\ 1 & -2 \end{bmatrix} -->
+<!-- $$ -->
+<!-- Solve: -->
+<!-- $$ -->
+<!-- \begin{bmatrix} -1 & 2 \\ 1 & -2 \end{bmatrix} -->
+<!-- \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} -->
+<!-- $$ -->
+<!-- Solution: \( y = \frac{1}{2}x \) -->
+<!-- → Eigenvector:   -->
+<!-- $$ -->
+<!-- \vec{v}_1 = \begin{bmatrix} 2 \\ 1 \end{bmatrix} -->
+<!-- $$ -->
+<!-- # Step 5: Find Eigenvectors (λ = 2) -->
+<!-- Plug into \( (A - 2I)\vec{v} = 0 \): -->
+<!-- $$ -->
+<!-- A - 2I = \begin{bmatrix} 2 & 2 \\ 1 & 1 \end{bmatrix} -->
+<!-- $$ -->
+<!-- Solve: -->
+<!-- $$ -->
+<!-- \begin{bmatrix} 2 & 2 \\ 1 & 1 \end{bmatrix} -->
+<!-- \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} -->
+<!-- $$ -->
+<!-- Solution: \( y = -x \) -->
+<!-- → Eigenvector: -->
+<!-- $$ -->
+<!-- \vec{v}_2 = \begin{bmatrix} 1 \\ -1 \end{bmatrix} -->
+<!-- $$ -->
+<!-- # Final Result -->
+<!-- Matrix: -->
+<!-- $$ -->
+<!-- A = \begin{bmatrix} 4 & 2 \\ 1 & 3 \end{bmatrix} -->
+<!-- $$ -->
+<!-- **Eigenvalues**: -->
+<!-- $$ -->
+<!-- \lambda_1 = 5, \quad \lambda_2 = 2 -->
+<!-- $$ -->
+<!-- **Corresponding Eigenvectors**: -->
+<!-- $$ -->
+<!-- \vec{v}_1 = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad -->
+<!-- \vec{v}_2 = \begin{bmatrix} 1 \\ -1 \end{bmatrix} -->
+<!-- $$ -->
+<!-- # Why Are Eigenvalues Important? -->
+<!-- * **PCA**: directions of max variance (eigenvectors of covariance matrix) -->
+<!-- * **Markov chains**: long-run behavior from eigenvalues -->
+<!-- * **Differential equations**: stability and behavior -->
+<!-- * **Systems of equations**: decoupling and simplification -->
+<!-- * Eigenvalues reveal **fundamental structure** in data and models. -->
+</section>
+<section id="principal-components-analysis" class="level1">
+<h1>Principal Components Analysis</h1>
+<ul>
+<li>PCA transforms the original variables into orthogonal (uncorrelated) principal components. These are linear combinations of the original features, ranked by the amount of variance they capture.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"USArrests"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale the data (important for PCA!)</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>usarrests_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(USArrests)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Run PCA</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(usarrests_scaled)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># View the proportion of variance explained</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                          PC1    PC2     PC3     PC4
+Standard deviation     1.5749 0.9949 0.59713 0.41645
+Proportion of Variance 0.6201 0.2474 0.08914 0.04336
+Cumulative Proportion  0.6201 0.8675 0.95664 1.00000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scree plot (visualizing how much variance each PC explains)</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pca_result, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Scree Plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Biplot to visualize both the variables and the observations</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pca_result, <span class="at">scale =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="what-pca-tells-us" class="level1">
+<h1>What PCA tells us:</h1>
+<ul>
+<li>The first principal component (PC1) often captures the contrast between high and low crime states.</li>
+<li>The second component (PC2) might capture differences in specific crimes (e.g., murder vs rape).</li>
+<li>Biplot shows which states cluster together and how each variable contributes to the components.</li>
+</ul>
+</section>
+<section id="identity-matrix-1" class="level1">
+<h1>Identity Matrix</h1>
+<ul>
+<li>An <strong>identity matrix</strong> is a <strong>square matrix</strong> with:
+<ul>
+<li>All <strong>diagonal elements = 1</strong></li>
+<li>All <strong>off-diagonal elements = 0</strong></li>
+</ul></li>
+</ul>
+[ I =
+<span class="math display">\[\begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}\]</span>
+<p>]</p>
+<ul>
+<li>Denoted by ( I_n ) for an ( n n ) matrix</li>
+</ul>
+</section>
+<section id="identity-in-multiplication" class="level1">
+<h1>Identity in Multiplication</h1>
+<ul>
+<li>For any ( n n ) matrix ( A ):</li>
+</ul>
+<p>[ A I_n = I_n A = A ]</p>
+<ul>
+<li><p>Identity matrix acts like the number <strong>1</strong> in regular multiplication</p></li>
+<li><p>Example:</p></li>
+</ul>
+[
+<span class="math display">\[\begin{bmatrix}
+2 &amp; 3 \\
+4 &amp; 5
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; 1
+\end{bmatrix}\]</span>
+=
+<span class="math display">\[\begin{bmatrix}
+2 &amp; 3 \\
+4 &amp; 5
+\end{bmatrix}\]</span>
+<p>]</p>
+</section>
+<section id="identity-matrix-and-inverse" class="level1">
+<h1>Identity Matrix and Inverse</h1>
+<ul>
+<li>The <strong>inverse</strong> of a matrix ( A ), if it exists, is a matrix ( A^{-1} ) such that:</li>
+</ul>
+<p>[ A A^{-1} = A^{-1} A = I ]</p>
+<ul>
+<li><p>Identity matrix is the <strong>result</strong> of multiplying a matrix by its inverse</p></li>
+<li><p>Only <strong>square, non-singular</strong> matrices have inverses</p></li>
+</ul>
+</section>
+<section id="identity-matrix-in-r" class="level1">
+<h1>Identity Matrix in R</h1>
+<p>You can create an identity matrix using <code>diag()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1</code></pre>
+</div>
+</div>
+<section id="matrix-multiplication-example-1" class="level2">
+<h2 class="anchored" data-anchor-id="matrix-multiplication-example-1">Matrix Multiplication Example</h2>
+<p>We want to multiply two (2 ) matrices:</p>
+[
+<span class="math display">\[\begin{bmatrix}
+0.6 &amp; -0.7 \\
+-0.2 &amp; 0.4
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+4 &amp; 7 \\
+2 &amp; 6
+\end{bmatrix}\]</span>
+<p>]</p>
+<p>Using matrix multiplication rules:</p>
+[
+<span class="math display">\[\begin{bmatrix}
+(0.6)(4) + (-0.7)(2) &amp; (0.6)(7) + (-0.7)(6) \\
+(-0.2)(4) + (0.4)(2) &amp; (-0.2)(7) + (0.4)(6)
+\end{bmatrix}\]</span>
+=
+<span class="math display">\[\begin{bmatrix}
+1.0 &amp; 0.0 \\
+0.0 &amp; 1.0
+\end{bmatrix}\]</span>
+<p>]</p>
+<p>This is the identity matrix ( I_2 ), so:</p>
+[
+<span class="math display">\[\begin{bmatrix}
+0.6 &amp; -0.7 \\
+-0.2 &amp; 0.4
+\end{bmatrix}
+\text{ is the inverse of }
+\begin{bmatrix}
+4 &amp; 7 \\
+2 &amp; 6
+\end{bmatrix}\]</span>
+<p>]</p>
+</section>
+</section>
+<section id="solve" class="level1">
+<h1>Solve</h1>
+<p>The <code>diag()</code> function in R is used to create or extract diagonal elements of a matrix. When given a single number <span class="math inline">\(n\)</span>, <code>diag(n)</code> returns an <span class="math inline">\(n \times n\)</span> identity matrix with 1s on the diagonal and 0s elsewhere. If given a vector, <code>diag()</code> creates a square matrix with the vector elements placed on the main diagonal. Additionally, if given a matrix as input, <code>diag()</code> will extract the values from its main diagonal.</p>
+<ul>
+<li>The <code>solve()</code> function in R is used to solve systems of linear equations of the form <span class="math inline">\(Ax = b\)</span>, where <span class="math inline">\(A\)</span> is a square matrix of coefficients and <span class="math inline">\(b\)</span> is a vector of constants. The function returns the vector <span class="math inline">\(x\)</span> that satisfies the equation. Internally, <code>solve()</code> uses matrix decomposition techniques to efficiently compute the solution. For example, <code>solve(A, b)</code> returns the solution to the linear system, while <code>solve(A)</code> returns the inverse of matrix <span class="math inline">\(A\)</span>, if it exists.</li>
+<li>Just printing I here would also work.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>I <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">3</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(I) <span class="co">#or just I</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1</code></pre>
+</div>
+</div>
+<ul>
+<li>This works for Guassian Elimination problems like we just did.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Right-hand side vector b</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">14</span>, <span class="dv">8</span>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the system Ax = b</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>solution <span class="ot">&lt;-</span> <span class="fu">solve</span>(A, b)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Show result</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>solution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10 -2  0</code></pre>
+</div>
+</div>
+</section>
+<section id="diag" class="level1">
+<h1>diag</h1>
+<section id="extracting-the-diagonal-from-a-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="extracting-the-diagonal-from-a-matrix">Extracting the Diagonal from a Matrix</h3>
+<p>When <code>diag()</code> is applied to a matrix, it returns the values from the <strong>main diagonal</strong> (top-left to bottom-right). This can be useful when you want to isolate or manipulate just the diagonal elements.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>              <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">8</span>,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>              <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>), </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the diagonal</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 5 9</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="inverse-with-solve" class="level1">
+<h1>Inverse with solve</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>              <span class="dv">2</span>, <span class="dv">6</span>), </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]  0.6 -0.7
+[2,] -0.2  0.4</code></pre>
+</div>
+</div>
+</section>
+<section id="singular-value-decomposition-svd" class="level1">
+<h1>Singular Value Decomposition (SVD)</h1>
+<ul>
+<li><p><strong>Singular Value Decomposition (SVD)</strong> is a fundamental matrix factorization: <span class="math display">\[
+A = U \Sigma V^T
+\]</span></p></li>
+<li><p>Where:</p>
+<ul>
+<li>( A ): original ( m n ) matrix</li>
+<li>( U ): ( m m ) matrix of <strong>left singular vectors</strong></li>
+<li>( ): ( m n ) <strong>diagonal matrix</strong> of singular values</li>
+<li>( V^T ): transpose of ( V ), the ( n n ) matrix of <strong>right singular vectors</strong></li>
+</ul></li>
+<li><p>Used in <strong>data compression</strong>, <strong>dimensionality reduction</strong>, and <strong>latent structure discovery</strong>.</p></li>
+</ul>
+</section>
+<section id="why-use-svd" class="level1">
+<h1>Why Use SVD?</h1>
+<ul>
+<li>SVD helps decompose complex datasets into simpler, interpretable parts.</li>
+<li>Key applications:
+<ul>
+<li><strong>Principal Component Analysis (PCA)</strong></li>
+<li><strong>Recommender systems</strong></li>
+<li><strong>Image compression</strong></li>
+<li><strong>Latent Semantic Analysis</strong> in NLP</li>
+</ul></li>
+<li>It handles <strong>non-square</strong> and <strong>non-invertible</strong> matrices — unlike eigen decomposition which requires square matrices.</li>
+</ul>
+</section>
+<section id="example-svd-in-r" class="level1">
+<h1>Example: SVD in R</h1>
+<p>We can compute SVD of a matrix using <code>svd()</code> in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a matrix</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute SVD</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>svd_result <span class="ot">&lt;-</span> <span class="fu">svd</span>(A)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># U, D (Sigma), and V</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> svd_result<span class="sc">$</span>u</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">diag</span>(svd_result<span class="sc">$</span>d)</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> svd_result<span class="sc">$</span>v</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co"># U contains the left singular vectors</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Sigma contains the singular values </span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co">#V contains the right singular vectors</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="svd-for-low-rank-approximation" class="level1">
+<h1>SVD for Low-Rank Approximation</h1>
+<ul>
+<li><p>The matrix ( A ) can be approximated using only the first ( k ) singular values: <span class="math display">\[
+A \approx U_k \Sigma_k V_k^T
+\]</span></p></li>
+<li><p>Retaining just a few top singular values captures most of the structure in the data.</p></li>
+<li><p>This is the basis of <strong>dimensionality reduction</strong> in PCA.</p></li>
+<li><p>Great for compressing images or reducing noise in datasets.</p></li>
+</ul>
+</section>
+<section id="uses-of-svd" class="level1">
+<h1>Uses of SVD</h1>
+<ul>
+<li>In machine learning and data science, SVD is widely used for:</li>
+<li><strong>Dimensionality reduction</strong> (as in PCA),</li>
+<li><strong>Latent semantic analysis</strong> in natural language processing (NLP),</li>
+<li><strong>Collaborative filtering</strong> in recommender systems (e.g., matrix completion in Netflix),</li>
+<li><strong>Noise reduction</strong> and <strong>data compression</strong>, especially in image processing.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span>T); A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    2    1
+[2,]    0    3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>), <span class="dv">2</span>, <span class="dv">1</span>); B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]    4
+[2,]    5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> A <span class="sc">%*%</span> B; C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]   13
+[2,]   15</code></pre>
+</div>
+</div>
+</section>
+<section id="table" class="level1">
+<h1>Table</h1>
+<ul>
+<li>Suppose you have a small table of people’s ratings for two movies. SVD breaks this table into three smaller parts: one that shows people’s preferences, one that shows the importance of each movie, and one that shows how similar the movies are to each other</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Movie 1 Rating</th>
+<th>Movie 2 Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sally</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Joel</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Shay</td>
+<td>5</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Calculate svd</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>,   </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>              <span class="dv">3</span>, <span class="dv">2</span>,   </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>              <span class="dv">5</span>, <span class="dv">4</span>),  </span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">nrow =</span> <span class="dv">3</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute SVD</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>svd_result <span class="ot">&lt;-</span> <span class="fu">svd</span>(A); svd_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$d
+[1] 9.673049 1.196710
+
+$u
+           [,1]       [,2]
+[1,] -0.6556797  0.7350057
+[2,] -0.3673531 -0.5104646
+[3,] -0.6596482 -0.4463100
+
+$v
+           [,1]       [,2]
+[1,] -0.7260399 -0.6876526
+[2,] -0.6876526  0.7260399</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># U, D (Sigma), and V</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="u-contains-the-left-singular-vectors" class="level2">
+<h2 class="anchored" data-anchor-id="u-contains-the-left-singular-vectors">U contains the left singular vectors</h2>
+<ul>
+<li>These are the eigenvectors of <span class="math inline">\(AA^T\)</span>. They represent directions in the row space of <span class="math inline">\(A\)</span>. Each column of <span class="math inline">\(U\)</span> corresponds to a principal direction in the data.</li>
+<li>Interpreted as: how the original rows (observations) are projected into orthogonal directions. ::: {.cell}</li>
+</ul>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> svd_result<span class="sc">$</span>u; U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           [,1]       [,2]
+[1,] -0.6556797  0.7350057
+[2,] -0.3673531 -0.5104646
+[3,] -0.6596482 -0.4463100</code></pre>
+</div>
+<p>::: ## Sigma contains the singular values * These are the square roots of the eigenvalues of both <span class="math inline">\(AA^T\)</span> and <span class="math inline">\(A^TA\)</span>, sorted from largest to smallest: + They tell you how much variance or information is captured along each corresponding singular vector direction. + Larger singular values = more important directions. * Interpreted as: the strength (or importance) of each latent feature in the data. ::: {.cell}</p>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">diag</span>(svd_result<span class="sc">$</span>d); Sigma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         [,1]    [,2]
+[1,] 9.673049 0.00000
+[2,] 0.000000 1.19671</code></pre>
+</div>
+<p>::: ## V contains the right singular vectors * These are the eigenvectors of <span class="math inline">\(A^TA\)</span> and represent directions in the column space of <span class="math inline">\(A\)</span>. Each column of <span class="math inline">\(V\)</span> tells you how the original features (columns of <span class="math inline">\(A\)</span>) align with the principal components. $ Interpreted as: how the original features are weighted to form the components. ::: {.cell}</p>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> svd_result<span class="sc">$</span>v; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           [,1]       [,2]
+[1,] -0.7260399 -0.6876526
+[2,] -0.6876526  0.7260399</code></pre>
+</div>
+<p>:::</p>
+<ul>
+<li>We classify the matrix as rank 2 because of the number of non-zero singular values in its SVD (under Sigma).Since the matrix has rank 2, its rows are linearly independent (but not full-rank in a 3-dimensional space).</li>
+</ul>
+</section>
+</section>
+<section id="visualize" class="level1">
+<h1>Visualize</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create scree plot</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>singular_values <span class="ot">&lt;-</span> svd_result<span class="sc">$</span>d</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Component =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(singular_values)),</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> singular_values</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Component, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(Value, <span class="dv">2</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Singular Values (Scree Plot)"</span>,</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Component"</span>,</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Singular Value"</span>) <span class="sc">+</span></span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Left singular vectors (U) times Sigma</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>projected <span class="ot">&lt;-</span> svd_result<span class="sc">$</span>u <span class="sc">%*%</span> <span class="fu">diag</span>(svd_result<span class="sc">$</span>d)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into a data frame for plotting</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>projected_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dim1 =</span> projected[, <span class="dv">1</span>],</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dim2 =</span> projected[, <span class="dv">2</span>],</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Label =</span> <span class="fu">c</span>(<span class="st">"Row 1"</span>, <span class="st">"Row 2"</span>, <span class="st">"Row 3"</span>)</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(projected_df, <span class="fu">aes</span>(<span class="at">x =</span> Dim1, <span class="at">y =</span> Dim2, <span class="at">label =</span> Label)) <span class="sc">+</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Projection of Rows via SVD"</span>,</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Component 1"</span>,</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Component 2"</span>) <span class="sc">+</span></span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="image-compression" class="level1">
+<h1>Image Compression</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co"># library(jpeg)</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co"># library(imager)</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # Load the image (change the path to your actual file)</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="co"># img &lt;- load.image("pictures/wren.jpg") </span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # Convert to grayscale</span></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="co"># gray_img &lt;- grayscale(img)</span></span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a><span class="co"># # Convert to matrix</span></span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a><span class="co"># A &lt;- as.matrix(gray_img)</span></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a><span class="co"># # Perform SVD</span></span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="co"># svd_result &lt;- svd(A)</span></span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a><span class="co"># # Reconstruct image using top k singular values</span></span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a><span class="co"># reconstruct_image &lt;- function(k) {</span></span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a><span class="co">#   U_k &lt;- svd_result$u[, 1:k]</span></span>
+<span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a><span class="co">#   D_k &lt;- diag(svd_result$d[1:k])</span></span>
+<span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a><span class="co">#   V_k &lt;- svd_result$v[, 1:k]</span></span>
+<span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a><span class="co">#   U_k %*% D_k %*% t(V_k)</span></span>
+<span id="cb59-25"><a href="#cb59-25" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a><span class="co"># # Plot compressed images for different k values</span></span>
+<span id="cb59-28"><a href="#cb59-28" aria-hidden="true" tabindex="-1"></a><span class="co"># par(mfrow = c(1, 3))</span></span>
+<span id="cb59-29"><a href="#cb59-29" aria-hidden="true" tabindex="-1"></a><span class="co"># for (k in c(10, 50, 100)) {</span></span>
+<span id="cb59-30"><a href="#cb59-30" aria-hidden="true" tabindex="-1"></a><span class="co">#   img_k &lt;- reconstruct_image(k)</span></span>
+<span id="cb59-31"><a href="#cb59-31" aria-hidden="true" tabindex="-1"></a><span class="co">#   image(t(apply(img_k, 2, rev)), col = gray.colors(256),</span></span>
+<span id="cb59-32"><a href="#cb59-32" aria-hidden="true" tabindex="-1"></a><span class="co">#         main = paste("k =", k), axes = FALSE)</span></span>
+<span id="cb59-33"><a href="#cb59-33" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="eigen" class="level1">
+<h1>Eigen</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    4    2
+[2,]    1    3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>eigen() decomposition
+$values
+[1] 5 2
+
+$vectors
+          [,1]       [,2]
+[1,] 0.8944272 -0.7071068
+[2,] 0.4472136  0.7071068</code></pre>
+</div>
+</div>
+</section>
+<section id="pca-example-2" class="level1">
+<h1>PCA Example 2</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"iris"</span>)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
+                
+                
+                </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only numeric columns for PCA</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>iris_numeric <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>Species)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize the data (mean = 0, sd = 1)</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>iris_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(iris_numeric)</span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA</span></span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>iris_pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(iris_scaled, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(iris_pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                          PC1    PC2     PC3     PC4
+Standard deviation     1.7084 0.9560 0.38309 0.14393
+Proportion of Variance 0.7296 0.2285 0.03669 0.00518
+Cumulative Proportion  0.7296 0.9581 0.99482 1.00000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame with PCA results for graphing</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>pca_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(iris_pca<span class="sc">$</span>x)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>pca_df<span class="sc">$</span>Species <span class="ot">&lt;-</span> iris<span class="sc">$</span>Species</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the first two principal components</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pca_df, <span class="fu">aes</span>(PC1, PC2, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"PCA of Iris Dataset"</span>,</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Principal Component 1"</span>,</span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Principal Component 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris_pca, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Scree Plot: Iris PCA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="advmath_files/figure-html/unnamed-chunk-31-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./mathnotation.html" class="pagination-link" aria-label="Math Notation and Probability in R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Math Notation and Probability in R</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./pythonsetup.html" class="pagination-link" aria-label="Python and Environment Set up">
+        <span class="nav-page-text"><span class="chapter-title">Python and Environment Set up</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

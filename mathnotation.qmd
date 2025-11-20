@@ -1,0 +1,441 @@
+
+---
+title: "Math Notation and Probability in R"
+format: html
+---
+```{r, warning=FALSE, echo=FALSE}
+library(reticulate)
+use_condaenv("r-reticulate", required = TRUE)
+```
+
+
+## Math notation
+* sigma, pi, functions, exponents, logic rules 
+
+
+# Why Math Notation Matters
+
+* Math notation is a universal language in analytics and data science.
+* Appears in:
+  + Formulas (e.g., regression equations)
+  + Algorithms (e.g., gradient descent)
+  + Documentation (e.g., academic papers or software manuals)
+* Understanding notation helps with:
+  + Communication  
+  + Model interpretation  
+  + Data-driven decision-making
+
+
+# Variables and Subscripts
+
+* **Variables** represent unknowns or data values: $x,\ y,\ p$
+* **Subscripts** identify specific elements: $x_1,\ x_2,\ \ldots,\ x_n$
+     + In most formulas, $n$ typically represents the **sample size** or the total number of observations in the dataset.
+
+* Example: $x_i = \text{the } i\text{-th observation in a dataset}$
+
+
+# Greek Letters in Math
+* $\mu$ — population mean  
+* $\sigma$ — population standard deviation  
+* $\beta$ — regression coefficient  
+* $\varepsilon$ — error term  
+* $\alpha$ — significance level (e.g., 0.05 in hypothesis testing)  
+* $\lambda$ — regularization parameter (e.g., in Ridge or Lasso regression)  
+* $\theta$ — model parameters (commonly in machine learning)  
+* $\pi$ — probability of success or class membership (e.g., in classification)  
+* $\Delta$ — change or difference between quantities  
+* $\Sigma$ — summation symbol (capital sigma)
+
+
+## Creating a new function vs using a built in function
+
+* Function_name: The name you assign to your function (e.g., my_sum)
+* <-	Assignment operator: stores the function under the name
+* function(): Declares that you're defining a function
+* arguments: Inputs the function expects (e.g., x, y)
+* {} The body: code that runs when the function is called
+* return(): Specifies the value that gets returned (can also omit this in simple cases)
+
+
+
+# Summation and Product Notation
+
+* **Summation** means to add values:
+
+$$
+\sum_{i=1}^n x_i = x_1 + x_2 + \ldots + x_n
+$$
+```{r}
+x <- 1:3
+#sample mean is 2
+sample_mean <- (1+2+3)/3; sample_mean
+mean(x)
+
+my_mean <- function(x) {
+  total <- sum(x)
+  n <- length(x)
+  result <- total / n
+  return(result)
+}
+
+my_mean(x)
+mean(x)
+
+#sample variance is 1
+sample_variance <- sum((x-sample_mean)^2/(3-1)); sample_variance
+
+my_variance <- function(x) {
+  n <- length(x)
+  m <- mean(x)
+  var <- sum((x - m)^2) / (n - 1)
+  return(var)
+}
+my_variance(x)
+
+var(x)
+
+#weighted average
+#y are a students grades for each category
+y <- c(.8, .9, 1, .75)
+#w is the weight of each grade category
+w <- c(.25, .4, .2, .15)
+sum(w) #weights add to 1, so denominator in formula is 1. 
+sum(y*w) 
+#The student would make a 87.25 in the class with those grades and weights.
+
+
+my_weighted_mean <- function(x, w) {
+  if (length(x) != length(w)) {
+    stop("x and w must be the same length")
+  }
+  sum_w <- sum(w)
+  if (sum_w == 0) {
+    stop("Sum of weights cannot be zero")
+  }
+  
+  weighted_mean <- sum(x * w) / sum_w
+  return(weighted_mean)
+}
+my_weighted_mean(y,w)
+
+weighted.mean(y, w)
+
+
+```
+
+
+
+
+* **Product** means to multiply values:
+
+$$
+\prod_{i=1}^n x_i = x_1 \times x_2 \times \ldots \times x_n
+$$
+```{r}
+a <- c(2, 4, 6)
+b <- c(1, 3, 5)
+
+dot_product <- sum(a * b)
+dot_product
+a %*% b
+
+
+
+my_dot_product <- function(a, b) {
+  if (length(a) != length(b)) {
+    stop("Vectors must be of equal length")
+  }
+  
+  result <- sum(a * b)
+  return(result)
+}
+my_dot_product(a,b)
+
+```
+
+
+# Means and Averages
+
+* Sample mean:
+
+$$
+\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i
+$$
+
+* Pronounced "x-bar".  
+* Represents the average of $n$ data points.  
+* Used often in descriptive statistics.
+
+## Sample Variance
+
+$$
+s^2 = \frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n - 1}
+$$
+
+* Measures data spread. 
+* Basis for standard deviation.
+
+
+# Weighted Sums and Linear Combinations
+* Both functions below represent linear combinations of values, where weights control the influence of each component.
+
+## Weighted Average
+
+$$
+\bar{x}_w = \frac{\sum_{i=1}^n w_i x_i}{\sum_{i=1}^n w_i}
+$$
+
+* Values weighted by importance (e.g., confidence or revenue).
+
+## Dot Product (Vectors)
+
+$x \cdot w = \sum_{i=1}^n x_i w_i$
+
+* Core in machine learning models and matrix operations.
+
+
+
+# Probability Notation 
+
+* Marginal Probability: $P(A)$: Probability of event A  
+* Joint Probability: $P(A \cap B)$ : Probability of both A and B  
+* Conditional Probability: $P(A \mid B)$: Probability of A given B  
+* Union (addition) rule: $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+
+
+
+# Functions and Equations
+
+* A function maps input to output:
+
+$$
+f(x) = 2x + 5
+$$
+
+* Common types:
+  + Linear: $y = mx + b$
+  + Quadratic:  $y = ax^2 + bx + c$
+  + Exponential: $y = ae^{bx}$
+
+
+
+
+# Regression Equation
+
+$$
+y = \beta_0 + \beta_1 x + \varepsilon
+$$
+
+
+* $y$: predicted outcome  
+* $\beta_0$: intercept  
+* $\beta_1$: slope coefficient  
+* $x$: independent variable  
+* $\varepsilon$: error or noise term
+
+## Sum of Squared Errors (SSE)
+
+$$\text{SSE} = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
+
+* Used in regression model evaluation
+
+```{r}
+x <- c(2, 4, 6, 8, 9)
+y <- c(1, 3, 4, 10, 8)
+
+
+```
+
+## Covariance
+
+$$ \text{Cov}(X, Y) = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{n - 1}$$
+
+
+$$
+r = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y}
+$$
+
+* Measures linear relationship between two variables
+* **Cov(X, Y)** is the covariance between variables \( X \) and \( Y \).
+* \( \sigma_X \) and \( \sigma_Y \) are the **standard deviations** of \( X \) and \( Y \), respectively.
+* **r** ranges from **−1** (perfect negative) to **+1** (perfect positive).
+* Describes both **strength** and **direction** of a linear relationship.
+* Unitless — unaffected by changes in scale or units.
+
+
+```{r}
+x <- c(2, 4, 6, 8, 9)
+y <- c(1, 3, 4, 10, 8)
+
+mean_x <- mean(x)
+mean_y <- mean(y)
+
+cov_xy <- sum((x-mean_x)*(y-mean(y)))/(5-1); cov_xy
+cor_xy <- cov_xy/(sd(x)*sd(y)); cor_xy
+
+```
+
+
+
+
+# Summation Formulas You Should Know: Error Measures
+
+## Mean Absolute Error (MAE)
+
+$\text{MAE} = \frac{1}{n} \sum_{i=1}^n | y_i - \hat{y}_i|$
+
+* Measures average size of prediction error. 
+* Less sensitive to outliers than SSE.
+
+**Given:**
+
+- Actual values: 3, 5, 2, 7  
+- Predicted values: 2, 6, 2.5, 8
+
+**Absolute Errors:** 
+$$|3 - 2| = 1,\quad |5 - 6| = 1,\quad |2 - 2.5| = 0.5,\quad |7 - 8| = 1$$
+
+**MAE Calculation:**
+
+$$
+\text{MAE} = \frac{1 + 1 + 0.5 + 1}{4} = \frac{3.5}{4} = 0.875
+$$
+
+## Mean Squared Error (MSE)
+
+
+$\text{MSE} = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2$
+
+* Measures the average of the squared differences between actual and predicted values.  
+* A common metric to evaluate the accuracy of regression models.  
+* Sensitive to large errors due to squaring.
+
+**Squared Errors:**
+
+$$
+(3 - 2)^2 = 1,\quad (5 - 6)^2 = 1,\quad (2 - 2.5)^2 = 0.25,\quad (7 - 8)^2 = 1
+$$
+
+**MSE Calculation:**
+
+$$
+\text{MSE} = \frac{1 + 1 + 0.25 + 1}{4} = \frac{3.25}{4} = 0.8125
+$$
+
+
+# Summation Formulas You Should Know: Regression and Classification
+
+## Log-Likelihood (Logistic Regression)
+
+$\ell(\beta) = \sum_{i=1}^n [ y_i \log(p_i) + (1 - y_i) \log(1 - p_i)]$
+
+* Quantifies how likely predicted probabilities match observed outcomes  
+* Maximized to estimate model parameters $\beta$.
+
+## K-Means Clustering Objective
+
+$J = \sum_{i=1}^k \sum_{x \in C_i} \| x - \mu_i \|^2$
+
+
+* **K-Means Clustering** is an unsupervised machine learning algorithm used to group data points into **k clusters** based on similarity, essentially measuring the within-cluster variance.  
+* Each data point is assigned to the cluster with the nearest **centroid** (mean of the cluster).
+* The algorithm aims to **minimize the total within-cluster variance** — that is, the distance between points and their cluster centers.
+
+
+# Distance Measures
+
+## Euclidean Distance
+
+$$
+d_{\text{euclidean}}(x, y) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
+$$
+
+
+* Measures the **straight-line (as-the-crow-flies)** distance between two points in n-dimensional space.
+* Commonly used in clustering, nearest neighbor models, and geometry.
+* Sensitive to scale — variables should often be standardized.
+* Example: $d = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}$
+
+* **Euclidean**:  $\sqrt{(5 - 2)^2 + (5 - 1)^2} = \sqrt{9 + 16} = \sqrt{25} = 5$
+  
+![Euclidean Distance](pictures/EuclideanDistance.png)
+  
+# Distance Measures  
+## Manhattan Distance
+
+$$
+d_{\text{manhattan}}(x, y) = \sum_{i=1}^n |x_i - y_i|
+$$
+
+
+
+* Measures distance along **axes only** — like navigating a grid of city streets.
+* More robust to outliers than Euclidean distance.
+* Used in clustering, especially when features are **not continuous** or are sparse (e.g., in NLP or recommender systems).
+* Example: $d = |x_1 - y_1| + |x_2 - y_2|$
+ 
+* **Manhattan**: $|5 - 2| + |5 - 1| = 3 + 4 = 7$
+ 
+![Manhattan Distance](pictures/ManhattanDistance.png)
+
+
+# Sets
+
+* A set is a collection of distinct elements.
+
+Example: $A = {1, 2, 3}$
+Common symbols:
+    $\in$: "is an element of"
+    $\subseteq$: "is a subset of"
+    $\cup$: union
+    $\cap$: intersection
+
+Example: If $A = {1, 2}$ and $B = {2, 3}$:
+    $A \cup B = {1, 2, 3}$
+    $A \cap B = {2}$
+    
+# Set Operations
+
+* Union: $A \cup B$
+* Intersection: $A \cap B$
+* Difference: $A - B = {x \in A : x \notin B}$
+* Complement: $A^c = U - A$ where $U$ is the universal set
+* Cardinality: $|A|$ = number of elements in set $A$
+
+# Functions
+
+* A function maps each element from one set to exactly one element in another set
+* Notation: $f: A \rightarrow B$
+* Example:
+     + $f(x) = x^2$
+     + $f: {1, 2, 3} \rightarrow {1, 4, 9}$
+* One-to-one (injective), onto (surjective), and bijective functions
+
+## Function Basics
+
+* Function Properties
+     + Injective: No two inputs map to the same output
+     + Surjective: Every element in the codomain is mapped to by some input
+     + Bijective: Both injective and surjective
+* Example: $f(x) = 2x$ on domain $\mathbb{Z}$ is injective but not surjective on $\mathbb{Z}$
+
+# Logic Basics
+
+* Statements are declarative sentences that are either true or false
+* Logical operators:
+     + $\neg$: NOT
+     + $\wedge$: AND
+     + $\vee$: OR
+     + $\rightarrow$: IMPLIES
+     + $\leftrightarrow$: IF AND ONLY IF
+* Example: $p = \text{"It is raining"}, q = \text{"It is cloudy"}$
+     + $p \rightarrow q$: If it is raining, then it is cloudy
+     
+
+
+
+## Odds, distance measures
+
+## Implement probability calculations
+

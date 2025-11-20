@@ -1,0 +1,11 @@
+
+---
+title: "Python and Environment Set up"
+format: html
+---
+
+## Python Installation and IDEs (VS Code)
+
+## Setting up virtual environments (conda)
+
+## Python basics (variables, operators, functions)

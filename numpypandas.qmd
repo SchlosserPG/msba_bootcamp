@@ -1,0 +1,327 @@
+---
+title: "If Statements and While Loops"
+output: html
+execute:
+  echo: false
+---
+
+```{r, warning=FALSE, echo=FALSE}
+library(reticulate)
+use_condaenv("r-reticulate", required = TRUE)
+```
+
+## If Statements
+
+::: callout-note
+References from Lutz, M. (2013). *Learning Python* (6th ed.). O'Reilly Media, Inc.
+:::
+
+Welcome to your first lesson in **Python control flow**.
+
+In programming and especially in analytics it's not enough to simply store or calculate data. We also need to make **decisions** ("if this, then that") and **repeat actions** ("keep doing this until done").
+
+For example:
+
+-   A financial model might check **if profit \> target**, then apply a bonus.
+-   A data-cleaning script might **keep looping while there are missing values**.
+
+In Python, two of the most common tools for this are:
+
+-   `if` statements → for **decision making**
+-   `while` loops → for **repetition and automation**
+
+### Logical Conditions
+
+Before we jump into Python syntax, let's talk conceptually.
+
+A **condition** is something that can be either **True** or **False**.
+
+Examples of conditions in everyday life:
+
+-   Is it raining? → `True` or `False`
+-   Is my grade above 90? → `True` or `False`
+-   Is the customer balance less than zero? → `True` or `False`
+
+In Python, we can write conditions using **comparison operators**:
+
+| Symbol | Meaning          | Example | Result |
+|--------|------------------|---------|--------|
+| ==     | equal to         | 5==5    | True   |
+| !=     | not equal to     | 5!=3    | True   |
+| \>     | greater than     | 7\>3    | True   |
+| \<     | less than        | 2\<10   | True   |
+| \>=    | greater or equal | 5\>=5   | True   |
+| \<=    | less or equal    | 4\<=3   | False  |
+
+```{python}
+5 > 3  # True
+5 == 2  # False
+5 != 5  # False
+```
+
+These Boolean results are what drive decision-making in code.
+
+### Basic Syntax
+
+In simple terms, the Python `if` statement selects actions to perform. Along with its `if` expression counterpart, it's the primary selection tool in Python and represents much of the *logic* a Python program possesses. It's also our first compound statement. Like all such statements, the `if` statement may contain other statements, including other `if`s. In fact, Python lets you combine statements in a program both sequentially (so that they execute one after another), and in an arbitrarily nested fashion (so that they execute only under certain conditions, such as selections and loops).
+
+An **if statement** tells Python: "Only run this block of code if a certain condition is true."
+
+Think of it like a business rule: If revenue is above target, then give a performance bonus.
+
+**Syntax:**
+
+```{python}
+#| eval: false
+if test1:                 # Main if test
+    statements1           # Associated block
+elif test2:               # Optional elif test(s)
+    statements2           # Associated block
+else:                     # Optional else default
+    statements3           # Associated block
+```
+
+### Simple Example
+
+```{python}
+revenue = 120000
+target = 100000
+
+if revenue > target:
+    print("Bonus approved!")  # Will print Bonus approved!
+```
+
+Because the condition **revenue \> target** is true, Python prints the message.
+
+Try changing **revenue** to a smaller number and re-run the code and see if it still prints the same thing.
+
+### If-Else
+
+What if we also want to say something when the condition is **not true**? That's where else comes in.
+
+```{python}
+sales = 85
+
+if sales >= 90:
+    print("Excellent performance!")
+else:
+    print("Needs improvement.")
+```
+
+Python checks the if condition first. If it's **false**, it runs the else block instead.
+
+### Multiple Conditions
+
+When you have more than two possibilities, use elif ("else if").
+
+```{python}
+score = 82
+
+# Note: the indentation after the colon is required and normally Python IDEs will naturally do this for you
+if score >= 90:
+    print("Grade: A")
+elif score >= 80:
+    print("Grade: B")
+elif score >= 70:
+    print("Grade: C")
+else:
+    print("Grade: D or F")
+```
+
+Python checks the conditions in order and runs the first one that's true.
+
+### Combining Conditions
+
+You can combine multiple conditions using:
+
+-   `and` → both must be true
+-   `or` → at least one is true
+-   `not` → reverses true/false
+
+```{python}
+age = 25
+income = 50000
+
+if age > 18 and income > 30000:
+    print("Eligible for credit card")
+```
+
+### Nested Statements
+
+You can also put one if inside another for more complex logic.
+
+```{python}
+age = 22
+has_id = True
+
+if age >= 18:
+    if has_id:
+        print("You can enter.")
+    else:
+        # The else statement will be lined up against the condition from the previous if statement
+        print("ID required.")
+else:
+    print("Underage.")
+```
+
+This structure is common in data workflows — checking multiple business rules in sequence.
+
+### Practice
+
+Write your own example:
+
+-   Ask for a test score (input)
+-   Print "Excellent" if 90+, "Good" if 80–89, otherwise "Needs Improvement"
+
+## While Loops
+
+## Loop Basics
+
+Python's `while` statement is the most general iteration construct in the language. In simple terms, it repeatedly executes an associated block of statements as long as a test at the top keeps evaluating to a true value. It is called a "loop" because control keeps looping back to the start of the statement until the test becomes false. When the test does become false, control passes to the statement that follows the `while` block. The net effect is that the loop's body is executed repeatedly while the test at the top is true. If the test is false to begin with, the body never runs and the `while` statement is skipped.
+
+Basically sometimes we need to repeat a task **several times** — or **until a condition changes**.
+
+Example in plain language: While there are still customers in line → keep serving.
+
+In Python the syntax is:
+
+```{python}
+#| eval: false
+while test:              # Loop test
+    statements           # Repeated loop body
+else:                    # Optional else
+    statements           # Run if didn't exit loop body with break
+```
+
+The loop runs again and again **as long as** the condition is true.
+
+```{python}
+count = 1
+
+while count <= 3:
+    print("Hello, world!")
+    count += 1  # increases count by 1
+```
+
+This prints three lines because:
+
+-   Start: count = 1
+-   Each loop: print, then add 1
+-   Stop when count \<= 3 becomes false
+
+### Infinite Loops
+
+If the condition never becomes false, the loop never ends.
+
+```{python}
+#| eval: false
+while True:
+    print("This will never stop!")
+```
+
+Always make sure something inside your loop **changes** the condition.
+
+### Loop Control
+
+In Python we can control loop flow manually.
+
+**`break`**: Jumps out of the closest enclosing loop (past the entire loop statement)
+
+**`continue`**: Jumps to the top of the closest enclosing loop (to the loop's header line)
+
+**`pass`**: Does nothing at all: it's an empty statement placeholder
+
+**Loop `else` block**: Runs if and only if the loop is exited normally (i.e., without hitting a `break`)
+
+```{python}
+#| eval: false
+while test:
+    statements
+    if test: break         # Exit loop now, skip else if present
+    if test: continue      # Go to test at top of loop now
+else:
+    statements             # Run on exit if didn't hit a 'break'
+```
+
+`break` and `continue` statements can appear anywhere inside the `while` (or per ahead, `for`) loop's body, but they are usually coded further nested in an `if` test to take action in response to some condition.
+
+**break → exit the loop early**
+
+```{python}
+i = 1
+
+while i <= 5:
+    if i == 3:
+        break  # stop the loop
+    print(i)
+    i += 1
+```
+
+**continue → skip this iteration**
+
+```{python}
+i = 0
+
+while i < 5:
+    i += 1
+    if i == 3:
+        continue 
+    print(i)
+```
+
+### While-Else
+
+A while loop can also have an else block that runs when the loop ends normally (without break).
+
+```{python}
+x = 3
+
+while x > 0:
+    print("x =", x)
+    x -= 1
+else:
+    print("Loop finished!")
+```
+
+### Combined Example
+
+We can combine both ideas to make small, smart programs.
+
+```{python}
+#| eval: false
+secret = 7
+guess = None
+
+while guess != secret:
+    guess = int(input("Guess a number between 1 and 10: "))
+    
+    if guess < secret:
+        print("Too low!")
+    elif guess > secret:
+        print("Too high!")
+    else:
+        print("Correct! You guessed it!")
+```
+
+Explanation:
+
+1.  The while loop keeps asking until the user guesses correctly.
+2.  The if inside checks how the guess compares to the secret number.
+
+### Summary
+
+| Concept  | Purpose                          | Example        |
+|----------|----------------------------------|----------------|
+| if       | Run code when condition is true  | if x \> 5:     |
+| else     | Run code when condition is false | else:          |
+| elif     | Test another condition           | elif x == 5:   |
+| while    | Repeat while condition is true   | while x \< 10: |
+| break    | Exit the loop early              | break          |
+| continue | Skip current iteration           | continue       |
+
+
+## Numpy
+
+## Pandas
+
+## Data Cleaning

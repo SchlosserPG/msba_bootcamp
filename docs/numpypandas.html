@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Pamela Schlosser">
-<meta name="dcterms.date" content="2025-11-18">
 
-<title>MSBA Bootcamp</title>
+<title>If Statements and While Loops – MSBA Bootcamp</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./introR.html" rel="next">
+<link href="./sql.html" rel="next">
+<link href="./functions.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -70,35 +69,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -112,7 +82,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-title">Installation Information</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./numpypandas.html"><span class="chapter-title">If Statements and While Loops</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,7 +109,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Installation Information</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Installation Information</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -184,7 +154,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./numpypandas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">If Statements and While Loops</span></a>
+  <a href="./numpypandas.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">If Statements and While Loops</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -212,18 +182,29 @@ window.Quarto = {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#why-r" id="toc-why-r" class="nav-link active" data-scroll-target="#why-r">Why R?</a></li>
-  <li><a href="#installing-r" id="toc-installing-r" class="nav-link" data-scroll-target="#installing-r">Installing R</a>
+  <li><a href="#if-statements" id="toc-if-statements" class="nav-link active" data-scroll-target="#if-statements">If Statements</a>
   <ul class="collapse">
-  <li><a href="#installing-r-on-windows" id="toc-installing-r-on-windows" class="nav-link" data-scroll-target="#installing-r-on-windows">Installing R on Windows</a></li>
-  <li><a href="#installing-r-on-a-mac" id="toc-installing-r-on-a-mac" class="nav-link" data-scroll-target="#installing-r-on-a-mac">Installing R on a Mac</a></li>
+  <li><a href="#logical-conditions" id="toc-logical-conditions" class="nav-link" data-scroll-target="#logical-conditions">Logical Conditions</a></li>
+  <li><a href="#basic-syntax" id="toc-basic-syntax" class="nav-link" data-scroll-target="#basic-syntax">Basic Syntax</a></li>
+  <li><a href="#simple-example" id="toc-simple-example" class="nav-link" data-scroll-target="#simple-example">Simple Example</a></li>
+  <li><a href="#if-else" id="toc-if-else" class="nav-link" data-scroll-target="#if-else">If-Else</a></li>
+  <li><a href="#multiple-conditions" id="toc-multiple-conditions" class="nav-link" data-scroll-target="#multiple-conditions">Multiple Conditions</a></li>
+  <li><a href="#combining-conditions" id="toc-combining-conditions" class="nav-link" data-scroll-target="#combining-conditions">Combining Conditions</a></li>
+  <li><a href="#nested-statements" id="toc-nested-statements" class="nav-link" data-scroll-target="#nested-statements">Nested Statements</a></li>
+  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice">Practice</a></li>
   </ul></li>
-  <li><a href="#installing-r-studio" id="toc-installing-r-studio" class="nav-link" data-scroll-target="#installing-r-studio">Installing R Studio</a>
+  <li><a href="#while-loops" id="toc-while-loops" class="nav-link" data-scroll-target="#while-loops">While Loops</a></li>
+  <li><a href="#loop-basics" id="toc-loop-basics" class="nav-link" data-scroll-target="#loop-basics">Loop Basics</a>
   <ul class="collapse">
-  <li><a href="#downloading-rstudio-for-mac-or-pc" id="toc-downloading-rstudio-for-mac-or-pc" class="nav-link" data-scroll-target="#downloading-rstudio-for-mac-or-pc">Downloading RStudio For Mac or PC</a></li>
-  </ul></li>
-  <li><a href="#take-your-first-look-at-r" id="toc-take-your-first-look-at-r" class="nav-link" data-scroll-target="#take-your-first-look-at-r">Take Your First Look at R</a></li>
+  <li><a href="#infinite-loops" id="toc-infinite-loops" class="nav-link" data-scroll-target="#infinite-loops">Infinite Loops</a></li>
+  <li><a href="#loop-control" id="toc-loop-control" class="nav-link" data-scroll-target="#loop-control">Loop Control</a></li>
+  <li><a href="#while-else" id="toc-while-else" class="nav-link" data-scroll-target="#while-else">While-Else</a></li>
+  <li><a href="#combined-example" id="toc-combined-example" class="nav-link" data-scroll-target="#combined-example">Combined Example</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy">Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas">Pandas</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
   </ul>
 </nav>
     </div>
@@ -232,26 +213,14 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MSBA Bootcamp</h1>
+<h1 class="title"><span class="chapter-title">If Statements and While Loops</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Pamela Schlosser </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">November 18, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -261,106 +230,302 @@ window.Quarto = {
 </header>
 
 
-<section id="why-r" class="level1">
-<h1>Why R?</h1>
+<section id="if-statements" class="level2">
+<h2 class="anchored" data-anchor-id="if-statements">If Statements</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>References from Lutz, M. (2013). <em>Learning Python</em> (6th ed.). O’Reilly Media, Inc.</p>
+</div>
+</div>
+<p>Welcome to your first lesson in <strong>Python control flow</strong>.</p>
+<p>In programming and especially in analytics it’s not enough to simply store or calculate data. We also need to make <strong>decisions</strong> (“if this, then that”) and <strong>repeat actions</strong> (“keep doing this until done”).</p>
+<p>For example:</p>
 <ul>
-<li><p>In our MSBA program, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.</p></li>
-<li><p>R is a very sophisticated statistical software that allows you to enter commands one-at-a-time, or write scripts using the R language.</p></li>
-<li><p>Easily installed, state-of-the-art, and it is free and open source and supported by a well-established R Community.</p></li>
-<li><p>R can be used with RStudio, which is a graphical user interface that allows you to do the following:</p>
-<ul>
-<li>write, edit, and execute code;</li>
-<li>generate, view, and store plots;</li>
-<li>manage files, objects and data frames;</li>
-<li>integrate with version control systems.</li>
-</ul></li>
-<li><p>R comes with community that helps in the development of R resources.</p>
-<ul>
-<li>A package is developed by R users to do one specific thing or a set of related things that could store a collection of functions, data, and code.</li>
-<li>A library is the place where the package is located on your computer.</li>
-</ul></li>
-<li><p>A repository is a central location where many developed packages are located and available for download. There are 3 big repositories, but we use Comprehensive R Archive Network, or CRAN, which is R’s main repository with over 18,000 packages available.</p></li>
-<li><p>R’s community is vast, and you can always seek information from the community to try to help you with a R related issue.</p></li>
+<li>A financial model might check <strong>if profit &gt; target</strong>, then apply a bonus.</li>
+<li>A data-cleaning script might <strong>keep looping while there are missing values</strong>.</li>
 </ul>
-</section>
-<section id="installing-r" class="level1">
-<h1>Installing R</h1>
-<section id="installing-r-on-windows" class="level2">
-<h2 class="anchored" data-anchor-id="installing-r-on-windows">Installing R on Windows</h2>
+<p>In Python, two of the most common tools for this are:</p>
 <ul>
-<li>Open an internet browser and go to <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>.</li>
-<li>Click CRAN hyperlink underneath Download on the left.</li>
-<li>Select a CRAN location (a mirror site) and click the corresponding link. I selected O-cloud. This brings you to the following link: <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a></li>
-<li>Click on the “Download R for Windows” link at the top of the page if you have a Windows computer.<br>
-</li>
-<li>Click on the “install R for the first time” link at the top of the page.</li>
-<li>Click “Download R for Windows” and save the executable file somewhere on your computer.</li>
-<li>Run the .exe file</li>
-<li>Accept all defaults and follow the installation instructions</li>
-<li>Now that R is installed, you need to download and install RStudio.</li>
+<li><code>if</code> statements → for <strong>decision making</strong></li>
+<li><code>while</code> loops → for <strong>repetition and automation</strong></li>
 </ul>
-</section>
-<section id="installing-r-on-a-mac" class="level2">
-<h2 class="anchored" data-anchor-id="installing-r-on-a-mac">Installing R on a Mac</h2>
+<section id="logical-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="logical-conditions">Logical Conditions</h3>
+<p>Before we jump into Python syntax, let’s talk conceptually.</p>
+<p>A <strong>condition</strong> is something that can be either <strong>True</strong> or <strong>False</strong>.</p>
+<p>Examples of conditions in everyday life:</p>
 <ul>
-<li>Open an internet browser and go to <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>.</li>
-<li>Click CRAN hyperlink underneath Download on the left.</li>
-<li>Select a CRAN location (a mirror site) and click the corresponding link. I selected O-cloud. This brings you to the following link: <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a></li>
-<li>Click on the “Download R for (Mac) OS X” link at the top of the page.</li>
-<li>Click on the file containing the latest version of R under “Files.”</li>
-<li>Save the .pkg file, double-click it to open, and follow the installation instructions.</li>
-<li>Accept the license agreement and all subsequent defaults</li>
-<li>When the installation completes, click Close.</li>
-<li>Now that R is installed, you need to download and install RStudio.</li>
+<li>Is it raining? → <code>True</code> or <code>False</code></li>
+<li>Is my grade above 90? → <code>True</code> or <code>False</code></li>
+<li>Is the customer balance less than zero? → <code>True</code> or <code>False</code></li>
 </ul>
+<p>In Python, we can write conditions using <strong>comparison operators</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Example</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>==</td>
+<td>equal to</td>
+<td>5==5</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td>!=</td>
+<td>not equal to</td>
+<td>5!=3</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td>&gt;</td>
+<td>greater than</td>
+<td>7&gt;3</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td>&lt;</td>
+<td>less than</td>
+<td>2&lt;10</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td>&gt;=</td>
+<td>greater or equal</td>
+<td>5&gt;=5</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td>&lt;=</td>
+<td>less or equal</td>
+<td>4&lt;=3</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>True</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>False</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>False</code></pre>
+</div>
+</div>
+<p>These Boolean results are what drive decision-making in code.</p>
 </section>
+<section id="basic-syntax" class="level3">
+<h3 class="anchored" data-anchor-id="basic-syntax">Basic Syntax</h3>
+<p>In simple terms, the Python <code>if</code> statement selects actions to perform. Along with its <code>if</code> expression counterpart, it’s the primary selection tool in Python and represents much of the <em>logic</em> a Python program possesses. It’s also our first compound statement. Like all such statements, the <code>if</code> statement may contain other statements, including other <code>if</code>s. In fact, Python lets you combine statements in a program both sequentially (so that they execute one after another), and in an arbitrarily nested fashion (so that they execute only under certain conditions, such as selections and loops).</p>
+<p>An <strong>if statement</strong> tells Python: “Only run this block of code if a certain condition is true.”</p>
+<p>Think of it like a business rule: If revenue is above target, then give a performance bonus.</p>
+<p><strong>Syntax:</strong></p>
 </section>
-<section id="installing-r-studio" class="level1">
-<h1>Installing R Studio</h1>
-<section id="downloading-rstudio-for-mac-or-pc" class="level2">
-<h2 class="anchored" data-anchor-id="downloading-rstudio-for-mac-or-pc">Downloading RStudio For Mac or PC</h2>
+<section id="simple-example" class="level3">
+<h3 class="anchored" data-anchor-id="simple-example">Simple Example</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Bonus approved!</code></pre>
+</div>
+</div>
+<p>Because the condition <strong>revenue &gt; target</strong> is true, Python prints the message.</p>
+<p>Try changing <strong>revenue</strong> to a smaller number and re-run the code and see if it still prints the same thing.</p>
+</section>
+<section id="if-else" class="level3">
+<h3 class="anchored" data-anchor-id="if-else">If-Else</h3>
+<p>What if we also want to say something when the condition is <strong>not true</strong>? That’s where else comes in.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Needs improvement.</code></pre>
+</div>
+</div>
+<p>Python checks the if condition first. If it’s <strong>false</strong>, it runs the else block instead.</p>
+</section>
+<section id="multiple-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-conditions">Multiple Conditions</h3>
+<p>When you have more than two possibilities, use elif (“else if”).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Grade: B</code></pre>
+</div>
+</div>
+<p>Python checks the conditions in order and runs the first one that’s true.</p>
+</section>
+<section id="combining-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="combining-conditions">Combining Conditions</h3>
+<p>You can combine multiple conditions using:</p>
 <ul>
-<li>Go to the following URL: <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>.</li>
-<li>Click the Download button for Install RStudio.</li>
-<li>It should recognize your operating system. If you see different an Installers for Supported Platforms section, click the version that is appropriate for your operating system. When the download is complete, run the install program, accepting all defaults.</li>
-<li>Note, RStudio might conflict with some Mac antivirus programs. Ensure your antivirus is not blocking it from installing. Only worry about this if you have difficulty installing the program.</li>
+<li><code>and</code> → both must be true</li>
+<li><code>or</code> → at least one is true</li>
+<li><code>not</code> → reverses true/false</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Pictures/Ch0/RStudio.png" title="RStudio" class="img-fluid figure-img"></p>
-<figcaption>RStudio</figcaption>
-</figure>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Eligible for credit card</code></pre>
+</div>
 </div>
 </section>
+<section id="nested-statements" class="level3">
+<h3 class="anchored" data-anchor-id="nested-statements">Nested Statements</h3>
+<p>You can also put one if inside another for more complex logic.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>You can enter.</code></pre>
+</div>
+</div>
+<p>This structure is common in data workflows — checking multiple business rules in sequence.</p>
 </section>
-<section id="take-your-first-look-at-r" class="level1">
-<h1>Take Your First Look at R</h1>
+<section id="practice" class="level3">
+<h3 class="anchored" data-anchor-id="practice">Practice</h3>
+<p>Write your own example:</p>
 <ul>
-<li>On the right, two windows, each with tabs
-<ul>
-<li>There are many ways to customize the look of RStudio for accessibility purposes with a couple being the following:
-<ul>
-<li>You can resize the windows using the splitters.</li>
-<li>You can maximize/restore the windows within the left/right panels using the familiar Windows controls in the upper-right of each window.</li>
-</ul></li>
-</ul></li>
-<li>On the left, the Console Window reproduces the R environment.
-<ul>
-<li>Observe the command line with the <span class="math inline">\(&gt;\)</span> symbol.</li>
-</ul></li>
+<li>Ask for a test score (input)</li>
+<li>Print “Excellent” if 90+, “Good” if 80–89, otherwise “Needs Improvement”</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Pictures/Ch0/Console.png" title="Screenshot of Console" class="img-fluid figure-img"></p>
-<figcaption>Console</figcaption>
-</figure>
+</section>
+</section>
+<section id="while-loops" class="level2">
+<h2 class="anchored" data-anchor-id="while-loops">While Loops</h2>
+</section>
+<section id="loop-basics" class="level2">
+<h2 class="anchored" data-anchor-id="loop-basics">Loop Basics</h2>
+<p>Python’s <code>while</code> statement is the most general iteration construct in the language. In simple terms, it repeatedly executes an associated block of statements as long as a test at the top keeps evaluating to a true value. It is called a “loop” because control keeps looping back to the start of the statement until the test becomes false. When the test does become false, control passes to the statement that follows the <code>while</code> block. The net effect is that the loop’s body is executed repeatedly while the test at the top is true. If the test is false to begin with, the body never runs and the <code>while</code> statement is skipped.</p>
+<p>Basically sometimes we need to repeat a task <strong>several times</strong> — or <strong>until a condition changes</strong>.</p>
+<p>Example in plain language: While there are still customers in line → keep serving.</p>
+<p>In Python the syntax is:</p>
+<p>The loop runs again and again <strong>as long as</strong> the condition is true.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello, world!
+Hello, world!
+Hello, world!</code></pre>
+</div>
+</div>
+<p>This prints three lines because:</p>
+<ul>
+<li>Start: count = 1</li>
+<li>Each loop: print, then add 1</li>
+<li>Stop when count &lt;= 3 becomes false</li>
+</ul>
+<section id="infinite-loops" class="level3">
+<h3 class="anchored" data-anchor-id="infinite-loops">Infinite Loops</h3>
+<p>If the condition never becomes false, the loop never ends.</p>
+<p>Always make sure something inside your loop <strong>changes</strong> the condition.</p>
+</section>
+<section id="loop-control" class="level3">
+<h3 class="anchored" data-anchor-id="loop-control">Loop Control</h3>
+<p>In Python we can control loop flow manually.</p>
+<p><strong><code>break</code></strong>: Jumps out of the closest enclosing loop (past the entire loop statement)</p>
+<p><strong><code>continue</code></strong>: Jumps to the top of the closest enclosing loop (to the loop’s header line)</p>
+<p><strong><code>pass</code></strong>: Does nothing at all: it’s an empty statement placeholder</p>
+<p><strong>Loop <code>else</code> block</strong>: Runs if and only if the loop is exited normally (i.e., without hitting a <code>break</code>)</p>
+<p><code>break</code> and <code>continue</code> statements can appear anywhere inside the <code>while</code> (or per ahead, <code>for</code>) loop’s body, but they are usually coded further nested in an <code>if</code> test to take action in response to some condition.</p>
+<p><strong>break → exit the loop early</strong></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>1
+2</code></pre>
+</div>
+</div>
+<p><strong>continue → skip this iteration</strong></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>1
+2
+4
+5</code></pre>
+</div>
 </div>
 </section>
-<section id="summary" class="level1">
-<h1>Summary</h1>
-<ul>
-<li>At the end of this section, you should have downloaded and browsed R in RStudio. You should have looked at the quick keys in R to make editing your R documents easier. You should set up a project folder for the course where you want to on your computer, and made your first .R script file located in that project folder. You should have tried a line of code or two as presented. Finally, you should have looked around the RStudio environment and found the help tab.</li>
-</ul>
+<section id="while-else" class="level3">
+<h3 class="anchored" data-anchor-id="while-else">While-Else</h3>
+<p>A while loop can also have an else block that runs when the loop ends normally (without break).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>x = 3
+x = 2
+x = 1
+Loop finished!</code></pre>
+</div>
+</div>
+</section>
+<section id="combined-example" class="level3">
+<h3 class="anchored" data-anchor-id="combined-example">Combined Example</h3>
+<p>We can combine both ideas to make small, smart programs.</p>
+<p>Explanation:</p>
+<ol type="1">
+<li>The while loop keeps asking until the user guesses correctly.</li>
+<li>The if inside checks how the guess compares to the secret number.</li>
+</ol>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Concept</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>if</td>
+<td>Run code when condition is true</td>
+<td>if x &gt; 5:</td>
+</tr>
+<tr class="even">
+<td>else</td>
+<td>Run code when condition is false</td>
+<td>else:</td>
+</tr>
+<tr class="odd">
+<td>elif</td>
+<td>Test another condition</td>
+<td>elif x == 5:</td>
+</tr>
+<tr class="even">
+<td>while</td>
+<td>Repeat while condition is true</td>
+<td>while x &lt; 10:</td>
+</tr>
+<tr class="odd">
+<td>break</td>
+<td>Exit the loop early</td>
+<td>break</td>
+</tr>
+<tr class="even">
+<td>continue</td>
+<td>Skip current iteration</td>
+<td>continue</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="numpy" class="level2">
+<h2 class="anchored" data-anchor-id="numpy">Numpy</h2>
+</section>
+<section id="pandas" class="level2">
+<h2 class="anchored" data-anchor-id="pandas">Pandas</h2>
+</section>
+<section id="data-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h2>
 
 
 </section>
@@ -788,10 +953,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./functions.html" class="pagination-link" aria-label="Files, Functions, and Folders">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Files, Functions, and Folders</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./introR.html" class="pagination-link" aria-label="Introduction to R and RStudio">
-        <span class="nav-page-text"><span class="chapter-title">Introduction to R and RStudio</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sql.html" class="pagination-link" aria-label="Introduction to SQL in Python">
+        <span class="nav-page-text"><span class="chapter-title">Introduction to SQL in Python</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,0 +1,18 @@
+---
+title: "Files, Functions, and Folders"
+format: html
+---
+
+
+```{r, warning=FALSE}
+library(reticulate)
+use_condaenv("r-reticulate", required = TRUE)
+```
+
+## Reading/writing files (CSV, TXT)
+
+## Navigating directories
+
+## Functions and scope (Making own functions)
+
+## Debugging techniques

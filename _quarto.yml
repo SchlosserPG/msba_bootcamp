@@ -1,28 +1,35 @@
 project:
   type: book
   output-dir: docs
-include-in-header: custom-head.html
+##include-in-header: custom-head.html
 
 book:
-  title: "MSBA R Bootcamp"
+  title: "MSBA Bootcamp"
   author: "Pamela Schlosser"
-  date: "5/17/2024"
+  date: "11/18/2025"
   chapters:
     - index.qmd
     - introR.qmd
     - descriptives.qmd
     - dataprep.qmd
-    - dataviz.qmd
+    - mathnotation.qmd
+    - advmath.qmd
+    - pythonsetup.qmd
+    - datastructures.qmd
+    - functions.qmd
+    - numpypandas.qmd
+    - sql.qmd
     - summary.qmd
     - references.qmd
 
-bibliography: references.bib
 
 format:
   html:
     css: styles.css
-  pdf:
-    documentclass: scrreprt
+    number-sections: false
+    toc: true
+    toc-depth: 3
+    toc-title: "Table of Contents"
 
 editor: visual
 

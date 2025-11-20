@@ -9,7 +9,9 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## R Markdown
-$
+
+\$
+
 \begin{array}{|c|c|c|c|}
 \hline
 \textbf{Context} & \textbf{Formula} & \textbf{Interpretation} & \textbf{pnorm Function Usage} \\
@@ -21,4 +23,5 @@ $
 \text{Standardizing a sample proportion} & \frac{\hat{p} - p}{\sqrt{\frac{p(1 - p)}{n}}} & \text{Used for hypothesis tests of proportions} & \text{pnorm}(\hat{p}, p, \sqrt{\frac{p(1 - p)}{n}}) \\
 \hline
 \end{array}
-$
+
+\$

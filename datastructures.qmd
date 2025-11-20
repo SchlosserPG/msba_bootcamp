@@ -1,0 +1,342 @@
+---
+title: "Data Structures"
+format: html
+runtime: python
+execute:
+  echo: false
+---
+
+```{r, warning=FALSE}
+library(reticulate)
+use_condaenv("r-reticulate", required = TRUE)
+```
+
+
+## Lists
+
+## Tuples
+
+## Dictionaries
+
+## Sets
+
+## List Comprehension
+
+#### Introduction: What Is a List Comprehension?
+
+A **list comprehension** is a concise, elegant way to create new lists in Python — often replacing multi-line loops with a single readable line. Think of it as a powerful shorthand that lets you transform, filter, and process data with minimal code.
+
+Let's start with the traditional approach
+
+```{python}
+# Traditional for-loop approach
+squared_numbers = []  # Step 1: Start with an empty list
+for number in range(1, 6):  # Step 2: Loop through numbers 1 to 5
+    squared_numbers.append(number ** 2)  # Step 3: Append squared result
+
+print(squared_numbers)
+```
+
+This works fine, but it's a bit long for such a simple task. We need three separate steps: initialize an empty list, loop through values, and append results one by one.
+
+That's why we have List Comprehensions in Python. Python lets you compress those three steps into one clean line using list comprehension, making your code more Pythonic and easier to read.
+
+The general syntax is:
+
+\[ expression for item in iterable\]
+
+Where:
+
+-   **expression** → what you want to do with each item (like squaring a number or making text uppercase)
+
+-   **for item in iterable** → the loop through your data (like numbers, strings, or lists)
+
+-   The entire comprehension is wrapped in square brackets `[]` which tells Python to create a new list
+
+Let's rewrite our earlier example:
+
+```{python}
+squared_numbers_lc = [ number ** 2 for number in range(1, 6) ]
+
+print(squared_numbers_lc)
+```
+
+Same output, shorter code and once you get used to it, it is much more readable! Notice how we eliminated the need to initialize an empty list and manually append values.
+
+List comprehensions work on any iterable, not just numbers. Let's try it with strings.
+
+```{python}
+fruits = ["apple", "banana", "kiwi", "grape"]
+
+uppercase_fruits = [ fruit.upper() for fruit in fruits ]
+
+print(uppercase_fruits)
+```
+
+Here this code is saying: "Take each fruit in fruits, make it uppercase, and collect the results in a new list." The `.upper()` method is applied to every string automatically as we loop through.
+
+#### Exercises
+
+**Exercise 1: Word Lengths**
+
+Create a new list called lengths that contains the length of each word in the list.
+
+```{python}
+words = ["python", "bootcamp", "code", "listcomp", "concise"]
+```
+
+**Enter Code here**
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Solution"
+
+#Solution
+lengths = [ len(word) for word in words ]
+print(lengths)
+# Output: [6, 8, 4, 8, 7]
+# Explanation: Each word's length is calculated and stored in the new list
+```
+
+**Exercise 2: Filtering with Conditions**
+
+Create a list called long_words that includes only words longer than 6 characters.
+
+```{python}
+words = ["python", "bootcamp", "code", "listcomp", "concise"]
+```
+
+**Enter Code here**
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Solution"
+
+#Solution
+long_words = [ word for word in words if len(word) > 6 ]
+print(long_words)
+# Output: ['bootcamp', 'listcomp', 'concise']
+# Explanation: Only words with more than 6 characters pass the filter
+```
+
+**Exercise 3: Filtering and Transforming Numbers**
+
+From the numbers 1–20, make a new list called divisible_by_3_doubled that:
+
+-   Only includes numbers divisible by 3
+-   Doubles each of those numbers
+
+```{python}
+numbers_data = range(1, 21) # Numbers 1 through 20
+```
+
+**Enter Code here**
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Solution"
+
+#Solution
+divisible_by_3_doubled = [ num * 2 for num in numbers_data if num % 3 == 0 ]
+print(divisible_by_3_doubled)
+# Output: [6, 12, 18, 24, 30, 36, 42, 48, 54, 60]
+# Explanation: Numbers 3, 6, 9, 12, 15, 18 are divisible by 3, then each is doubled
+```
+
+#### Adding Conditions: if, else and elif
+
+List comprehensions are not just for simple loops. You can also **add conditional logic** to decide what gets included or what value is produced. This is where list comprehensions become truly powerful, allowing you to filter data and transform values based on specific criteria.
+
+##### Using `if` as a Filter
+
+You can use `if` **at the end** of a comprehension to only include items that meet a condition. This acts as a filter, letting only certain items "pass through" into your new list.
+
+```{python}
+numbers = range(1, 11)
+# Include only even numbers
+evens = [num for num in numbers if num % 2 == 0]
+print(evens)
+```
+
+**Step-by-step:**
+
+1.  Loop through each `num` in `numbers` (1 through 10).
+2.  Check `if num % 2 == 0` → only even numbers pass the filter.
+3.  The expression `num` is added to the new list if the condition is True.
+4.  Odd numbers (1, 3, 5, 7, 9) are skipped entirely.
+
+**Output:** `[2, 4, 6, 8, 10]`
+
+**Key Point:** When `if` appears at the END of the comprehension, it's a filter. Items that don't meet the condition are excluded from the result.
+
+##### Using `if–else` in Expressions
+
+Sometimes you want **all items** included, but with **different values** depending on a condition. Here, the `if–else` is **inside the expression** at the beginning, not at the end. This means every item will appear in the new list, but their values will be transformed differently based on the condition.
+
+```{python}
+numbers = range(1, 6)
+
+labels = ["even" if num % 2 == 0 else "odd" for num in numbers]
+print(labels)
+```
+
+**Step-by-step:**
+
+1.  Loop through each `num` (1, 2, 3, 4, 5).
+2.  Check the condition: `num % 2 == 0`
+    -   If True → add the string `"even"`
+    -   If False → add the string `"odd"`
+3.  Every number produces a result — nothing is filtered out.
+
+**Output:** `['odd', 'even', 'odd', 'even', 'odd']`
+
+**Key Point:** When `if–else` appears at the BEGINNING (in the expression), it transforms values rather than filtering. Every item is included, just with different values.
+
+##### Chaining Conditions (Like `elif`)
+
+Python does **not** have a direct `elif` in a comprehension, but you can **chain multiple `if–else` expressions** to create multi-way branching logic. The conditions are evaluated in order from left to right, and the first true condition determines the output.
+
+**Example: Categorizing Student Scores**
+
+```{python}
+scores = [95, 70, 45, 88, 30, 60]
+
+categories = [
+    "Excellent" if s >= 90 else  # ≥ 90 → Excellent
+    "Good" if s >= 70 else  # 70–89 → Good
+    "Needs Improvement"  # < 70 → Needs Improvement
+    for s in scores  # Loop through each score
+]
+
+print(categories)
+```
+
+**Step-by-step:**
+
+1.  Loop through each `s` in `scores`.
+2.  Check first condition `s >= 90`:
+    -   If True → assign `"Excellent"` and stop checking
+    -   If False → move to next condition
+3.  Check second condition `s >= 70`:
+    -   If True → assign `"Good"` and stop checking
+    -   If False → assign the default `"Needs Improvement"`
+4.  This creates a cascading decision tree for each score.
+
+**Output:** `['Excellent', 'Good', 'Needs Improvement', 'Good', 'Needs Improvement', 'Good']`
+
+**Example: Temperature Categories**
+
+```{python}
+temps = [35, 28, 22, 18, 30, 10, 25]
+
+categories = [
+    "Hot" if t >= 30 else  # ≥ 30 → Hot
+    "Warm" if t >= 20 else  # 20–29 → Warm
+    "Cold"  # < 20 → Cold
+    for t in temps  # Loop through temperatures
+]
+
+print(categories)
+```
+
+**Step-by-step:**
+
+1.  Loop through each `t` in `temps`.
+2.  Check `t >= 30`:
+    -   If True → assign `"Hot"` (like 35 and 30)
+3.  Else check `t >= 20`:
+    -   If True → assign `"Warm"` (like 28, 22, 25)
+4.  Else assign `"Cold"` (like 18 and 10)
+5.  Each temperature gets exactly one category.
+
+**Output:** `['Hot', 'Warm', 'Warm', 'Cold', 'Hot', 'Cold', 'Warm']`
+
+**Tip:** You can chain as many `if–else` conditions as needed to mimic `elif` logic in a single comprehension. Just remember that they're evaluated left to right, and the first matching condition wins.
+
+##### Filtering + Conditional Output
+
+You can also combine **filtering (`if` at the end)** with **conditional expressions** inside the comprehension. This gives you maximum flexibility: transform values differently based on one condition, then filter the results based on another condition.
+
+```{python}
+numbers = range(1, 16)
+
+# Double even numbers, keep odd numbers the same, only include numbers < 10
+
+processed = [num * 2 if num % 2 == 0 else num for num in numbers if num < 10]
+
+print(processed)
+```
+
+**Step-by-step:**
+
+1.  Loop through numbers 1–15.
+2.  Filter (at the end): only include numbers \< 10 (so 1-9 are considered).
+3.  Expression (at the beginning):
+    -   If even → double it (2→4, 4→8, 6→12, 8→16)
+    -   If odd → keep as-is (1→1, 3→3, 5→5, 7→7, 9→9)
+4.  Numbers 10-15 are excluded before transformation even happens.
+
+**Output:** `[1, 4, 3, 8, 5, 12, 7, 16, 9]`
+
+**Order of Operations:** Python first filters the items (the `if` at the end), then applies the transformation expression to each item that passed the filter.
+
+#### Nested Comprehensions (2D Lists)
+
+List comprehensions can also loop over multiple levels of data, like lists of lists (2D lists or matrices). This is called a **nested comprehension**. While it might look complex at first, it follows the same left-to-right reading pattern as nested for-loops.
+
+```{python}
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+# Flatten the matrix using a nested comprehension
+flattened = [num for row in matrix for num in row]
+print(flattened)
+```
+
+**Explanation and step-by-step overview:**
+
+-   **First loop:** `for row in matrix` — Loop through each row in matrix (each row is a list).
+
+-   **Second loop:** `for num in row` — Then loop through each num in that row.
+
+-   **Expression:** `num` — Collect each num into a new flat list.
+
+-   **Reading order:** Read left to right, just like you would write nested for-loops.
+
+This is equivalent to the following traditional nested loop, but much shorter and cleaner:
+
+```{python}
+# Traditional approach (equivalent to the comprehension above)
+flattened_traditional = []
+for row in matrix:
+    for num in row:
+        flattened_traditional.append(num)
+        
+print(flattened_traditional)
+```
+
+**Output:** `[1, 2, 3, 4, 5, 6, 7, 8, 9]`
+
+**Visualization:** The 3×3 matrix is "flattened" into a single list of 9 numbers, preserving the order from left to right, top to bottom.
+
+#### Quick Recap: List Comprehensions
+
+| Concept | Syntax | Description | Example |
+|------------------|------------------|-------------------|------------------|
+| Basic | `[x for x in iterable]` | Loop through values and collect them | `[n for n in range(5)]` |
+| Filter | `[x for x in iterable if condition]` | Include only items meeting condition (filter at the end) | `[n for n in range(10) if n%2==0]` |
+| Conditional | `[expr_if_true if cond else expr_if_false for x in iterable]` | Change output based on condition (all items included) | `["even" if n%2==0 else "odd" for n in range(6)]` |
+| Chained / `elif` | `[expr1 if cond1 else expr2 if cond2 else expr3 for x in iterable]` | Multiple condition branches (cascading logic) | `["High" if s>=90 else "Medium" if s>=70 else "Low" for s in scores]` |
+| Nested | `[item for sublist in list_of_lists for item in sublist]` | Flatten or loop through nested lists (read left to right) | `[num for row in matrix for num in row]` |
+
+#### Key Ideas
+
+-   **Performance:** List comprehensions are faster than traditional loops because they're optimized at the interpreter level.
+-   **Readability:** Keep comprehensions readable — if it gets too complex, break it into multiple lines or use a traditional loop.
+-   **Use cases:** Use comprehensions when transforming or filtering data; use traditional loops for more complex logic with multiple operations.
+-   **Memory:** For very large datasets, consider using generator expressions `(x for x in iterable)` instead of list comprehensions to save memory.
+
+## Strings and String Manipulation

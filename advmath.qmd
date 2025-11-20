@@ -1,0 +1,1717 @@
+---
+title: "Calculus and Linear Algebra"
+format: html
+execute: 
+  warning: false
+  error: false
+---
+
+
+```{r, warning=FALSE, echo=FALSE}
+library(reticulate)
+use_condaenv("r-reticulate", required = TRUE)
+```
+# What Is a Derivative?
+
+- A **derivative** represents the **rate of change** of a function with respect to a variable.
+- It is the **slope** of the tangent line at any point on a function.
+- In simple terms:
+  \[
+  \text{Derivative} = \frac{\Delta y}{\Delta x}
+  \]
+Where $\Delta$ = rate of change
+
+---
+
+# Why Do We Use Derivatives?
+
+* We use derivatives to:
+     + Understand **how a quantity changes**.
+     + Find **maximum** and **minimum** values.
+     + Model **speed**, **growth**, **decay**, and more.
+
+* Examples:
+     + How fast is revenue increasing?
+     + When is profit at its maximum?
+
+---
+
+## A Simple Function and Its Slope
+
+* Let's start with:
+$$
+f(x) = x^2
+$$
+
+* We can plot it in R and look at the slope at a few points.
+```{r}
+library(tidyverse)
+
+# Define the function and its derivative
+f <- function(x) x^2
+df <- data.frame(x = seq(-5, 5, by = 0.1))
+df$fx <- f(df$x) #applying function x^2
+
+# Key points
+key_points <- data.frame(x = c(-2, 0, 2), fx = f(c(-2, 0, 2)))
+
+# Plot using ggplot2
+ggplot(df, aes(x = x, y = fx)) +
+  geom_line(color = "blue") +
+  geom_vline(xintercept = c(-2, 0, 2), linetype = "dashed", color = "gray") +
+  geom_point(data = key_points, aes(x = x, y = fx), color = "red") +
+  labs(y = "f(x)", title = "Plot of f(x) = x^2") +
+  theme_minimal()
+
+```
+
+# Calculating the Derivative
+
+* The exact derivative of $f(x) = x^2$ is $f'(x) = 2x$
+* The function \( f(x) = x^2 \) is a simple power function where the exponent is 2. 
+* To find its derivative, we apply the **power rule** from calculus, which states that if \( f(x) = x^n \), then the derivative is \( f'(x) = n \cdot x^{n-1} \). 
+* In this case, \( n = 2 \), so taking the derivative gives \( f'(x) = 2 \cdot x^{2-1} = 2x \). 
+* This derivative represents the slope of the tangent line to the curve at any point \( x \), and it tells us how quickly the value of \( f(x) \) is changing at that point.
+
+# Using R to Calculate the Derivative
+* R can compute symbolic derivatives using expression() and D():
+```{r}
+expr <- expression(x^2)
+D(expr, "x")
+
+```
+
+* The function _D(expr, "x")_ then tells R to take the derivative of this expression with respect to \( x \). The output is _2 * x_, which is the correct symbolic derivative of \( x^2 \) using basic calculus rules. 
+
+
+# The Slope as a Limit
+
+* The derivative at a point represents the slope of the tangent line to the function at that point. This slope is found by calculating the **limit of the average rate of change** over a small interval. 
+
+* Specifically, for a function \( f(x) \), the derivative at \( x \) is defined as:
+
+$$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$$
+
+* This expression calculates the slope of the secant line between the points \( x \) and \( x + h \), and as \( h \) approaches zero, the secant line becomes the tangent line. Therefore, the derivative gives the instantaneous rate of change of the function at the point \( x \).
+* From our earlier formula we stated that 
+  \[
+  \text{Derivative} = \frac{\Delta y}{\Delta x}
+  \]
+  
+  Here:
+
+\[
+h \equiv \Delta x
+\]
+\[
+f(x + h) - f(x) \equiv \Delta y
+\] And therefore,
+\[
+\frac{f(x + h) - f(x)}{h} = \frac{\Delta y}{\Delta x}
+\]
+
+* This expression computes the average rate of change of the function over a small interval of length \( h \). As \( h \to 0 \), this formula becomes the definition of the derivative, giving the instantaneous rate of change of the function at the point \( x \).
+
+
+* Let’s approximate the slope of $f(x) = x^2$ at $x = 2$ using a small value of $h$:
+
+```{r}
+x <- 2
+h <- 0.0001
+slope_approx <- (f(x + h) - f(x)) / h
+slope_approx  # Should be close to 4
+```
+
+
+
+
+# Visualizing with Secant Line
+
+* Why $h$ matters: This graph shows how we estimate the derivative when we don’t yet know the exact derivative. It’s the foundation of the concept of differentiation.
+* As we shrink $h$, the secant line (which connects two points) approaches the tangent line (which touches at just one point).
+* As we went up one unit in x, we went up four units in f(x) (i.e., the slope is 4 as measured earlier mathematically). 
+
+```{r}
+# Choose x and h
+x0 <- 1
+h <- 1
+x1 <- x0 + h
+
+# Points on the curve
+y0 <- f(x0)
+y1 <- f(x1)
+
+# Secant slope
+slope_secant <- (y1 - y0) / (x1 - x0)
+
+# Define secant line function
+secant_line <- function(x) slope_secant * (x - x0) + y0
+
+# Add secant line to df
+df$secant <- secant_line(df$x)
+
+# Highlighted points
+points_df <- data.frame(x = c(x0, x1), y = c(y0, y1))
+
+# Plot
+ggplot(df, aes(x = x)) +
+  geom_line(aes(y = fx), color = "blue", size = 1.2) +
+  geom_line(aes(y = secant), color = "green", linetype = "dashed") +
+  geom_point(data = points_df, aes(x = x, y = y), color = "red") +
+  geom_text(data = points_df, aes(x = x, y = y + 0.5, 
+             label = paste0("(", round(x,1), ", ", round(y,1), ")"))) +
+  labs(title = "Slope as a Limit: Secant Approximates Tangent",
+       subtitle = "f(x) = x²; Secant line between x = 1 and x = 2",
+       y = "f(x)", x = "x") +
+  theme_minimal()
+
+```
+
+
+# Visualizing with Known Derivative Function
+
+* Let’s visualize $f(x) = x^2$ and its derivative $f'(x) = 2x$ across a range of values. 
+* This tells us that for every value of $x$, we see the value of the slope of the tangent line at that point.
+* Because the derivative has already been calculated exactly (analytically) using calculus. For example, for $f(x) = x^2$, we know $f'(x) = 2x$, and we just graph both.
+* It’s a global look at the whole slope behavior, with no approximation.
+```{r, message=FALSE}
+
+f_prime <- function(x) 2 * x
+
+# Adding to df dataset
+df$fpx <- f_prime(df$x) #applying function 2*x
+
+#Plot
+ggplot(df, aes(x = x)) +
+  geom_line(aes(y = fx, color = "f(x) = x^2")) +
+  geom_line(aes(y = fpx, color = "f'(x) = 2x")) +
+  labs(title = "Function and Its Derivative",
+       y = "Value", color = "Legend") +
+  theme_minimal()
+
+
+```
+
+# Tangent Line 
+* The tangent line shows the instantaneous rate of change — a more abstract idea, because it involves a limit as the two points get infinitely close. It's the foundation of derivatives and allows us to talk about velocity at a specific instant, marginal cost, and more.
+* We are essentially shrinking the secant line as the second point moves closer to the first. 
+
+* $f(x)=x^2$ at $x=1$
+
+
+```{r}
+# Point of tangency
+x0 <- 1
+y0 <- f(x0)
+slope <- f_prime(x0)
+
+# Tangent line function
+tangent_line <- function(x) slope * (x - x0) + y0
+
+# Add Tangent_line vector to dataset
+df$tangent <- tangent_line(df$x)
+
+# Plot
+ggplot(df, aes(x = x)) +
+  geom_line(aes(y = fx, color = "f(x) = x^2")) +
+  geom_line(aes(y = tangent, color = "Tangent at x = 1"), linetype = "dashed") +
+  geom_point(aes(x = x0, y = y0), color = "red", size = 3) +
+  labs(title = "Tangent Line at x = 1",
+       y = "Value", color = "Legend") +
+  theme_minimal()
+
+
+```
+
+## Sine and Its Derivative
+
+* We explore the function \( f(x) = \sin(x) \) and its derivative \( f'(x) = \cos(x) \). The derivative of a function tells us the slope of the tangent line at any point. For trigonometric functions like sine, the derivative reveals how the rate of change behaves across the domain.
+
+\[
+\frac{d}{dx} \sin(x) = \cos(x)
+\]
+
+* We'll visualize both \( \sin(x) \) and \( \cos(x) \) to see how the function and its rate of change are related.
+
+
+# Derivative of a Trigonometric Function
+
+* $f(x) = \sin(x) \Rightarrow f'(x) = \cos(x)
+$
+```{r}
+# Create data
+df_trig <- data.frame(x = seq(0, 2 * pi, by = 0.1))
+df_trig$fx <- sin(df_trig$x)
+df_trig$fpx <- cos(df_trig$x)
+
+# Plot sin(x) and cos(x)
+ggplot(df_trig, aes(x = x)) +
+  geom_line(aes(y = fx, color = "f(x) = sin(x)"), size = 1.2) +
+  geom_line(aes(y = fpx, color = "f'(x) = cos(x)"), size = 1.2) +
+  labs(title = "Sine and Its Derivative",
+       y = "Value", color = "Legend") +
+  theme_minimal()
+```
+
+
+
+# Interpreting the Derivative
+
+* Observe that the peaks and valleys of \( \sin(x) \) occur where the slope (i.e., derivative) is zero — which is exactly where \( \cos(x) \) crosses the x-axis.
+
+     + When \( \sin(x) \) is **increasing**, \( \cos(x) \) is **positive**.
+     + When \( \sin(x) \) is **decreasing**, \( \cos(x) \) is **negative**.
+     + The maximum and minimum of \( \sin(x) \) align with zeros of \( \cos(x) \), reinforcing that a derivative is zero at extrema.
+* This visually confirms that:
+\[
+\frac{d}{dx} \sin(x) = \cos(x)
+\]
+
+
+# Common Functions and Their Derivatives
+
+<!-- $$ -->
+<!-- \begin{array}{|l|l|l|} -->
+<!-- \hline -->
+<!-- \textbf{Function Type} & \textbf{Function} & \textbf{Derivative} \\ -->
+<!-- \hline -->
+<!-- \text{Constant} & c & 0 \\ -->
+<!-- \text{Line} & x & 1 \\ -->
+<!--            & ax & a \\ -->
+<!-- \text{Square} & x^2 & 2x \\ -->
+<!-- \text{Square Root} & \sqrt{x} & \frac{1}{2}x^{-1/2} \\ -->
+<!-- \text{Exponential} & e^x & e^x \\ -->
+<!--                   & a^x & \ln(a) \cdot a^x \\ -->
+<!-- \text{Logarithms} & \ln(x) & \frac{1}{x} \\ -->
+<!--                   & \log_a(x) & \frac{1}{x \ln(a)} \\ -->
+<!-- \hline -->
+<!-- \end{array} -->
+<!-- $$ -->
+
+# Trigonometric and Inverse Trigonometric Derivatives
+
+Assume \( x \) is in radians.
+
+<!-- $$ -->
+<!-- \begin{array}{|l|l|l|} -->
+<!-- \hline -->
+<!-- \textbf{Function Type} & \textbf{Function} & \textbf{Derivative} \\ -->
+<!-- \hline -->
+<!-- \text{Trigonometric} & \sin(x) & \cos(x) \\ -->
+<!--                      & \cos(x) & -\sin(x) \\ -->
+<!--                      & \tan(x) & \sec^2(x) \\ -->
+<!-- \text{Inverse Trig} & \sin^{-1}(x) & \frac{1}{\sqrt{1 - x^2}} \\ -->
+<!--                     & \cos^{-1}(x) & -\frac{1}{\sqrt{1 - x^2}} \\ -->
+<!--                     & \tan^{-1}(x) & \frac{1}{1 + x^2} \\ -->
+<!-- \hline -->
+<!-- \end{array} -->
+<!-- $$ -->
+
+## Derivative Rules
+
+$$
+\begin{array}{|l|l|l|}
+\hline
+\textbf{Rule} & \textbf{Function} & \textbf{Derivative} \\
+\hline
+\text{Multiplication by Constant} & c f & c f' \\
+\text{Power Rule} & x^n & n x^{n-1} \\
+\text{Sum Rule} & f + g & f' + g' \\
+\text{Difference Rule} & f - g & f' - g' \\
+\text{Product Rule} & fg & f g' + f' g \\
+\text{Quotient Rule} & \frac{f}{g} & \frac{f' g - g' f}{g^2} \\
+\text{Reciprocal Rule} & \frac{1}{f} & -\frac{f'}{f^2} \\
+\hline
+\end{array}
+$$
+
+## Chain Rule Variants
+
+<!-- $$ -->
+<!-- \begin{array}{|l|l|l|} -->
+<!-- \hline -->
+<!-- \textbf{Form} & \textbf{Expression} & \textbf{Derivative} \\ -->
+<!-- \hline -->
+<!-- \text{Prime Notation} & f(g(x)) & f'(g(x)) \cdot g'(x) \\ -->
+<!-- \text{Composition Notation} & f \circ g & (f' \circ g) \cdot g' \\ -->
+<!-- \text{Leibniz Notation} & \frac{dy}{dx} & \frac{dy}{du} \cdot \frac{du}{dx} \\ -->
+<!-- \hline -->
+<!-- \end{array} -->
+<!-- $$ -->
+
+
+## From Slopes to Gradients
+
+- In one variable, the **slope** of a function tells us how steeply the function increases or decreases:
+  \[
+  \text{slope} = \frac{\Delta y}{\Delta x}
+  \]
+- For example, if \( f(x) = x^2 \), the slope at any point is:
+  \[
+  f'(x) = 2x
+  \]
+- This slope tells us the direction and steepness of the curve at a specific point.
+
+---
+
+## What Is a Gradient?
+
+- In multiple dimensions, we generalize the idea of slope to the **gradient**.
+- The **gradient** is a vector of partial derivatives:
+
+\[
+\nabla f(x, y) = \left[ \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y} \right]
+\]
+
+- It points in the direction of **steepest ascent** of a function.
+- The gradient gives us the rate of change in each direction.
+
+---
+
+## Visualizing Gradient with a 3D Surface
+
+Let’s take a simple surface:
+
+\[
+f(x, y) = x^2 + y^2
+\]
+
+- The gradient is:
+
+\[
+\nabla f(x, y) = [2x, 2y]
+\]
+
+- It always points **away from the origin**, where the minimum is.
+- This is important because many optimization methods (like gradient descent) use the gradient to **navigate the surface**.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+df <- expand.grid(x = seq(-2, 2, length.out = 20),
+                  y = seq(-2, 2, length.out = 20)) %>%
+  mutate(z = x^2 + y^2,
+         dx = 2 * x,
+         dy = 2 * y)
+
+ggplot(df, aes(x, y)) +
+  geom_contour(aes(z = z), bins = 15, color = "gray") +
+  geom_segment(aes(xend = x + dx * 0.1, yend = y + dy * 0.1), 
+               arrow = arrow(length = unit(0.1, "inches")), 
+               color = "blue") +
+  labs(title = "Gradient Vectors on f(x, y) = x² + y²",
+       x = "x", y = "y") +
+  theme_minimal()
+```
+
+* Gradients are used to \textbf{optimize functions} — to find minimum cost, maximum profit, or best-fit models.
+     + In machine learning, we use an algorithm called gradient descent:
+     + Move in the opposite direction of the gradient to reduce error.
+     + Repeat until the algorithm converges on a minimum.
+
+    \[
+    \theta_{\text{new}} = \theta_{\text{old}} - \alpha \cdot \nabla f(\theta)
+    \]
+* $\alpha$ is the learning rate, and \( \nabla f(\theta) \) is the gradient.
+* This powers tools like \textit{linear regression}, \textit{logistic regression}, and neural networks.
+
+
+# Gradient Example
+
+\( f(x, y) = x^2 + y^2 \)
+
+We are given the function:
+
+\[
+f(x, y) = x^2 + y^2
+\]
+
+### Step 1: Compute Partial Derivatives
+
+\[
+\frac{\partial f}{\partial x} = 2x, \quad \frac{\partial f}{\partial y} = 2y
+\]
+
+At the point \( (1, 2) \):
+
+\[
+\nabla f(1, 2) = \left[ 2(1), 2(2) \right] = [2, 4]
+\]
+
+The gradient vector at this point is:
+
+\[
+\nabla f(1, 2) = [2, 4]
+\]
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+
+
+# Create a grid of x and y values
+df <- expand.grid(x = seq(-3, 3, length.out = 20),
+                  y = seq(-3, 3, length.out = 20))
+
+# Define the function and gradients
+df$z <- with(df, x^2 + y^2)
+df$dx <- with(df, 2 * x)
+df$dy <- with(df, 2 * y)
+
+# Highlight point (1, 2)
+point <- data.frame(x = 1, y = 2, dx = 2, dy = 4)
+
+# Plot
+ggplot(df, aes(x, y)) +
+  geom_contour(aes(z = z), bins = 15, color = "gray") +
+  geom_segment(data = point, aes(xend = x + dx * 0.2, yend = y + dy * 0.2),
+               arrow = arrow(length = unit(0.15, "inches")),
+               color = "blue", size = 1.2) +
+  geom_point(data = point, aes(x = x, y = y), color = "red", size = 3) +
+  labs(title = "Gradient Vector at (1, 2)",
+       subtitle = "Function: f(x, y) = x² + y²",
+       x = "x", y = "y") +
+  theme_minimal()
+```
+
+# 3d plot
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(plotly)
+
+# # Generate grid
+# grid <- expand.grid(x = seq(-3, 3, length.out = 30),
+#                     y = seq(-3, 3, length.out = 30)) %>%
+#      mutate(z = x^2 + y^2,
+#             dx = 2 * x,
+#             dy = 2 * y)
+# 
+# # Highlight point (1, 2)
+# pt <- data.frame(x = 1, y = 2, dx = 2, dy = 4)
+# 
+# # Create 3D surface using plotly
+# x <- seq(-3, 3, length.out = 50)
+# y <- seq(-3, 3, length.out = 50)
+# z <- outer(x, y, function(x, y) x^2 + y^2)
+# 
+# plot_ly(x = ~x, y = ~y, z = ~z) %>%
+#      add_surface(colorscale = "Viridis") %>%
+#      layout(title = "3D Surface of f(x, y) = x^2 and y^2",
+#             scene = list(xaxis = list(title = "x"),
+#                          yaxis = list(title = "y"),
+#                          zaxis = list(title = "f(x, y)")))
+```
+
+
+```{r}
+# Define the function as a symbolic expression
+f <- expression(x^2 + y^2)
+
+# Partial derivative with respect to x
+D(f, "x")
+# Output: 2 * x
+
+# Partial derivative with respect to y
+D(f, "y")
+# Output: 2 * y
+
+```
+
+
+---
+# probl
+
+
+```{r}
+# P(X < 78)
+pnorm(78, mean = 80, sd = 6)
+#There is approximately a 36.9% chance that a single student scores below 78.
+
+#P(Xbar < 78) given 4 repititions
+#Suppose a school selects a random sample of 4 students and computes their average score on the same exam. #What is the probability that the average score of the 4 students is less than 78?
+pnorm(78, mean = 80, sd = 6/sqrt(4))
+#There is approximately a 25.2% chance that the average score of 4 students is below 78.
+```
+
+# transpose a matrix 
+
+```{r}
+A <- matrix(1:6, 3, 2, byrow=T); A
+t(A)
+```
+
+# Vectors
+
+* In linear algebra, a vector is a quantity that has both magnitude and direction. More formally:
+     + A vector is an ordered list of numbers, which can represent a point in space or a direction from the origin. Vectors are often written as a column (or row) of numbers and belong to a vector space.
+     + Vectors can represent data points, directions, velocities, or coefficients in systems of equations, and they are subject to operations like addition, scalar multiplication, and dot or cross products.
+
+
+# Why Vectors Matter in Analytics
+
+* Vectors form the foundation of:
+     + Linear models
+     + Gradient-based optimization
+     + PCA and dimensionality reduction
+* In business analytics:
+     + Vectors describe customer profiles, asset returns, feature weights, etc.
+* Understanding vectors helps in understanding directional change and relationships
+
+
+# Vector as a Directed Segment
+
+* Let A and B be two points. A directed line segment from A to B is denoted by: 
+
+$$\overrightarrow{AB}$$
+
+*  This directed line segment constitutes a vector. If you can move the line segment to another line segment with the same direction and length, they constitute the same vector. 
+* Notation emphasizes direction, not just location
+
+
+
+# Components of a Vector
+
+* Vectors can be expressed as ordered pairs/triples:
+* For example, the vector $$\mathbf{v} = \begin{bmatrix} 2 \\ -1 \\ 3 \end{bmatrix}$$
+
+is a 3-dimensional vector, $\mathbb{R}^3$ where each entry is a component along one of the coordinate axes. 
+
+
+# Position vs. Direction
+
+* Important distinction:
+     + A point: $B=(2,3)$
+     + A vector: $\overrightarrow{AB}$
+* Shows direction and displacement
+* Many vectors can have the same direction and magnitude but start from different locations
+
+
+
+# Length of Vector
+
+* The length of a vector $\vec{v}$ is denoted by $\|\vec{v}\|$, or in shorthand by $|\vec{v}|$.
+\begin{equation}
+\|\vec{v}\|
+\tag{2.3}
+\end{equation}
+
+* The length of a vector is a **scalar**, which just means that it is a regular number, such as $5$ or $3.2$. The term *scalar* is used to emphasize that it is just a number and not a vector or a point.
+
+* Note that the order of the points is important. That is, if you change the order of $A$ and $B$, another vector, $\vec{BA}$, is obtained. It has the **opposite direction**, but the **same length**, i.e.,
+$$
+\|\vec{AB}\| = \|\vec{BA}\|.
+$$
+
+Even $\vec{AA}$ is a vector, which is called the **zero vector**, as shown in the definition below.
+
+
+
+# Vector Addition
+
+* Vector addition combines two vectors to form a third vector.
+* If 
+  $$
+  \vec{u} = \begin{bmatrix} u_1 \\ u_2 \end{bmatrix}, \quad \vec{v} = \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}
+  $$
+  then their sum is:  
+  $$
+  \vec{u} + \vec{v} = \begin{bmatrix} u_1 + v_1 \\ u_2 + v_2 \end{bmatrix}
+  $$
+* Addition is **component-wise**: each element is added separately.
+
+* Think of it as moving in one direction, then continuing in another.
+
+# Visualizing Vector Addition
+
+* Graphically, vectors are added using the **tip-to-tail method**:
+  * Place the tail of $\vec{v}$ at the tip of $\vec{u}$
+  * The resulting vector $\vec{u} + \vec{v}$ goes from the tail of $\vec{u}$ to the tip of $\vec{v}$
+
+* Example:  
+  $$
+  \vec{u} = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad \vec{v} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}
+  $$
+  $$
+  \vec{u} + \vec{v} = \begin{bmatrix} 3 \\ 4 \end{bmatrix}
+  $$
+
+* Vector addition is **commutative**:
+  $$
+  \vec{u} + \vec{v} = \vec{v} + \vec{u}
+  $$
+  
+# Vector Multiplication: Dot Product
+
+* The **dot product** (or scalar product) of two vectors $\vec{u}$ and $\vec{v}$ is:
+  $$
+  \vec{u} \cdot \vec{v} = u_1v_1 + u_2v_2 + \dots + u_nv_n
+  $$
+
+* For example, if  
+  $$
+  \vec{u} = \begin{bmatrix} 2 \\ 3 \end{bmatrix}, \quad \vec{v} = \begin{bmatrix} 4 \\ 1 \end{bmatrix}
+  $$
+  then:  
+  $$
+  \vec{u} \cdot \vec{v} = 2 \cdot 4 + 3 \cdot 1 = 8 + 3 = 11
+  $$
+
+* The result is a **scalar**, not a vector.
+
+# Dot Product: Interpretation and Uses
+
+* The dot product also equals:
+  $$
+  \vec{u} \cdot \vec{v} = \|\vec{u}\| \, \|\vec{v}\| \cos(\theta)
+  $$
+  where $\theta$ is the angle between the vectors.
+
+* Interpretation:
+  * If $\theta = 0^\circ$ (vectors in same direction), $\vec{u} \cdot \vec{v}$ is **positive and maximal**
+  * If $\theta = 90^\circ$ (vectors are perpendicular), $\vec{u} \cdot \vec{v} = 0$
+  * If $\theta = 180^\circ$ (opposite directions), $\vec{u} \cdot \vec{v}$ is **negative**
+
+# **Business Insight**:  
+* Dot product is used in projections, cosine similarity, and determining alignment between data vectors (e.g., in recommendation systems).
+
+
+# Cosine Similarity: Definition
+
+* **Cosine similarity** measures the **cosine of the angle** between two non-zero vectors.
+* It captures **directional similarity**, regardless of magnitude.
+* The formula is:
+  $$
+  \text{Cosine Similarity} = \cos(\theta) = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \, \|\vec{v}\|}
+  $$
+
+* Where:
+  * $\vec{u} \cdot \vec{v}$ is the **dot product**
+  * $\|\vec{u}\|$ and $\|\vec{v}\|$ are the **magnitudes (lengths)** of the vectors
+  * $\theta$ is the **angle** between the vectors
+
+* Result is a value between **-1 and 1**:
+  * **1**: same direction (high similarity)
+  * **0**: orthogonal (no similarity)
+  * **-1**: opposite direction
+
+# Cosine Similarity: Applications
+
+* **Why use it?**  
+  Magnitude may not matter — just the **orientation** (pattern) matters.
+
+* **Common uses:**
+  * **Text mining / NLP**: compare documents represented as word vectors (TF-IDF)
+  * **Recommendation systems**: match user preferences or item features
+  * **Clustering**: group similar observations based on direction in high-dimensional space
+
+* **Example:**
+  Two customers have these purchase patterns:
+  $$
+  \vec{u} = \begin{bmatrix} 3 & 0 & 1 \end{bmatrix}, \quad
+  \vec{v} = \begin{bmatrix} 6 & 0 & 2 \end{bmatrix}
+  $$
+  Then:
+  $$
+  \cos(\theta) = \frac{(3)(6) + (0)(0) + (1)(2)}{\sqrt{3^2 + 0^2 + 1^2} \cdot \sqrt{6^2 + 0^2 + 2^2}} = \frac{20}{\sqrt{10} \cdot \sqrt{40}} \approx 1
+  $$
+  → Nearly identical pattern of behavior, though one bought more.
+
+* Cosine similarity focuses on **behavioral pattern**, not quantity.
+
+
+# Cosine Similarity: Simple Example
+
+* Let two vectors be:
+  $$
+  \vec{u} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}, \quad
+  \vec{v} = \begin{bmatrix} 2 \\ 3 \end{bmatrix}
+  $$
+
+**Step 1: Compute the dot product**
+$$
+\vec{u} \cdot \vec{v} = 1 \cdot 2 + 2 \cdot 3 = 2 + 6 = 8
+$$
+
+**Step 2: Compute the magnitudes**
+$$
+\|\vec{u}\| = \sqrt{1^2 + 2^2} = \sqrt{5}, \quad
+\|\vec{v}\| = \sqrt{2^2 + 3^2} = \sqrt{13}
+$$
+
+**Step 3: Plug into the cosine similarity formula**
+$$
+\cos(\theta) = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \cdot \|\vec{v}\|} =
+\frac{8}{\sqrt{5} \cdot \sqrt{13}} \approx \frac{8}{8.062} \approx 0.993
+$$
+
+* The result is **close to 1**, indicating that the vectors point in **almost the same direction**.
+
+# From Dot Product to Cosine Similarity
+
+* The **dot product** of two vectors is:
+  $$
+  \vec{u} \cdot \vec{v} = u_1v_1 + u_2v_2 + \dots + u_nv_n
+  $$
+
+* But the dot product also tells us something **geometric**:
+  $$
+  \vec{u} \cdot \vec{v} = \|\vec{u}\| \, \|\vec{v}\| \cos(\theta)
+  $$
+  where:
+  * $\|\vec{u}\|$ and $\|\vec{v}\|$ are the **lengths** (magnitudes) of the vectors
+  * $\theta$ is the **angle** between them
+
+* Rearranging this gives us the formula for **cosine similarity**:
+  $$
+  \cos(\theta) = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \cdot \|\vec{v}\|}
+  $$
+
+* **Cosine similarity** focuses on **direction**, while the dot product combines both direction and magnitude.
+
+# Cosine Similarity: Customer Behavior Example
+
+Let two customers have these purchase vectors:
+$$
+\vec{u} = \begin{bmatrix} 3 \\ 0 \\ 1 \end{bmatrix}, \quad
+\vec{v} = \begin{bmatrix} 6 \\ 0 \\ 2 \end{bmatrix}
+$$
+
+
+**Step 1: Dot Product**
+$$
+\vec{u} \cdot \vec{v} = (3)(6) + (0)(0) + (1)(2) = 18 + 0 + 2 = 20
+$$
+
+**Step 2: Magnitudes**
+$$
+\|\vec{u}\| = \sqrt{3^2 + 0^2 + 1^2} = \sqrt{10}, \quad
+\|\vec{v}\| = \sqrt{6^2 + 0^2 + 2^2} = \sqrt{40}
+$$
+
+**Step 3: Cosine Similarity**
+$$
+\cos(\theta) = \frac{20}{\sqrt{10} \cdot \sqrt{40}} = \frac{20}{\sqrt{400}} = \frac{20}{20} = 1
+$$
+
+* *Interpretation**:  
+Although one customer purchased more, the cosine similarity is **1**, indicating their **purchase patterns are directionally identical**.
+
+
+# Introduction to Gaussian Elimination
+
+* **Gaussian Elimination** is a method for solving systems of linear equations.
+* The process converts a system into a simpler **row echelon form** using:
+  - **Row swapping**
+  - **Scaling rows**
+  - **Row replacement**
+
+* Final goal: solve the system using **back-substitution**.
+
+# Example System of Equations
+
+We want to solve the system:
+$$
+\begin{aligned}
+x + 2y + z &= 6 \\
+2x + 3y + 3z &= 14 \\
+x + y + z &= 8
+\end{aligned}
+$$
+
+We'll use **Gaussian Elimination** to find the solution.
+
+# Step 1: Augmented Matrix
+
+Write the system as an augmented matrix:
+$$
+\left[
+\begin{array}{ccc|c}
+1 & 2 & 1 & 6 \\
+2 & 3 & 3 & 14 \\
+1 & 1 & 1 & 8
+\end{array}
+\right]
+$$
+
+Our goal is to use row operations to make this into **row echelon form**.
+
+# Row Operations
+
+There are 3 valid operations in Gaussian Elimination:
+
+1. Swap two rows: $R_i \leftrightarrow R_j$
+2. Multiply a row by a scalar: $k \cdot R_i$
+3. Replace a row: $R_j \leftarrow R_j - k \cdot R_i$
+
+These operations do **not change the solution** of the system.
+
+# Step 2: Eliminate Below First Pivot
+
+Start with pivot in row 1, column 1 (value = 1):
+
+Use $R_2 \leftarrow R_2 - 2 \cdot R_1$ and $R_3 \leftarrow R_3 - R_1$:
+$$
+\left[
+\begin{array}{ccc|c}
+1 & 2 & 1 & 6 \\
+0 & -1 & 1 & 2 \\
+0 & -1 & 0 & 2
+\end{array}
+\right]
+$$
+
+# Step 3: Eliminate Below Second Pivot
+
+Use the second pivot in row 2, column 2 (value = -1):
+
+Make $R_3 \leftarrow R_3 - R_2$:
+$$
+\left[
+\begin{array}{ccc|c}
+1 & 2 & 1 & 6 \\
+0 & -1 & 1 & 2 \\
+0 & 0 & -1 & 0
+\end{array}
+\right]
+$$
+
+* Now we have **row echelon form**.
+
+# Step 4: Back-Substitution and Final Solution
+
+* Start from the bottom row:
+$$
+-1z = 0 \Rightarrow z = 0
+$$
+
+* Move to the second row:
+$$
+-1y + 1z = 2 \Rightarrow -y = 2 \Rightarrow y = -2
+$$
+
+* Top row:
+$$
+x + 2y + z = 6 \Rightarrow x + 2(-2) + 0 = 6 \Rightarrow x = 10
+$$
+
+* The final solution to the system is:
+$$
+x = 10, \quad y = -2, \quad z = 0
+$$
+
+
+# What Is a Matrix?
+
+* A **matrix** is a rectangular array of numbers arranged in **rows** and **columns**.
+* Example:
+  $$
+  A = \begin{bmatrix}
+  1 & 2 & 3 \\
+  4 & 5 & 6
+  \end{bmatrix}
+  $$
+
+* This is a **2 × 3 matrix** (2 rows, 3 columns).
+* Matrices are used to represent systems, datasets, and transformations.
+
+# Matrix Notation
+
+* A matrix is typically denoted by uppercase letters (e.g., $A$, $B$, $M$).
+* The element in the $i$-th row and $j$-th column is written as $a_{ij}$.
+
+* For matrix $A$:
+  $$
+  A = \begin{bmatrix}
+  a_{11} & a_{12} \\
+  a_{21} & a_{22}
+  \end{bmatrix}
+  $$
+
+* Dimensions are often written as $m \times n$, where:
+  * $m$ = number of rows
+  * $n$ = number of columns
+
+# Types of Matrices
+
+* **Square matrix**: same number of rows and columns
+* **Zero matrix**: all elements are zero
+* **Identity matrix**: diagonal of 1s, zeros elsewhere
+* **Diagonal matrix**: only diagonal elements may be non-zero
+* **Column matrix**: only one column
+* **Row matrix**: only one row
+
+# Matrix Addition
+
+* Two matrices can be added if they have the **same dimensions**.
+
+* Example:
+  $$
+  A = \begin{bmatrix}
+  1 & 2 \\
+  3 & 4
+  \end{bmatrix}, \quad
+  B = \begin{bmatrix}
+  5 & 6 \\
+  7 & 8
+  \end{bmatrix}
+  $$
+  $$
+  A + B = \begin{bmatrix}
+  6 & 8 \\
+  10 & 12
+  \end{bmatrix}
+  $$
+
+# Scalar Multiplication
+
+* Multiply each element of a matrix by a scalar (single number).
+
+* Example:
+  $$
+  3 \cdot \begin{bmatrix}
+  2 & -1 \\
+  0 & 4
+  \end{bmatrix}
+  = \begin{bmatrix}
+  6 & -3 \\
+  0 & 12
+  \end{bmatrix}
+  $$
+
+# Matrix Multiplication
+
+* You can multiply $A \cdot B$ if **columns of A = rows of B**
+* If $A$ is $m \times n$ and $B$ is $n \times p$, the result is $m \times p$
+
+* Multiply **rows of A** by **columns of B**
+
+* Example:
+  $$
+  \begin{bmatrix}
+  1 & 2 \\
+  3 & 4
+  \end{bmatrix}
+  \cdot
+  \begin{bmatrix}
+  5 \\
+  6
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+  17 \\
+  39
+  \end{bmatrix}
+  $$
+
+# Matrix Multiplication Example
+
+Let:
+$$
+A = \begin{bmatrix} 2 & 1 \\ 0 & 3 \end{bmatrix}, \quad
+B = \begin{bmatrix} 4 \\ 5 \end{bmatrix}
+$$
+
+Matrix $A$ is $2 \times 2$ and matrix $B$ is $2 \times 1$ → result is $2 \times 1$
+
+
+**Step 1: Multiply rows of A by the column of B**
+
+Top row:
+$$
+(2)(4) + (1)(5) = 8 + 5 = 13
+$$
+
+Bottom row:
+$$
+(0)(4) + (3)(5) = 0 + 15 = 15
+$$
+
+ 
+
+**Final result:**
+$$
+AB = \begin{bmatrix} 13 \\ 15 \end{bmatrix}
+$$
+
+* his shows how a **2×2** matrix multiplied by a **2×1** column vector gives a **2×1** result.
+
+
+
+# Identity Matrix
+
+* The identity matrix $I$ is a **square matrix** with 1s on the diagonal:
+  $$
+  I = \begin{bmatrix}
+  1 & 0 \\
+  0 & 1
+  \end{bmatrix}
+  $$
+
+* For any matrix $A$ of compatible size:
+  $$
+  AI = IA = A
+  $$
+* Acts like multiplying by 1 for matrices.
+
+# Transpose of a Matrix
+
+* The **transpose** of a matrix $A$, denoted $A^T$, flips rows and columns.
+
+* Example:
+  $$
+  A = \begin{bmatrix}
+  1 & 2 \\
+  3 & 4 \\
+  5 & 6
+  \end{bmatrix} \quad
+  A^T = \begin{bmatrix}
+  1 & 3 & 5 \\
+  2 & 4 & 6
+  \end{bmatrix}
+  $$
+
+* Useful in solving equations and for symmetric matrices.
+
+# Matrix Inverse
+
+* If $A$ is a **square matrix**, its **inverse** $A^{-1}$ satisfies:
+  $$
+  AA^{-1} = A^{-1}A = I
+  $$
+
+* Not all matrices are invertible (must be **nonsingular** with non-zero determinant).
+
+* Used to solve systems:  
+  $$
+  AX = B \Rightarrow X = A^{-1}B
+  $$
+
+# Example: Matrix Inverse (2×2)
+
+Let:
+$$
+A = \begin{bmatrix} 4 & 7 \\ 2 & 6 \end{bmatrix}
+$$
+
+We use the formula for the inverse of a 2×2 matrix:
+$$
+A^{-1} = \frac{1}{ad - bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
+$$
+
+ 
+
+**Step 1: Compute the determinant**
+$$
+\det(A) = (4)(6) - (7)(2) = 24 - 14 = 10
+$$
+
+**Step 2: Plug into the inverse formula**
+$$
+A^{-1} = \frac{1}{10} \begin{bmatrix} 6 & -7 \\ -2 & 4 \end{bmatrix}
+= \begin{bmatrix} 0.6 & -0.7 \\ -0.2 & 0.4 \end{bmatrix}
+$$
+
+* This is the inverse of matrix \( A \).
+
+# What Are Eigenvalues?
+
+* Eigenvalues arise from solving:
+  $$
+  A\vec{v} = \lambda\vec{v}
+  $$
+
+* Where:
+  - \( A \) is a square matrix
+  - \( \vec{v} \) is a nonzero vector (eigenvector)
+  - \( \lambda \) is the **eigenvalue**
+
+* The equation means:  
+  Applying \( A \) to \( \vec{v} \) **scales** it, without changing direction.
+
+# The Eigenvalue Problem
+
+To find eigenvalues, we solve:
+$$
+A\vec{v} = \lambda\vec{v}
+\Rightarrow (A - \lambda I)\vec{v} = 0
+$$
+
+This is a **homogeneous system** that has a nontrivial solution only when:
+$$
+\det(A - \lambda I) = 0
+$$
+
+This is called the **characteristic equation**.
+
+<!-- # Example Matrix -->
+
+<!-- Let: -->
+<!-- $$ -->
+<!-- A = \begin{bmatrix} 4 & 2 \\ 1 & 3 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- We want to find the eigenvalues of matrix \( A \) using the characteristic equation. -->
+
+<!-- # Step 1: Subtract $\lambda I$ -->
+
+<!-- * Form $A - \lambda I$ -->
+
+
+<!-- # Step 2: Compute the Determinant -->
+
+<!-- Set up the characteristic equation: -->
+<!-- $$ -->
+<!-- \det(A - \lambda I) =  -->
+<!-- (4 - \lambda)(3 - \lambda) - (2)(1) = 0 -->
+<!-- $$ -->
+
+<!-- Simplify: -->
+<!-- $$ -->
+<!-- (4 - \lambda)(3 - \lambda) - 2 = \lambda^2 - 7\lambda + 10 = 0 -->
+<!-- $$ -->
+
+<!-- # Step 3: Solve the Characteristic Polynomial -->
+
+<!-- Solve: -->
+<!-- $$ -->
+<!-- \lambda^2 - 7\lambda + 10 = 0 -->
+<!-- $$ -->
+
+<!-- Factor: -->
+<!-- $$ -->
+<!-- (\lambda - 5)(\lambda - 2) = 0 -->
+<!-- $$ -->
+
+<!-- * So, the eigenvalues are: -->
+<!-- $$ -->
+<!-- \lambda_1 = 5, \quad \lambda_2 = 2 -->
+<!-- $$ -->
+
+<!-- # Step 4: Find Eigenvectors (λ = 5) -->
+
+<!-- Plug into \( (A - 5I)\vec{v} = 0 \): -->
+
+<!-- $$ -->
+<!-- A - 5I = \begin{bmatrix} -1 & 2 \\ 1 & -2 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- Solve: -->
+<!-- $$ -->
+<!-- \begin{bmatrix} -1 & 2 \\ 1 & -2 \end{bmatrix} -->
+<!-- \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- Solution: \( y = \frac{1}{2}x \) -->
+
+<!-- → Eigenvector:   -->
+<!-- $$ -->
+<!-- \vec{v}_1 = \begin{bmatrix} 2 \\ 1 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- # Step 5: Find Eigenvectors (λ = 2) -->
+
+<!-- Plug into \( (A - 2I)\vec{v} = 0 \): -->
+
+<!-- $$ -->
+<!-- A - 2I = \begin{bmatrix} 2 & 2 \\ 1 & 1 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- Solve: -->
+<!-- $$ -->
+<!-- \begin{bmatrix} 2 & 2 \\ 1 & 1 \end{bmatrix} -->
+<!-- \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- Solution: \( y = -x \) -->
+
+<!-- → Eigenvector: -->
+<!-- $$ -->
+<!-- \vec{v}_2 = \begin{bmatrix} 1 \\ -1 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- # Final Result -->
+
+<!-- Matrix: -->
+<!-- $$ -->
+<!-- A = \begin{bmatrix} 4 & 2 \\ 1 & 3 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- **Eigenvalues**: -->
+<!-- $$ -->
+<!-- \lambda_1 = 5, \quad \lambda_2 = 2 -->
+<!-- $$ -->
+
+<!-- **Corresponding Eigenvectors**: -->
+<!-- $$ -->
+<!-- \vec{v}_1 = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad -->
+<!-- \vec{v}_2 = \begin{bmatrix} 1 \\ -1 \end{bmatrix} -->
+<!-- $$ -->
+
+<!-- # Why Are Eigenvalues Important? -->
+
+<!-- * **PCA**: directions of max variance (eigenvectors of covariance matrix) -->
+<!-- * **Markov chains**: long-run behavior from eigenvalues -->
+<!-- * **Differential equations**: stability and behavior -->
+<!-- * **Systems of equations**: decoupling and simplification -->
+
+<!-- * Eigenvalues reveal **fundamental structure** in data and models. -->
+
+# Principal Components Analysis
+
+* PCA transforms the original variables into orthogonal (uncorrelated) principal components. These are linear combinations of the original features, ranked by the amount of variance they capture.
+
+```{r, message=FALSE}
+
+data("USArrests")
+
+# Scale the data (important for PCA!)
+usarrests_scaled <- scale(USArrests)
+
+# Run PCA
+pca_result <- prcomp(usarrests_scaled)
+
+# View the proportion of variance explained
+summary(pca_result)
+
+# Scree plot (visualizing how much variance each PC explains)
+plot(pca_result, type = "l", main = "Scree Plot")
+
+# Biplot to visualize both the variables and the observations
+biplot(pca_result, scale = 0)
+
+```
+
+# What PCA tells us: 
+
+* The first principal component (PC1) often captures the contrast between high and low crime states.
+* The second component (PC2) might capture differences in specific crimes (e.g., murder vs rape).
+* Biplot shows which states cluster together and how each variable contributes to the components.
+
+
+# Identity Matrix
+
+- An **identity matrix** is a **square matrix** with:
+  - All **diagonal elements = 1**
+  - All **off-diagonal elements = 0**
+  
+\[
+I = \begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\]
+
+- Denoted by \( I_n \) for an \( n \times n \) matrix
+
+# Identity in Multiplication
+
+- For any \( n \times n \) matrix \( A \):
+
+\[
+A \cdot I_n = I_n \cdot A = A
+\]
+
+- Identity matrix acts like the number **1** in regular multiplication
+
+- Example:
+
+\[
+\begin{bmatrix}
+2 & 3 \\
+4 & 5
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+2 & 3 \\
+4 & 5
+\end{bmatrix}
+\]
+
+# Identity Matrix and Inverse
+
+- The **inverse** of a matrix \( A \), if it exists, is a matrix \( A^{-1} \) such that:
+
+\[
+A \cdot A^{-1} = A^{-1} \cdot A = I
+\]
+
+- Identity matrix is the **result** of multiplying a matrix by its inverse
+
+- Only **square, non-singular** matrices have inverses
+
+# Identity Matrix in R
+
+You can create an identity matrix using `diag()`:
+
+
+```{r}
+diag(3)
+```
+
+## Matrix Multiplication Example
+
+We want to multiply two \(2 \times 2\) matrices:
+
+\[
+\begin{bmatrix}
+0.6 & -0.7 \\
+-0.2 & 0.4
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+4 & 7 \\
+2 & 6
+\end{bmatrix}
+\]
+
+Using matrix multiplication rules:
+
+\[
+\begin{bmatrix}
+(0.6)(4) + (-0.7)(2) & (0.6)(7) + (-0.7)(6) \\
+(-0.2)(4) + (0.4)(2) & (-0.2)(7) + (0.4)(6)
+\end{bmatrix}
+=
+\begin{bmatrix}
+1.0 & 0.0 \\
+0.0 & 1.0
+\end{bmatrix}
+\]
+
+This is the identity matrix \( I_2 \), so:
+
+\[
+\begin{bmatrix}
+0.6 & -0.7 \\
+-0.2 & 0.4
+\end{bmatrix}
+\text{ is the inverse of }
+\begin{bmatrix}
+4 & 7 \\
+2 & 6
+\end{bmatrix}
+\]
+
+
+# Solve
+The `diag()` function in R is used to create or extract diagonal elements of a matrix. When given a single number $n$, `diag(n)` returns an $n \times n$ identity matrix with 1s on the diagonal and 0s elsewhere. If given a vector, `diag()` creates a square matrix with the vector elements placed on the main diagonal. Additionally, if given a matrix as input, `diag()` will extract the values from its main diagonal.
+
+* The `solve()` function in R is used to solve systems of linear equations of the form $Ax = b$, where $A$ is a square matrix of coefficients and $b$ is a vector of constants. The function returns the vector $x$ that satisfies the equation. Internally, `solve()` uses matrix decomposition techniques to efficiently compute the solution. For example, `solve(A, b)` returns the solution to the linear system, while `solve(A)` returns the inverse of matrix $A$, if it exists.
+* Just printing I here would also work. 
+
+```{r}
+I <- diag(3)
+solve(I) #or just I
+
+```
+
+
+* This works for Guassian Elimination problems like we just did. 
+
+```{r}
+A <- matrix(c(
+  1, 2, 1,
+  2, 3, 3,
+  1, 1, 1
+), nrow = 3, byrow = TRUE)
+
+# Right-hand side vector b
+b <- c(6, 14, 8)
+
+# Solve the system Ax = b
+solution <- solve(A, b)
+
+# Show result
+solution
+```
+
+# diag
+
+### Extracting the Diagonal from a Matrix
+
+When `diag()` is applied to a matrix, it returns the values from the **main diagonal** (top-left to bottom-right). This can be useful when you want to isolate or manipulate just the diagonal elements.
+
+```{r}
+
+M <- matrix(c(1, 4, 7,
+              2, 5, 8,
+              3, 6, 9), 
+            nrow = 3, byrow = TRUE)
+
+# Extract the diagonal
+diag(M)
+
+```
+
+
+# Inverse with solve
+
+```{r}
+A <- matrix(c(4, 7,
+              2, 6), 
+            nrow = 2, byrow = TRUE)
+
+solve(A)
+```
+
+# Singular Value Decomposition (SVD)
+
+* **Singular Value Decomposition (SVD)** is a fundamental matrix factorization:
+  $$
+  A = U \Sigma V^T
+  $$
+
+* Where:
+  - \( A \): original \( m \times n \) matrix
+  - \( U \): \( m \times m \) matrix of **left singular vectors**
+  - \( \Sigma \): \( m \times n \) **diagonal matrix** of singular values
+  - \( V^T \): transpose of \( V \), the \( n \times n \) matrix of **right singular vectors**
+
+* Used in **data compression**, **dimensionality reduction**, and **latent structure discovery**.
+
+# Why Use SVD?
+
+* SVD helps decompose complex datasets into simpler, interpretable parts.
+* Key applications:
+  - **Principal Component Analysis (PCA)**
+  - **Recommender systems**
+  - **Image compression**
+  - **Latent Semantic Analysis** in NLP
+
+* It handles **non-square** and **non-invertible** matrices — unlike eigen decomposition which requires square matrices.
+
+# Example: SVD in R
+
+We can compute SVD of a matrix using `svd()` in R.
+
+```{r}
+# Create a matrix
+A <- matrix(c(1, 0, 0, 1, 1, 0), nrow = 2)
+
+# Compute SVD
+svd_result <- svd(A)
+
+# U, D (Sigma), and V
+U <- svd_result$u
+Sigma <- diag(svd_result$d)
+V <- svd_result$v
+# U contains the left singular vectors
+# Sigma contains the singular values 
+#V contains the right singular vectors
+
+```
+
+
+
+
+ 
+
+# SVD for Low-Rank Approximation
+
+* The matrix \( A \) can be approximated using only the first \( k \) singular values:
+  $$
+  A \approx U_k \Sigma_k V_k^T
+  $$
+
+* Retaining just a few top singular values captures most of the structure in the data.
+* This is the basis of **dimensionality reduction** in PCA.
+* Great for compressing images or reducing noise in datasets.
+
+# Uses of SVD
+
+* In machine learning and data science, SVD is widely used for:
+* **Dimensionality reduction** (as in PCA),
+* **Latent semantic analysis** in natural language processing (NLP),
+* **Collaborative filtering** in recommender systems (e.g., matrix completion in Netflix),
+* **Noise reduction** and **data compression**, especially in image processing.
+
+
+```{r}
+A <- matrix(c(2, 1, 0, 3), 2, 2, byrow=T); A
+B <- matrix(c(4, 5), 2, 1); B
+C <- A %*% B; C
+
+```
+
+
+ 
+
+# Table
+* Suppose you have a small table of people’s ratings for two movies. SVD breaks this table into three smaller parts: one that shows people’s preferences, one that shows the importance of each movie, and one that shows how similar the movies are to each other
+
+| Name   | Movie 1 Rating | Movie 2 Rating |
+|--------|----------------|----------------|
+| Sally  | 4              | 5              |
+| Joel   | 3              | 2              |
+| Shay   | 5              | 4              |
+
+* Calculate svd
+
+```{r}
+A <- matrix(c(4, 5,   
+              3, 2,   
+              5, 4),  
+            nrow = 3,
+            byrow = TRUE)
+# Compute SVD
+svd_result <- svd(A); svd_result
+# U, D (Sigma), and V
+
+
+```
+
+## U contains the left singular vectors
+
+* These are the eigenvectors of $AA^T$. They represent directions in the row space of $A$. Each column of $U$ corresponds to a principal direction in the data.
+* Interpreted as: how the original rows (observations) are projected into orthogonal directions.
+```{r}
+U <- svd_result$u; U
+```
+## Sigma contains the singular values
+* These are the square roots of the eigenvalues of both $AA^T$ and $A^TA$, sorted from largest to smallest:
+     + They tell you how much variance or information is captured along each corresponding singular vector direction.
+     + Larger singular values = more important directions.
+* Interpreted as: the strength (or importance) of each latent feature in the data.
+```{r}
+Sigma <- diag(svd_result$d); Sigma
+```
+## V contains the right singular vectors
+* These are the eigenvectors of $A^TA$ and represent directions in the column space of $A$. Each column of $V$ tells you how the original features (columns of $A$) align with the principal components.
+$ Interpreted as: how the original features are weighted to form the components.
+```{r}
+V <- svd_result$v; V
+```
+
+* We classify the matrix as rank 2 because of the number of non-zero singular values in its SVD (under Sigma).Since the matrix has rank 2, its rows are linearly independent (but not full-rank in a 3-dimensional space).
+
+# Visualize
+
+```{r}
+# Create scree plot
+library(ggplot2)
+singular_values <- svd_result$d
+df <- data.frame(
+  Component = factor(1:length(singular_values)),
+  Value = singular_values
+)
+
+ggplot(df, aes(x = Component, y = Value)) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = round(Value, 2)), vjust = -0.5) +
+  labs(title = "Singular Values (Scree Plot)",
+       x = "Component",
+       y = "Singular Value") +
+  theme_minimal()
+
+```
+
+```{r}
+
+# Left singular vectors (U) times Sigma
+projected <- svd_result$u %*% diag(svd_result$d)
+
+# Turn into a data frame for plotting
+projected_df <- data.frame(
+  Dim1 = projected[, 1],
+  Dim2 = projected[, 2],
+  Label = c("Row 1", "Row 2", "Row 3")
+)
+
+ggplot(projected_df, aes(x = Dim1, y = Dim2, label = Label)) +
+  geom_point(color = "darkred", size = 3) +
+  geom_text(vjust = -1) +
+  labs(title = "Projection of Rows via SVD",
+       x = "Component 1",
+       y = "Component 2") +
+  theme_minimal()
+
+
+```
+
+# Image Compression
+
+```{r}
+# 
+# 
+# library(jpeg)
+# library(imager)
+# 
+# 
+# # Load the image (change the path to your actual file)
+# img <- load.image("pictures/wren.jpg") 
+# 
+# # Convert to grayscale
+# gray_img <- grayscale(img)
+# 
+# # Convert to matrix
+# A <- as.matrix(gray_img)
+# 
+# # Perform SVD
+# svd_result <- svd(A)
+# 
+# # Reconstruct image using top k singular values
+# reconstruct_image <- function(k) {
+#   U_k <- svd_result$u[, 1:k]
+#   D_k <- diag(svd_result$d[1:k])
+#   V_k <- svd_result$v[, 1:k]
+#   U_k %*% D_k %*% t(V_k)
+# }
+# 
+# # Plot compressed images for different k values
+# par(mfrow = c(1, 3))
+# for (k in c(10, 50, 100)) {
+#   img_k <- reconstruct_image(k)
+#   image(t(apply(img_k, 2, rev)), col = gray.colors(256),
+#         main = paste("k =", k), axes = FALSE)
+# }
+
+```
+
+# Eigen
+
+```{r}
+A <- matrix(c(4, 2, 1, 3), 2, 2, byrow=TRUE)
+A
+eigen(A)
+```
+
+
+# PCA Example 2
+
+```{r}
+library(tidyverse)
+data("iris")
+summary(iris)
+# Keep only numeric columns for PCA
+iris_numeric <- iris %>% select(-Species)
+
+# Standardize the data (mean = 0, sd = 1)
+iris_scaled <- scale(iris_numeric)
+
+# Perform PCA
+iris_pca <- prcomp(iris_scaled, center = TRUE, scale. = TRUE)
+summary(iris_pca)
+
+# Create a data frame with PCA results for graphing
+pca_df <- as.data.frame(iris_pca$x)
+pca_df$Species <- iris$Species
+# Plot the first two principal components
+ggplot(pca_df, aes(PC1, PC2, color = Species)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "PCA of Iris Dataset",
+       x = "Principal Component 1",
+       y = "Principal Component 2")
+
+plot(iris_pca, type = "l", main = "Scree Plot: Iris PCA")
+```
+
+
+

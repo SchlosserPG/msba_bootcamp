@@ -1,0 +1,740 @@
+---
+title: "Introduction to SQL in Python"
+format: html
+runtime: sql
+---
+
+```{r, warning=FALSE, echo=FALSE}
+library(reticulate)
+use_condaenv("r-reticulate", required = TRUE)
+```
+
+Books:
+
+-   SQL Pocket Guide, 4th Edition: Alice Zhao
+    -   <https://learning.oreilly.com/library/view/sql-pocket-guide/9781492090397/ch03.html>
+-   Learning SQL- Ben Forta (Video)
+    -   <https://learning.oreilly.com/videos/learning-sql/9780134193700/9780134193700-LSQL_00_Introduction/>
+
+# Installing MySQL
+
+### Video Instruction
+
+<https://www.youtube.com/watch?v=u96rVINbAUI>
+
+# Intro to Databases
+
+### What is a Database?:
+
+* A database is where structured data is stored.
+     + Think of a database as a filing cabinet that contains lots of drawers and folders.
+
+* Databases are managed by Database Management System Software (or DBMS).
+     + Example of DBMSs: MySQL, Microsoft SQL Server, Oracle, PostgreSQL
+
+### What are Tables?
+
+* A table is where data of a specific type is stored.
+     + If the file cabinet is the database, file folders can be thought of as the tables.
+
+* Tables are very structured - they can only contain data as specified in the table description.
+     + A table set up to store product lists cannot store customer info.
+
+### What are Columns?
+
+* Tables are made up of columns that contain specific parts of the data (product name, product price, contact name, etc.).
+* When a table is created, each column is defined with:
+     + name
+     + datatype (which defines what type of data the column will accept)
+     + optional details (NOT NULL, UNIQUE, etc)
+
+### What Are Rows?
+* Rows are the data records.
+     + Rows can be thought of as the individual pages in the file folders.
+* When a record is added to a table, a row is added, and data is stored in each column for the new row.
+
+### What is a Relational Database
+* A relational database is a data management system that stores data in lots of specific tables that are connected to each other.
+     + The connections are called relationships.
+     + SQL is the language used to work with relational data.
+
+### What are Keys?
+* For relational databases to work, two important keys are needed:
+     + Every table should have a **primary key**, the value that uniquely identifies each row.
+     + **Foreign Keys** are used in related tables to connect the data back to the primary key in the primary table.
+
+# Intro to SQL:
+
+* SQL (Structured Query Language) is the standard language used to store, manipulate, and retrieve data in relational database systems. It allows users to define database structures, insert and update records, write complex queries to filter and aggregate data, and manage permissions and security. SQL is essential for analytics because it enables analysts to work efficiently with large datasets, join information across multiple tables, and create reproducible, transparent data pipelines.
+* SQL commands are generally grouped into two major categories based on their purpose:
+     + Data Definition Language (DDL) commands are used to define, structure, and modify the schema of database objects such as tables, views, and indexes—for example, creating new tables, altering existing ones, or removing objects entirely. 
+     + In contrast, Data Manipulation Language (DML) commands focus on working with the data stored within those objects. These include inserting new records, updating or deleting existing data, and querying information through statements like SELECT. 
+     Together, DDL and DML form the core of how users design relational databases and interact with the data they contain.
+
+## SQL syntax notes:
+* SQL has a flexible and easy-to-read syntax. 
+     + A semicolon (;) marks the end of a SQL statement, which is especially helpful when several statements appear in sequence. 
+     + SQL keywords (such as SELECT, FROM, and WHERE) and the names of tables and columns are not case sensitive, so formatting is up to the user. 
+     + SQL commands can also be written on a single line or spread across multiple lines for clarity. 
+* These features make SQL straightforward to write, easy to interpret, and adaptable to many coding styles.
+
+
+
+# DDL
+
+## Creating a Database in SQL:
+
+Use CREATE DATABASE to create a new database using SQL
+
+
+
+``` sql
+CREATE DATABASE DBName;
+```
+
+### Creating tables, columns, and keys in the database
+
+-   USE specifies that database you will be using
+-   CREATE TABLE creates a table in your specified database
+-   new column names are followed by the column data type
+
+``` sql
+USE DBName;
+CREATE TABLE TName
+(Column1 data type NOT NULL, (if mandatory)
+Column 2 data type, (if optional)
+…
+Column data type NOT NULL, 
+PRIMARY KEY (Column1),
+FOREIGN KEY (Column) references OtherTable (column));
+```
+
+### SQL data types:
+
+-   CHAR(n): fixed length n character string
+-   VARCHAR(n): variable length character string with a maximum size of n characters
+-   INT: integer
+-   NUMERIC(x,y): number with x digits, y of which are after the decimal point
+-   DATE: date values (year, month, day)
+
+### Altering a Table
+
+Use ALTER TABLE to alter column in a table
+
+-   ADD adds columns
+-   DROP drops columns
+
+``` sql
+ALTER TABLE tablename ADD (Column data type)
+ALTER TABLE tablename DROP (Column);
+```
+
+### Insert values into a table
+
+Use INSERT INTO tablename VALUES to insert data into the rows of a table
+
+``` sql
+INSERT INTO tablename VALUES (column1, column2, …);
+```
+
+For example, if we want to add a row into a table, students, with the columns StudentID, FirstName, LastName, DateOfEnrollment, Email:
+
+``` sql
+INSERT INTO students VALUES (1, ‘Maria’, ‘Gonzales’, 2024-08-15’, email@example.com);
+```
+
+### Delete from a table
+
+Use DELETE FROM
+
+``` sql
+DELETE FROM tablename 
+WHERE condition;
+```
+
+### Modify existing records within a table
+
+Use UPDATE
+
+``` sql
+UPDATE tablename 
+SET columnname = value
+WHERE condition (if applicable);
+```
+
+# DML
+
+## Using the SELECT Statement
+
+SELECT is used to select (retrieve) data from a database table.
+
+SELECT requires two pieces of information:
+
+-   What to SELECT
+-   Where to SELECT it from
+
+``` sql
+SELECT column
+FROM table;
+```
+
+### Retrieve a Single Column
+
+``` sql
+SELECT prod_name
+FROM Products
+```
+
+### Retrieve Multiple Columns
+
+List columns in a comma delimited list
+
+``` sql
+SELECT prod_id, prod_name, prod_price
+FROM Products;
+```
+
+### Retrieve All Columns
+
+Use \* to retrieve all columns from a table
+
+``` sql
+SELECT *
+FROM Products;
+```
+
+### Retrieve Distinct Rows
+
+* After SELECT, use DISTINCT to select distinct values
+
+``` sql
+SELECT DISTINCT prod_name
+FROM Products
+```
+
+### Limit Retrieved Data
+
+* Use LIMIT following the FROM statement to limit the amount of data retrieved
+
+``` sql
+SELECT prod_name
+FROM Products
+LIMIT 5;
+```
+
+## ORDER BY
+
+To specify sort order, add ORDER BY to your SELECT statement.
+
+ORDER BY requires one piece of information:
+
+-   The column to sort by
+-   Optionally, you may also specify multiple sort columns as well as sort direction
+
+``` sql
+SELECT column
+FROM table
+ORDER BY column ASC|DESC
+```
+
+### Sort by One Column
+
+``` sql
+SELECT prod_name
+FROM Products
+ORDER BY prod_name;
+```
+
+### Sort by Multiple Columns
+
+Select column names in a comma delimited list, and provide a list of columns to order by that are comma delimited.
+
+``` sql
+SELECT prod_id, prod_name, prod_price
+FROM Products
+ORDER BY prod_price, prod_name;
+```
+
+### Specify Sort Direction
+
+Use ASC or DESC
+
+-   The default is ASC, however it is best practice to provide an explicit sort order
+
+``` sql
+SELECT prod_id, prod_name, prod_price
+FROM Products
+ORDER BY prod_price, prod_name DESC;
+```
+
+## Using WHERE
+
+To filter returned data, add WHERE to your SELECT statement
+
+WHERE requires one piece of information:
+
+-   The filter condition (a statement that is tested against each row)
+
+Goes after FROM and before ORDER BY in the SELECT statement
+
+``` sql
+SELECT column
+FROM table
+WHERE condition
+ORDER BY column ASC|DESC;
+```
+
+### WHERE Clause Operators:
+
+-   Equality: =
+-   Non-equality: != or \<\>
+-   Less than: \<
+-   Less than or equal to: \<=
+-   Greater than: \>
+-   Greater than or equal to: \>=
+
+Example:
+
+``` sql
+SELECT prod_name, prod_price
+FROM Products
+WHERE prod_price < 10;
+```
+
+### Filter using a range using WHERE:
+
+Use WHERE column BETWEEN to filter using a range:
+
+``` sql
+SELECT prod_name, prod_price
+FROM Products
+WHERE prod_price BETWEEN 5 AND 10;
+```
+
+### Filter for No Value
+
+Null is a special keyword that means that a column has no value
+
+-   NULL is not the same as ""
+
+WHERE can be used with NULL to find (or exclude) columns with no value
+
+``` sql
+SELECT prod_name
+FROM Products
+WHERE prod_price IS NULL;
+```
+
+This will return only the rows that have a null value in a specified column
+
+## Combine WHERE clauses
+
+WHERE clauses can be combined using
+
+-   AND (both conditions must be true)
+-   OR (one or more conditions must be true)
+
+``` sql
+SELECT prod_name, prod_price, prod_id
+FROM Products
+WHERE prod_id = 'DLL01'
+AND prod_price <= 4;
+```
+
+### Order of Evaluation
+
+AND always gets evaluated before OR in a where clause unless parentheses are used to explicitly change the order of evaluation.
+
+``` sql
+SELECT prod_name, prod_price
+FROM Products
+WHERE (prod_id = 'DLL01' OR prod_id = 'BRS01') AND prod_price >= 10
+```
+
+The use of parentheses forces a higher level of evaluation.
+
+Best practice is to always use parentheses to explicitly control order of evaluation.
+
+### Filter using IN
+
+IN is used to specify one or more values to be matched
+
+IN values are comma delimited
+
+-   IN (1,2,3)
+
+``` sql
+SELECT prod_name, prod_price
+FROM Products
+WHERE prod_id IN ('DLL01', 'BRS01') 
+ORDER BY prod_name; 
+```
+
+Why use IN?:
+
+-   helps to simplify order of evaluation
+-   useful for filtering for multiple values
+-   useful in subqueries
+
+### Negate using NOT
+
+NOT is used to negate a WHERE clause NOT is inserted before the condition:
+
+``` sql
+SELECT prod_price
+FROM Products
+WHERE NOT prod_price = 3.49; 
+```
+
+### Filter using LIKE
+
+Use LIKE to search using a wildcard
+
+-   \% to match zero or more characters
+-   \_ to match a single character
+
+``` sql
+SELECT prod_id, prod_name
+FROM Products
+WHERE prod_name LIKE 'F%';
+```
+
+Will return matched text that begins with the letter F in the column prod_name. The % after the F indicates that any sequence of characters can follow.
+
+``` sql
+SELECT product_name
+FROM Products
+WHERE product_id LIKE '_A%';
+```
+
+This query would match 'BA123', 'CA456', etc.
+
+## Creating Caclulated Fields
+
+### Use Concatenation
+
+Concatenation is used to appends columns to each other.
+
+-   Concat()
+
+``` sql
+SELECT Concat(prod_name, ' (', prod_country, ')')
+FROM Products;
+```
+
+This query returns you prod_name (prod_country). For example, an output may be Teddy Bear (USA).
+
+### Using Aliases
+
+Aliases are used to name database objects:
+
+-   Tables
+-   Columns
+-   Calculated Fields
+
+To create a column alias, you follow a column name or expression with either:
+
+-   an alias name -the AS keyword and an alias name
+
+``` sql
+SELECT Concat(prod_name, ' (', prod_country, ')') prod_title
+FROM Products;
+```
+
+OR
+
+``` sql
+SELECT Concat(prod_name, ' (', prod_country, ')') AS prod_title
+FROM Products;
+```
+
+### Perform Mathematical Calculations
+
+SELECT statements can be used to perform mathematical calculations:
+
+-   Addition: +
+-   Subtraction: -
+-   Multiplication: \*
+-   Division: /
+
+When performing calculations, aliases can be used to name the results
+
+``` sql
+SELECT prod_id, quantity, item_price, quantity * item_price AS expanded_price
+FROM OrderItems
+WHERE order_num = 20008;
+```
+
+### Using String Functions
+
+Common functions include:
+
+-   LEFT() and RIGHT() to extract parts of a string
+-   LENGTH() to obtain the length of a string
+-   LOWER() and UPPER() to convert string case
+-   TRIM(), LTRIM(), and RTRIM to trim strings
+
+``` sql
+SELECT prod_name, UPPER(prod_name) AS prod_name_upcase
+FROM Products
+ORDER BY prod_name;
+```
+
+Returns to columns, prod_name and prod_name in all capital letters.
+
+### Using Date Functions
+
+Date functions are used to:
+
+-   Extract parts of dates and times
+-   Compare date and time values
+-   Format dates and times for locale and language specific display
+
+``` sql
+SELECT order_num
+FROM orders
+WHERE YEAR(order_date) = 2012;
+```
+
+### Using aggregate functions
+
+Frequently used Aggregate Functions are:
+
+-   AVG()
+-   COUNT()
+    -   can be used with a column name or with \*
+-   MAX()
+-   MIN()
+-   SUM()
+
+``` sql
+SELECT AVG(prod_price) AS avg_price, MIN(prod_price) AS price_min
+FROM Products;
+```
+
+This query returns the average prod_price and the minimum prod_price.
+
+``` sql
+SELECT COUNT(*) AS num_cust
+FROM Customers;
+```
+
+This query returns the total number of rows in the Customers table.
+
+## Using GROUP BY
+
+GROUP BY is used to summarize data by group
+
+-   A group is a unique column value
+-   Goes before ORDER BY and after WHERE
+
+``` sql
+SELECT column
+FROM table
+WHERE condition
+GROUP BY column
+ORDER BY column ASC|DESC;
+```
+
+``` sql
+SELECT vend_id, COUNT(*) AS num_prods
+FROM Products
+GROUP BY vend_id;
+```
+
+## Using HAVING
+
+HAVING is used to filter results at the group level
+
+-   HAVING is passed a filter statement, just like WHERE
+-   Goes after GROUP BY and before ORDER BY
+
+``` sql
+SELECT column
+FROM table
+WHERE condition
+GROUP BY column
+HAVING condition
+ORDER BY column ASC|DESC;
+```
+
+### WHERE versus HAVING
+
+-   WHERE filters before data is grouped, and HAVING filters after data is grouped.
+-   Rows that are eliminated by a WHERE clause will not be included in the group
+
+``` sql
+SELECT vend_id, COUNT(*) AS num_prods
+FROM Products
+WHERE prod_price >= 4
+GROUP BY vend_id
+HAVING COUNT(*) >= 2;
+```
+
+## Using Subqueries with WHERE
+
+-   A WHERE clause filters data retrieved by SELECT
+-   Subqueries allow the results of one query to be used as the filter conditions for another query
+
+``` sql
+SELECT cust_id
+FROM ORDERS
+WHERE order_num IN (SELECT order_num
+                    FROM OrderItems
+                    WHERE prod_id = 'RGAN01');
+```
+
+This query is selecting customer ID from orders where the order number is in whatever the results are from the subquery select statement.
+
+### Using Subqueries as Calculated Fields
+
+This example, uses fully qualified table names to prevent ambiguity.
+
+``` sql
+SELECT cust_name, cust_state,
+      (SELECT COUNT(*) 
+       FROM Orders
+       WHERE Orders.cust_id = Customers.cust_id) AS orders
+FROM Customers
+ORDER BY cust_name;
+```
+
+## Joining Tables
+
+### Create a Basic Join
+
+Tables are usually joined by keys
+
+-   A primary key uniquely identifies every row in a table -There can only ever be one of each primary key value
+-   A foreign key in a table contains the primary key value of a required table
+    -   Multiple rows in table can have the same foreign key value
+
+The Simplest join requires two tables that share a key which are tested for equality
+
+-   Primary key in one table
+-   Foreign key in another table
+
+This is called an INNER JOIN
+
+``` sql
+SELECT vend_name, prod_name, prod_price
+FROM Vendors INNER JOIN Products 
+  ON Vendors.vend_id = Products.vend_id;
+```
+
+### Join Multiple Tables
+
+``` sql
+SELECT prod_name, vend_name, prod_price, quantity
+FROM OrderItems, Products, Vendors
+WHERE Products.vend_id = Vendors.vend_id
+  AND OrderItems.prod_id = Products.prod_id
+  AND order_num = 20007;
+```
+
+## Creating Advanced Joins
+
+### Using Table Aliases
+
+Similar to how aliases are used to name or rename columns, aliases can also be used to rename tables
+
+``` sql
+SELECT column
+FROM table AS alias;
+```
+
+### Creating a Self Join
+
+-   A self join is used to join a table to itself.
+-   When using self joins aliases must be used to uniquely name each table instance
+
+``` sql
+SELECT c1.cust_id, c1.cust_name, c1.cust_contact
+FROM Customers AS c1, Customers AS c2
+WHERE c1.cust_name = c2.cust_name 
+  AND c2.cust_contact = 'Jim Jones';
+```
+
+### Creating an Outer Join
+
+-   An INNER JOIN joins two tables and only retrieves rows that have related rows in the other table.
+-   An outer join makes it possible to retrieve all the rows from one table regardless of whether or not they have related rows in the other table.
+    -   LEFT OUTER JOIN or RIGHT OUTER JOIN
+
+``` sql
+SELECT Customers.cust_id, Orders.order_num
+FROM Customers LEFT OUTER JOIN Orders 
+  ON Customers.cust_id = Orders.cust_id;
+```
+
+``` sql
+SELECT Customers.cust_id, Orders.order_num
+FROM Customers RIGHT OUTER JOIN Orders 
+  ON Customers.cust_id = Orders.cust_id;
+```
+
+## Combining Queries
+
+### Using a UNION
+
+The UNION operator combines the result sets of two or more SELECT statements into a single, distinct result set.
+
+To use a UNION, orovide both complete queries with the keyword UNION between them
+
+``` sql
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_state IN ('IL', 'IN', 'MI')
+UNION
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_name = 'Fun4All';
+```
+
+UNION rules:
+
+-   All queries must have the same columns
+-   Column order need not be the same
+-   Column types need not be the same but must be compatible
+
+### Including/Excluding Duplicates
+
+-   Unions automatically exclude duplicates
+-   To include all rows, even duplicates, use UNION ALL
+
+``` sql
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_state IN ('IL', 'IN', 'MI')
+UNION ALL
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_name = 'Fun4All';
+```
+
+### Sorting Combined Queries
+
+When using a UNION, only one ORDER BY may be used
+
+``` sql
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_state IN ('IL', 'IN', 'MI')
+UNION ALL
+SELECT cust_name, cust_contact, cust_email
+FROM Customers
+WHERE cust_name = 'Fun4All'
+ORDER BY cust_name, cust_contact;
+```
+
+## The SELECT Statement Revisited
+
+``` sql
+SELECT column
+FROM table(s)
+  ON join
+GROUP BY column
+HAVING condition
+UNION
+ORDER BY column ASC|DESC;
+```

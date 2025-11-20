@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Pamela Schlosser">
-<meta name="dcterms.date" content="2025-11-18">
 
-<title>MSBA Bootcamp</title>
+<title>Files, Functions, and Folders – MSBA Bootcamp</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,7 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./introR.html" rel="next">
+<link href="./numpypandas.html" rel="next">
+<link href="./datastructures.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -70,35 +103,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -112,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-title">Installation Information</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./functions.html"><span class="chapter-title">Files, Functions, and Folders</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,7 +143,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Installation Information</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Installation Information</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -179,7 +183,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Files, Functions, and Folders</span></a>
+  <a href="./functions.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Files, Functions, and Folders</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -212,18 +216,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#why-r" id="toc-why-r" class="nav-link active" data-scroll-target="#why-r">Why R?</a></li>
-  <li><a href="#installing-r" id="toc-installing-r" class="nav-link" data-scroll-target="#installing-r">Installing R</a>
-  <ul class="collapse">
-  <li><a href="#installing-r-on-windows" id="toc-installing-r-on-windows" class="nav-link" data-scroll-target="#installing-r-on-windows">Installing R on Windows</a></li>
-  <li><a href="#installing-r-on-a-mac" id="toc-installing-r-on-a-mac" class="nav-link" data-scroll-target="#installing-r-on-a-mac">Installing R on a Mac</a></li>
-  </ul></li>
-  <li><a href="#installing-r-studio" id="toc-installing-r-studio" class="nav-link" data-scroll-target="#installing-r-studio">Installing R Studio</a>
-  <ul class="collapse">
-  <li><a href="#downloading-rstudio-for-mac-or-pc" id="toc-downloading-rstudio-for-mac-or-pc" class="nav-link" data-scroll-target="#downloading-rstudio-for-mac-or-pc">Downloading RStudio For Mac or PC</a></li>
-  </ul></li>
-  <li><a href="#take-your-first-look-at-r" id="toc-take-your-first-look-at-r" class="nav-link" data-scroll-target="#take-your-first-look-at-r">Take Your First Look at R</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#readingwriting-files-csv-txt" id="toc-readingwriting-files-csv-txt" class="nav-link active" data-scroll-target="#readingwriting-files-csv-txt">Reading/writing files (CSV, TXT)</a></li>
+  <li><a href="#navigating-directories" id="toc-navigating-directories" class="nav-link" data-scroll-target="#navigating-directories">Navigating directories</a></li>
+  <li><a href="#functions-and-scope-making-own-functions" id="toc-functions-and-scope-making-own-functions" class="nav-link" data-scroll-target="#functions-and-scope-making-own-functions">Functions and scope (Making own functions)</a></li>
+  <li><a href="#debugging-techniques" id="toc-debugging-techniques" class="nav-link" data-scroll-target="#debugging-techniques">Debugging techniques</a></li>
   </ul>
 </nav>
     </div>
@@ -232,26 +228,14 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MSBA Bootcamp</h1>
+<h1 class="title"><span class="chapter-title">Files, Functions, and Folders</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Pamela Schlosser </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">November 18, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -261,106 +245,21 @@ window.Quarto = {
 </header>
 
 
-<section id="why-r" class="level1">
-<h1>Why R?</h1>
-<ul>
-<li><p>In our MSBA program, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.</p></li>
-<li><p>R is a very sophisticated statistical software that allows you to enter commands one-at-a-time, or write scripts using the R language.</p></li>
-<li><p>Easily installed, state-of-the-art, and it is free and open source and supported by a well-established R Community.</p></li>
-<li><p>R can be used with RStudio, which is a graphical user interface that allows you to do the following:</p>
-<ul>
-<li>write, edit, and execute code;</li>
-<li>generate, view, and store plots;</li>
-<li>manage files, objects and data frames;</li>
-<li>integrate with version control systems.</li>
-</ul></li>
-<li><p>R comes with community that helps in the development of R resources.</p>
-<ul>
-<li>A package is developed by R users to do one specific thing or a set of related things that could store a collection of functions, data, and code.</li>
-<li>A library is the place where the package is located on your computer.</li>
-</ul></li>
-<li><p>A repository is a central location where many developed packages are located and available for download. There are 3 big repositories, but we use Comprehensive R Archive Network, or CRAN, which is R’s main repository with over 18,000 packages available.</p></li>
-<li><p>R’s community is vast, and you can always seek information from the community to try to help you with a R related issue.</p></li>
-</ul>
-</section>
-<section id="installing-r" class="level1">
-<h1>Installing R</h1>
-<section id="installing-r-on-windows" class="level2">
-<h2 class="anchored" data-anchor-id="installing-r-on-windows">Installing R on Windows</h2>
-<ul>
-<li>Open an internet browser and go to <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>.</li>
-<li>Click CRAN hyperlink underneath Download on the left.</li>
-<li>Select a CRAN location (a mirror site) and click the corresponding link. I selected O-cloud. This brings you to the following link: <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a></li>
-<li>Click on the “Download R for Windows” link at the top of the page if you have a Windows computer.<br>
-</li>
-<li>Click on the “install R for the first time” link at the top of the page.</li>
-<li>Click “Download R for Windows” and save the executable file somewhere on your computer.</li>
-<li>Run the .exe file</li>
-<li>Accept all defaults and follow the installation instructions</li>
-<li>Now that R is installed, you need to download and install RStudio.</li>
-</ul>
-</section>
-<section id="installing-r-on-a-mac" class="level2">
-<h2 class="anchored" data-anchor-id="installing-r-on-a-mac">Installing R on a Mac</h2>
-<ul>
-<li>Open an internet browser and go to <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>.</li>
-<li>Click CRAN hyperlink underneath Download on the left.</li>
-<li>Select a CRAN location (a mirror site) and click the corresponding link. I selected O-cloud. This brings you to the following link: <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a></li>
-<li>Click on the “Download R for (Mac) OS X” link at the top of the page.</li>
-<li>Click on the file containing the latest version of R under “Files.”</li>
-<li>Save the .pkg file, double-click it to open, and follow the installation instructions.</li>
-<li>Accept the license agreement and all subsequent defaults</li>
-<li>When the installation completes, click Close.</li>
-<li>Now that R is installed, you need to download and install RStudio.</li>
-</ul>
-</section>
-</section>
-<section id="installing-r-studio" class="level1">
-<h1>Installing R Studio</h1>
-<section id="downloading-rstudio-for-mac-or-pc" class="level2">
-<h2 class="anchored" data-anchor-id="downloading-rstudio-for-mac-or-pc">Downloading RStudio For Mac or PC</h2>
-<ul>
-<li>Go to the following URL: <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>.</li>
-<li>Click the Download button for Install RStudio.</li>
-<li>It should recognize your operating system. If you see different an Installers for Supported Platforms section, click the version that is appropriate for your operating system. When the download is complete, run the install program, accepting all defaults.</li>
-<li>Note, RStudio might conflict with some Mac antivirus programs. Ensure your antivirus is not blocking it from installing. Only worry about this if you have difficulty installing the program.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Pictures/Ch0/RStudio.png" title="RStudio" class="img-fluid figure-img"></p>
-<figcaption>RStudio</figcaption>
-</figure>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_condaenv</span>(<span class="st">"r-reticulate"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="readingwriting-files-csv-txt" class="level2">
+<h2 class="anchored" data-anchor-id="readingwriting-files-csv-txt">Reading/writing files (CSV, TXT)</h2>
 </section>
+<section id="navigating-directories" class="level2">
+<h2 class="anchored" data-anchor-id="navigating-directories">Navigating directories</h2>
 </section>
-<section id="take-your-first-look-at-r" class="level1">
-<h1>Take Your First Look at R</h1>
-<ul>
-<li>On the right, two windows, each with tabs
-<ul>
-<li>There are many ways to customize the look of RStudio for accessibility purposes with a couple being the following:
-<ul>
-<li>You can resize the windows using the splitters.</li>
-<li>You can maximize/restore the windows within the left/right panels using the familiar Windows controls in the upper-right of each window.</li>
-</ul></li>
-</ul></li>
-<li>On the left, the Console Window reproduces the R environment.
-<ul>
-<li>Observe the command line with the <span class="math inline">\(&gt;\)</span> symbol.</li>
-</ul></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="Pictures/Ch0/Console.png" title="Screenshot of Console" class="img-fluid figure-img"></p>
-<figcaption>Console</figcaption>
-</figure>
-</div>
+<section id="functions-and-scope-making-own-functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions-and-scope-making-own-functions">Functions and scope (Making own functions)</h2>
 </section>
-<section id="summary" class="level1">
-<h1>Summary</h1>
-<ul>
-<li>At the end of this section, you should have downloaded and browsed R in RStudio. You should have looked at the quick keys in R to make editing your R documents easier. You should set up a project folder for the course where you want to on your computer, and made your first .R script file located in that project folder. You should have tried a line of code or two as presented. Finally, you should have looked around the RStudio environment and found the help tab.</li>
-</ul>
+<section id="debugging-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="debugging-techniques">Debugging techniques</h2>
 
 
 </section>
@@ -788,10 +687,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./datastructures.html" class="pagination-link" aria-label="Data Structures">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Data Structures</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./introR.html" class="pagination-link" aria-label="Introduction to R and RStudio">
-        <span class="nav-page-text"><span class="chapter-title">Introduction to R and RStudio</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./numpypandas.html" class="pagination-link" aria-label="If Statements and While Loops">
+        <span class="nav-page-text"><span class="chapter-title">If Statements and While Loops</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

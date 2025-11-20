@@ -1,8 +1,9 @@
 ---
 title: "Introduction to R and RStudio"
-author: ""
-date: "2024-08-09"
-output: html_document
+format: html
+execute: 
+  warning: false
+  error: false
 ---
 
 -   The goal of this lesson is to introduce you to R and RStudio while teaching you how to perform data preparation using these tools. In this part, we will go over forming an understanding of statistics, learning about observations and variables, and being able to move around and get comfortable with R. I will also teach you how use and load data.
@@ -11,13 +12,7 @@ output: html_document
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
 
-```{r tidy=FALSE}
-####################################
-# Project name: Introduction to R and RStudio
-# Data used: mtcars from R, Insurance from the MASS library and gss.2016 dataset 
-# Libraries used: MASS, tidyverse, dplyr (part of tidyverse)
-####################################
-```
+
 
 ### At a Glance
 
@@ -835,23 +830,7 @@ library(tidyverse)
 gss.2016b <- read_csv(file = "data/gss2016.csv")
 ```
 
-# Summarize Data
 
--   In R, summary() and summarize() serve different purposes. summary() is part of base R and gives a quick overview of data, returning descriptive statistics for each column. For example, summary(mtcars) provides the min, max, median, and mean for numeric columns and counts for factors. It’s useful for a broad snapshot of your dataset.
-
--   In contrast, summarize() (or summarise()) is from the dplyr package and allows for custom summaries. For instance, mtcars %\>% summarize(avg_mpg = mean(mpg), max_hp = max(hp)) returns the average miles per gallon and the maximum horsepower. It’s more flexible and is often used with group_by() for grouped calculations. In conclusion, summary() gives automatic overviews, while summarize() is better for tailored summaries.
-
--   Use the summary() function to examine the contents of the file.
-
-```{r}
-summary(object = gss.2016) 
-```
-
--   Again, we can eliminate the object = because it is the first argument and is required.
-
-```{r}
-summary(gss.2016)
-```
 
 
 
