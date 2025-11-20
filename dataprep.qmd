@@ -881,81 +881,12 @@ kurtosis(brfss.cleaned$PHYSHLTH)
 
 -   This data set full of categorical variables is now fully cleaned and ready to be analyzed!
 
-## Using AI
+# Data Visualization
+* The goal of this lesson is to help you create visualizations that clearly describe one or more variables and to explore patterns across groups or between multiple variables. To succeed, you will learn several common graph types in R, with a focus on ggplot2, a powerful and widely used graphics package within the tidyverse. Because R packages evolve quickly, some parameters may change over time, so it’s important to stay flexible, explore options, and rely on the open-source community for updated guidance.
 
--   Use the following prompts on a generative AI, like chatGPT, to learn more about data preparation activities.
+* This lesson provides a strong starting point rather than an exhaustive list of every visualization available in R. You will learn how to create graphs for a single categorical variable, a single continuous variable, and two variables at once. Throughout the lesson, we emphasize the importance of choosing visuals based on the variable type—categorical or quantitative—and ensuring that your data is coded correctly before you build your chart. You will work with bar charts, density plots, boxplots, scatterplots, and multiple-boxplot comparisons to understand both distributions and relationships between variables.
 
--   What is the difference between ordinal and nominal variables, and how can you recode these data types in R?
-
--   How can you use the filter() function to subset a dataset based on multiple conditions using & and \| in R?
-
--   How does subsetting using square brackets \[\] differ from using the filter() function in R?
-
--   What strategies can you use to handle missing data in R, and how does na.omit() differ from drop_na()?
-
--   How does the mutate() function help in transforming and creating new variables, and what are some practical examples?"
-
--   What is the purpose of the group_by() function, and how does it interact with summarize() to create summary statistics in R?"
-
--   Explain how you can use arrange() to sort a dataset by one or more variables and demonstrate sorting both in ascending and descending order."
-
--   Why is the piping operator %\>% useful in R, and how does it improve the readability and structure of your code?
-
--   How would you use summarize() to calculate mean, median, and standard deviation for a numerical variable in R?
-
-## Summary
-
--   In this lesson, we worked through the basics on data cleaning. Data cleaning is so important and there are so many ways to do it. Provided are some examples using popular functions in dplyr (under tidyverse).
-
-
----
-title: "Data Visualization"
-format: html
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
-```
-
--   The goals this lesson are to be able to create visualizations which help to describe a variable or variables more easily (descriptive statistics) and to explore patterns in the data based on groups or between two or more variables (inferential statistics).
-
-
-
-### At a Glance
-
--   In order to succeed in this lesson, we need to learn how to visualize data, noting that there are many ways to do this in R. This lesson presents common graphs used in R, and focuses on using ggplot2, a very common graphics package that is part of the tidyverse.
-
--   Because packages evolve fairly quickly, parameters within the commands shown in this section could evolve and adjust. The best way to figure out how to fine-tune your new graph is to explore options and parameter settings, while also using the open-source community.
-
--   By the end of this lesson, you should be able to create the following:
-
-1.  Common Graphs for a Single *Categorical* Variable
-2.  Common Graphs for a Single *Continuous* Variable
-3.  Common Graphs for Two Variables at Once
-
--   This lesson does not provide an exhaustive list of what you can do in R, but is a good starting point presenting some of the top graphs used in statistics with some common parameters added in.
-
-### Lesson Objectives
-
--   Choose and create graphs for a single categorical variable.
--   Choose and create graphs for a single continuous variable.
--   Choose and create graphs for two variables at once.
-
-### Consider While Reading
-
--   It is extremely useful to graph data in R in order to visualize what the data is telling us.
-
--   When making graphs, there are a lot of ways to visualize data correctly, but there are just as many to do it incorrectly. Be careful not to force the data into the story you want it to tell.
-
--   Always be cautious when looking at visuals to make sure the data was handled properly.
-
--   The lesson is arranged by first evaluating the variable or variables of interest by data type (quantitative or quantitative) and then giving some examples of visualizations where this is commonly used. It is essential to make sure the variable is in the right data type before you create a chart. We look at many charts in this lesson including bar charts, density plots, boxplots and scatterplots. A multiple boxplot helps us understand the relationship between a grouping variable and a numerical variable. The scatterplot helps us understand if there is a relationship between two numerical variables and it helps us determine whether that relationship is linear or nonlinear.
-
--   A lot of graphs you can do in ggplot, you can also do with base R. However, ggplot has much more capability to customize a specific format for your graphic.
-
-    -   Base R has many options to graph a variable or variables. If all you want is some insight into the data, this might be the way to go.
-    -   ggplot2 is extremely popular graphing package and has a good pattern for making charts. You set the first layer with the ggplot() command and then add layers as needed for your graphic.
-    -   There are also other graphing packages that serve a specific purpose (i.e., waffle package in R).
+* As you read, remember that visualizing data is one of the most effective ways to understand what the data is saying—yet visuals can be misleading if the data is handled improperly or if the graph is constructed to force a preferred story. Both base R and ggplot2 can produce many of the same graphs, but ggplot2 provides more flexibility and a layered structure that makes customization easier. Other specialized packages, such as waffle, also exist for specific types of graphics. By the end of the lesson, you should feel comfortable selecting and creating appropriate visualizations for different data types and analytical goals.
 
 ## Layering in ggplot
 
@@ -1217,39 +1148,8 @@ gss.2016.cleaned %>%
 
 -   Evaluate these graphs and see what information you can get from them.
 
-### Pie Chart
 
--   A pie chart is a segmented circle whose segments portray the relative frequencies of the categories of a qualitative variable.
--   Slices of pie in different colors represent the parts.
--   In this example, the firearm is divided by type to show parts of a whole, where the total of the proportions must add to 1.0 and the total of the percentages must add to 100%.
-
-```{r}
-# Importing data from working directory
-fbi.deaths <- read.csv("data/fbi_deaths.csv", stringsAsFactors = TRUE)
-# Selecting rows of interest for pie chart
-fbi.deaths.small <- fbi.deaths[c(3,4,5,6,7),]
-fbi.deaths.small <- fbi.deaths.small %>%
-  rename(Weapon = X)
-# Checking summary of fbi deaths
-summary(fbi.deaths.small)
-```
-
--   Again, ggplot works in layers, so in order to make a pie, you need a few layers and have a few optional ones.
-    -   The aes() command specifies the variable to create the pie, in this case x2016.
-    -   geom_col() sets the borders of the pie and makes it visible.
-    -   coord_polar() command makes the pie circular.
-    -   theme_void() command is optional and adjusts the theme of the pie. to remove axis, background, etc.
-
-```{r tidy=FALSE, fig.alt = "Pie Chart Generated by R"}
-ggplot(fbi.deaths.small, aes(x="", y=X2016, fill=Weapon)) +
-  geom_col() + 
-  coord_polar("y", start=0) + 
-  theme_void() 
-```
-
--   From the pie, we can see that the majority of weapons that caused fbi gun related deaths are handguns followed by a type of firearm that is not stated.
-
-### Comparison of Charts
+### Pie vs Bar Charts
 
 -   Recommended graphs for single categorical or factor type variable:
     -   Bar graph, for showing relative group sizes.
@@ -1266,7 +1166,7 @@ ggplot(fbi.deaths.small, aes(x="", y=X2016, fill=Weapon)) +
 
 Some common graphing options for single continuous variable:
 
--   Histograms (From Lesson 2)
+-   Histograms
 -   Density plots
 -   Boxplots
 -   Violin plots
@@ -1774,7 +1674,30 @@ ggplot(UScrime, aes(x=GDP, y=y)) + geom_point() + geom_smooth(method="lm")
 
 -   See what information you can take away from the scatterplots above and create some more to practice.
 
-# Using AI
+
+## Using AI
+
+-   Use the following prompts on a generative AI, like chatGPT, to learn more about data preparation activities.
+
+-   What is the difference between ordinal and nominal variables, and how can you recode these data types in R?
+
+-   How can you use the filter() function to subset a dataset based on multiple conditions using & and \| in R?
+
+-   How does subsetting using square brackets \[\] differ from using the filter() function in R?
+
+-   What strategies can you use to handle missing data in R, and how does na.omit() differ from drop_na()?
+
+-   How does the mutate() function help in transforming and creating new variables, and what are some practical examples?"
+
+-   What is the purpose of the group_by() function, and how does it interact with summarize() to create summary statistics in R?"
+
+-   Explain how you can use arrange() to sort a dataset by one or more variables and demonstrate sorting both in ascending and descending order."
+
+-   Why is the piping operator %\>% useful in R, and how does it improve the readability and structure of your code?
+
+-   How would you use summarize() to calculate mean, median, and standard deviation for a numerical variable in R?
+
+
 
 -   Use the following prompts on a generative AI, like chatGPT, to learn more about data visualization capabilities in ggplot2.
 
@@ -1792,5 +1715,6 @@ ggplot(UScrime, aes(x=GDP, y=y)) + geom_point() + geom_smooth(method="lm")
 
 ## Summary
 
+-   In this lesson, we worked through the basics on data cleaning. Data cleaning is so important and there are so many ways to do it. Provided are some examples using popular functions in dplyr (under tidyverse).
 -   Practice many more examples with the help of ChatGPT and work towards constructing high-quality charts and graphs.
 

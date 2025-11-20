@@ -359,9 +359,8 @@ $$
 
 * **Euclidean**:  $\sqrt{(5 - 2)^2 + (5 - 1)^2} = \sqrt{9 + 16} = \sqrt{25} = 5$
   
-![Euclidean Distance](pictures/EuclideanDistance.png)
+![Euclidean Distance](Pictures/EuclideanDistance.png)
   
-# Distance Measures  
 ## Manhattan Distance
 
 $$
@@ -377,31 +376,28 @@ $$
  
 * **Manhattan**: $|5 - 2| + |5 - 1| = 3 + 4 = 7$
  
-![Manhattan Distance](pictures/ManhattanDistance.png)
+![Manhattan Distance](Pictures/ManhattanDistance.png)
+## Looking at distance measures with a Dataset
+
+```{r}
+data <- read.csv("data/Universities.csv")
+library(tidyverse)
+# Remove the School column (non-numeric) and type
+numericData <- select(data, -School, -Type)
+str(numericData)
 
 
-# Sets
+# Compute Euclidean distance
+distance_matrix <- dist(numericData, method = "euclidean")
+# View the result
+distance_matrix
 
-* A set is a collection of distinct elements.
+#compare to scaled
+data_scaled <- scale(numericData)
+distance_matrix_scaled <- dist(data_scaled, method = "euclidean")
+distance_matrix_scaled
+```
 
-Example: $A = {1, 2, 3}$
-Common symbols:
-    $\in$: "is an element of"
-    $\subseteq$: "is a subset of"
-    $\cup$: union
-    $\cap$: intersection
-
-Example: If $A = {1, 2}$ and $B = {2, 3}$:
-    $A \cup B = {1, 2, 3}$
-    $A \cap B = {2}$
-    
-# Set Operations
-
-* Union: $A \cup B$
-* Intersection: $A \cap B$
-* Difference: $A - B = {x \in A : x \notin B}$
-* Complement: $A^c = U - A$ where $U$ is the universal set
-* Cardinality: $|A|$ = number of elements in set $A$
 
 # Functions
 
@@ -435,7 +431,89 @@ Example: If $A = {1, 2}$ and $B = {2, 3}$:
 
 
 
-## Odds, distance measures
+## Odds
+
 
 ## Implement probability calculations
+```{r}
+
+## Distance to substance abuse facility with medication-assisted treatment
+dist.mat <- read.csv("data/opioidFacility.csv")
+# Review the data
+summary(dist.mat)
+library(tidyverse)
+# Graph the distance variable which is called Value but represents miles. 
+# Note that this graph does not look normal - instead, it looks right or positive skewed. 
+ggplot(dist.mat, aes(VALUE)) + geom_histogram(fill = "#7463AC", color = "white") +labs(x = "Miles to nearest substance abuse facility", y = "Number of counties")
+
+dist.mat.cleaned <- dist.mat %>%
+     mutate(miles.cube.root = VALUE^(1/3)) %>%
+     mutate(miles.log = log(x = VALUE)) %>%
+     mutate(miles.inverse = 1/VALUE) %>%
+     mutate(miles.sqrt = sqrt(x = VALUE))
+
+qnorm(.25, 10, 2)
+qnorm(0.95, mean = 500, sd = 10, lower.tail=FALSE)
+pnorm(6, 7.5, .7)
+options(scipen=999)
+pnorm(35, mean = 30, sd = 3/sqrt(5), lower.tail = FALSE)
+
+
+cuberoot <-  ggplot(dist.mat.cleaned, aes(miles.cube.root)) +
+     geom_histogram(fill = "#7463AC", color = "white") + labs(x = "Cube root", y = "Number of counties"); cuberoot
+
+logged <- ggplot(dist.mat.cleaned, aes(miles.log)) +
+     geom_histogram(fill = "#7463AC", color = "white") + labs(x = "Log", y = "Number of counties"); logged
+
+
+inversed <- ggplot(dist.mat.cleaned, aes(miles.inverse)) +
+     geom_histogram(fill = "#7463AC", color = "white") + labs(x = "Inverse", y = "Number of counties")+ xlim(0, 1); logged
+     
+
+squareroot <- ggplot(dist.mat.cleaned, aes(miles.sqrt)) +
+     geom_histogram(fill = "#7463AC", color = "white") + labs(x = "SQRT", y = "Number of counties"); squareroot
+     
+# install.packages("gridExtra")
+gridExtra::grid.arrange(cuberoot, logged, inversed, squareroot)
+
+dist.mat.cleaned %>%
+     drop_na(miles.cube.root) %>%
+     summarize(mean.tran.dist = mean(x = miles.cube.root),sd.tran.dist = sd(x = miles.cube.root))
+
+# P(X < 3)
+pnorm(3, 2.66, .79)
+
+# P(X > 3)
+pnorm(3, 2.66, .79, lower.tail = FALSE)
+
+# P(X < 2)
+pnorm(2, 2.66, .79)
+
+#* We can use the equation to calculate the z-score for a county where you have to drive 15 miles to a facility. 
+(15^(1/3) - 2.66)/0.79
+# Next, we can calculate z for a county with residents who have to travel 50 miles to the nearest facility. In the transformed miles variable, this would be the cube root of 50, or a value of 3.68. 
+(50^(1/3)-2.66)/0.79
+
+# A clinical trial shows that 10% of patients develop mild side effects from a new medication.
+# What is the probability of developing side effects?
+#     + What are the odds in favor of developing side effects?
+#    + What are the odds against developing side effects?
+
+# Given
+p_side_effect <- 0.1
+
+# Odds in favor
+odds_side_effect <- p_side_effect / (1 - p_side_effect)
+odds_side_effect
+
+# Odds against
+odds_against <- (1 - p_side_effect) / p_side_effect
+odds_against
+##Interpretation: Side effects are unlikely.
+
+
+
+
+
+```
 

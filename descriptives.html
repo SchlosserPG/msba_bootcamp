@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Descriptive Statistics – MSBA Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./dataprep.html" rel="next">
+<link href="./introR.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-64b801fe9b6685c0a799f7172ecad621.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./descriptives.html"><span class="chapter-title">Descriptive Statistics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">MSBA Bootcamp</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Installation Information</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction to R and RStudio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptives.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Descriptive Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataprep.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Visualization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mathnotation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math Notation and Probability in R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pythonsetup.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Python and Environment Set up</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./advmath.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Calculus and Linear Algebra</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datastructures.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Structures</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Files, Functions, and Folders</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./numpypandas.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numpy and Pandas</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sql.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction to SQL in Python</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Recommended Further Reading Materials</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#lesson-objectives" id="toc-lesson-objectives" class="nav-link active" data-scroll-target="#lesson-objectives">Lesson Objectives</a></li>
+  <li><a href="#consider-while-reading" id="toc-consider-while-reading" class="nav-link" data-scroll-target="#consider-while-reading">Consider While Reading</a></li>
+  <li><a href="#summarizing-qualitative-data" id="toc-summarizing-qualitative-data" class="nav-link" data-scroll-target="#summarizing-qualitative-data">Summarizing Qualitative Data</a></li>
+  <li><a href="#summarizing-quantitative-data" id="toc-summarizing-quantitative-data" class="nav-link" data-scroll-target="#summarizing-quantitative-data">Summarizing Quantitative Data</a>
+  <ul class="collapse">
+  <li><a href="#defining-and-calculating-central-tendency" id="toc-defining-and-calculating-central-tendency" class="nav-link" data-scroll-target="#defining-and-calculating-central-tendency">Defining and Calculating Central Tendency</a></li>
+  </ul></li>
+  <li><a href="#defining-and-calculating-spread" id="toc-defining-and-calculating-spread" class="nav-link" data-scroll-target="#defining-and-calculating-spread">Defining and Calculating Spread</a>
+  <ul class="collapse">
+  <li><a href="#spread-to-report-with-the-mean" id="toc-spread-to-report-with-the-mean" class="nav-link" data-scroll-target="#spread-to-report-with-the-mean">Spread to Report with the Mean</a></li>
+  <li><a href="#histograms" id="toc-histograms" class="nav-link" data-scroll-target="#histograms">Histograms</a></li>
+  <li><a href="#spread-to-report-with-the-median" id="toc-spread-to-report-with-the-median" class="nav-link" data-scroll-target="#spread-to-report-with-the-median">Spread to Report with the Median</a></li>
+  <li><a href="#spread-to-report-with-the-mode" id="toc-spread-to-report-with-the-mode" class="nav-link" data-scroll-target="#spread-to-report-with-the-mode">Spread to Report with the Mode</a></li>
+  </ul></li>
+  <li><a href="#evaluating-data-types" id="toc-evaluating-data-types" class="nav-link" data-scroll-target="#evaluating-data-types">Evaluating Data Types</a></li>
+  <li><a href="#coercing-data-types" id="toc-coercing-data-types" class="nav-link" data-scroll-target="#coercing-data-types">Coercing Data Types</a>
+  <ul class="collapse">
+  <li><a href="#factor-data-type" id="toc-factor-data-type" class="nav-link" data-scroll-target="#factor-data-type">Factor data type:</a></li>
+  <li><a href="#numerical-data-types" id="toc-numerical-data-types" class="nav-link" data-scroll-target="#numerical-data-types">Numerical data types:</a></li>
+  <li><a href="#character-data-type" id="toc-character-data-type" class="nav-link" data-scroll-target="#character-data-type">Character data type</a></li>
+  <li><a href="#logical-data-type" id="toc-logical-data-type" class="nav-link" data-scroll-target="#logical-data-type">Logical data type</a></li>
+  <li><a href="#nominal-example-with-dataset" id="toc-nominal-example-with-dataset" class="nav-link" data-scroll-target="#nominal-example-with-dataset">Nominal Example with Dataset</a></li>
+  <li><a href="#numerical-example-with-dataset" id="toc-numerical-example-with-dataset" class="nav-link" data-scroll-target="#numerical-example-with-dataset">Numerical Example with Dataset</a></li>
+  <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Descriptive Statistics</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li>The goal of this lesson is to teach you how to summarize descriptive statistics for both quantitative and qualitative data in R. In order to succeed in this lesson, we need to learn how to describe data by understanding the difference between quantitative and qualitative data alongside examining its context. The context of the data gives us important information about how the data was collected, and its intended use.The second goal is to teach you about data types, coersion, and how to transform variables that do not follow a normal distribution.</li>
+</ul>
+<section id="lesson-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="lesson-objectives">Lesson Objectives</h3>
+<ul>
+<li>Choose and conduct descriptive analyses for categorical (factor) variables.</li>
+<li>Choose and conduct descriptive analyses for continuous (numeric) variables.</li>
+</ul>
+</section>
+<section id="consider-while-reading" class="level3">
+<h3 class="anchored" data-anchor-id="consider-while-reading">Consider While Reading</h3>
+<ul>
+<li>In any analysis, it is critically important to understand your data set by evaluating descriptive statistics. For qualitative data, you should know how to calculate frequencies and proportions and make a user-friendly display of results. For quantitative data, you should know what a histogram is and how it is used to describe quantitative data. We also should know how to describe variables by their center and spread of the distribution.</li>
+</ul>
+</section>
+<section id="summarizing-qualitative-data" class="level2">
+<h2 class="anchored" data-anchor-id="summarizing-qualitative-data">Summarizing Qualitative Data</h2>
+<ul>
+<li>Qualitative data is information that cannot be easily counted, measured, or easily expressed using numbers.
+<ul>
+<li>Nominal variables: a type of categorical variable that represents discrete categories or groups with no inherent order or ranking
+<ul>
+<li>gender (male, female)</li>
+<li>marital status (single, married, divorced)</li>
+<li>eye color (blue, brown, green)</li>
+</ul></li>
+<li>Ordinal variables: categories possess a natural order or ranking
+<ul>
+<li>a Likert scale measuring agreement with a statement (e.g., strongly disagree, disagree, neutral, agree, strongly agree)</li>
+</ul></li>
+</ul></li>
+<li>A frequency distribution shows the number of observations in each category for a factor or categorical variable.</li>
+<li>Guidelines when constructing frequency distribution:
+<ul>
+<li>Classes or categories are mutually exclusive (they are all unique).</li>
+<li>Classes or categories are exhaustive (a full list of categories).</li>
+</ul></li>
+<li>To calculate frequencies, first, start with a variable that has categorical data.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector with some data that could be categorical</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Sample_Vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame with the vector</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Sample_Vector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>To count the number of each category value, we can use the table() command.</li>
+<li>The output shows a top row of categories and a bottom row that contains the number of observations in the category.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table of frequencies</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>frequencies <span class="ot">&lt;-</span> <span class="fu">table</span>(data<span class="sc">$</span>Sample_Vector)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>frequencies</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+A B C 
+5 3 2 </code></pre>
+</div>
+</div>
+<ul>
+<li>Relative frequency is how often something happens divided by all outcomes.</li>
+<li>The relative frequency is calculated by <span class="math inline">\(f_i/n\)</span>, where <span class="math inline">\(f_i\)</span> is the frequency of class <span class="math inline">\(i\)</span> and <span class="math inline">\(n\)</span> is the total frequency.</li>
+<li>We can use the prop.table() command to calculate relative frequency by dividing each category’s frequency by the sample size.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate proportions</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>proportions <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(frequencies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>The cumulative relative frequency is given by <span class="math inline">\(cf_i/n\)</span>, where <span class="math inline">\(cf_i\)</span> is the cumulative frequency of class <span class="math inline">\(i\)</span>.</li>
+<li>The cumsum() function calculates the cumulative distribution of the data</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate cumulative frequencies</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cumulfreq <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(frequencies)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate cumulative proportions</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>cumulproportions <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(<span class="fu">prop.table</span>(frequencies))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>The rbind() function is used to combine multiple data frames or matrices by row. The name “rbind” stands for “row bind”. Since the data produced by the table is in rows, we can use rbind to link them together.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combine into table</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>frequency_table <span class="ot">&lt;-</span> <span class="fu">rbind</span>(frequencies, proportions, cumulfreq, cumulproportions)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the table</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>frequency_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   A   B    C
+frequencies      5.0 3.0  2.0
+proportions      0.5 0.3  0.2
+cumulfreq        5.0 8.0 10.0
+cumulproportions 0.5 0.8  1.0</code></pre>
+</div>
+</div>
+<ul>
+<li>We can transpose a table using the t() command, which flips the dataset.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>TransposedData <span class="ot">&lt;-</span> <span class="fu">t</span>(frequency_table)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>TransposedData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  frequencies proportions cumulfreq cumulproportions
+A           5         0.5         5              0.5
+B           3         0.3         8              0.8
+C           2         0.2        10              1.0</code></pre>
+</div>
+</div>
+<ul>
+<li>Finally, sometimes we need to transform our calculations into a dataset.</li>
+<li>The as.data.frame function is used to coerce or convert an object into a data frame.</li>
+<li>as.data.frame() is used when you have an existing object that needs to be coerced into a data frame. data.frame(), on the other hand, is for creating a data frame from scratch by specifying the data directly. Therefore, both as.data.frame() and data.frame() are used to convert or create data frames in R.</li>
+<li>as.data.frame() coerces an existing object (such as a list, matrix, or vector) into a data frame. Data.frame is used to create a new data frame from individual vectors or lists.</li>
+<li>as.data.frame() accepts a wider variety of inputs (like lists, matrices, and vectors), while data.frame() directly accepts vectors and lists to construct the data frame.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>TransposedData <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(TransposedData)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>TransposedData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  frequencies proportions cumulfreq cumulproportions
+A           5         0.5         5              0.5
+B           3         0.3         8              0.8
+C           2         0.2        10              1.0</code></pre>
+</div>
+</div>
+</section>
+<section id="summarizing-quantitative-data" class="level2">
+<h2 class="anchored" data-anchor-id="summarizing-quantitative-data">Summarizing Quantitative Data</h2>
+<section id="defining-and-calculating-central-tendency" class="level3">
+<h3 class="anchored" data-anchor-id="defining-and-calculating-central-tendency">Defining and Calculating Central Tendency</h3>
+<ul>
+<li>The term central location refers to how numerical data tend to cluster around some middle or central value.</li>
+<li>Measures of central location attempt to find a typical or central value that describes a variable.</li>
+<li>Why frequency distributions do not work for numeric variables:
+<ul>
+<li>Numeric variables measured on a continuum.</li>
+<li>Instead, we calculate descriptive statistics including central tendency and spread of the values for a numeric variable.</li>
+</ul></li>
+<li>We will examine the three mostly widely used measures of central location: mean, median and mode.</li>
+<li>Then we discuss a percentile: a measure of relative position.</li>
+</ul>
+<section id="using-the-mean" class="level4">
+<h4 class="anchored" data-anchor-id="using-the-mean">Using the Mean</h4>
+<ul>
+<li><p>The arithmetic mean or simply the mean is a primary measure of central location. It is often referred to as the average. Simply add up all the observations and divide by the number of observations.</p></li>
+<li><p>The numerator (top of the fraction) is the sum (sigma) of all the values of x from the first value (i = 1) to the last value (n) divided by the number of values (n).</p></li>
+<li><p><span class="math inline">\(m_x = (\sum_{i=1}^{n} x_{i})/n\)</span></p></li>
+<li><p>Consider the salaries of employees at a company: <img src="Pictures/Ch2/Salaries.png" title="Salary Data" class="img-fluid" alt="Salary Data"></p></li>
+<li><p>We can use the mean() command to calculate the mean in R.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Vector of Salaries</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>salaries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">40000</span>, <span class="dv">40000</span>, <span class="dv">65000</span>, <span class="dv">90000</span>, <span class="dv">145000</span>, <span class="dv">150000</span>, <span class="dv">550000</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean using the mean() command</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(salaries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 154285.7</code></pre>
+</div>
+</div>
+<ul>
+<li>Note that due to at least one <em>outlier</em> this mean does not reflect the typical salary - more on that later.</li>
+<li>If we edit our vector to include NAs, we have to account for this. This is a common way to handle NAs in functions that do not allow for them.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>salaries2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">40000</span>, <span class="dv">40000</span>, <span class="dv">65000</span>, <span class="dv">90000</span>, <span class="dv">145000</span>, <span class="dv">150000</span>, <span class="dv">550000</span>, <span class="cn">NA</span>,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean using the mean() command Notice that it does not</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># work</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(salaries2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add in na.rm parameter to get it to produce the mean with no NAs.</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(salaries2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 154285.7</code></pre>
+</div>
+</div>
+<ul>
+<li>Note that there are other types of means like the weighted mean or the geometric mean.<br>
+</li>
+<li>The weighted mean uses weights to determine the importance of each data point of a variable. It is calculated by <span class="math inline">\(\bar{x}_w = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}\)</span>, where are the weights associated to the values.</li>
+<li>An example is below.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>weighted_mean <span class="ot">&lt;-</span> <span class="fu">weighted.mean</span>(values, weights)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>weighted_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.533333</code></pre>
+</div>
+</div>
+</section>
+<section id="using-the-median" class="level4">
+<h4 class="anchored" data-anchor-id="using-the-median">Using the Median</h4>
+<ul>
+<li>The median is another measure of central location that is not affected by outliers.</li>
+<li>When the data are arranged in ascending order, the median is:
+<ul>
+<li>The middle value if the number of observations is odd, or</li>
+<li>The average of the two middle values if the number of observations is even.</li>
+</ul></li>
+<li>Consider the sorted salaries of employees presented earlier which contains an odd number of observations.<br>
+</li>
+<li>On the same salaries vector created above, use median() command to calculate the median in R.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the median using the median() command</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(salaries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 90000</code></pre>
+</div>
+</div>
+<ul>
+<li>Now compare to the mean and note the large difference in numbers signifying that at least one outlier is most likely present.</li>
+<li>Specifically, if the mean and median are different, it is likely the variable is skewed and contains outliers.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(salaries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 154285.7</code></pre>
+</div>
+</div>
+<ul>
+<li>For another example, consider the sorted data below that contains an even number of values.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>GrowthFund <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">38.32</span>, <span class="fl">1.71</span>, <span class="fl">3.17</span>, <span class="fl">5.99</span>, <span class="fl">12.56</span>, <span class="fl">13.47</span>, <span class="fl">16.89</span>, <span class="fl">16.96</span>, <span class="fl">32.16</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fl">36.29</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>When data contains an even number of values, the median is the average of the 2 sorted middle numbers (12.56 and 13.47).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(GrowthFund)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13.015</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">12.56</span> <span class="sc">+</span> <span class="fl">13.47</span>)<span class="sc">/</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13.015</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The mean is still the average</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(GrowthFund)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10.088</code></pre>
+</div>
+</div>
+</section>
+<section id="using-the-mode" class="level4">
+<h4 class="anchored" data-anchor-id="using-the-mode">Using the Mode</h4>
+<ul>
+<li>The mode is another measure of central location.</li>
+<li>The mode is the most frequently occurring value in a data set.</li>
+<li>The mode is useful in summarizing categorical data but can also be used to summarize quantitative data.</li>
+<li>A data set can have no mode, one mode (unimodal), two modes (bimodal) or many modes (multimodal).</li>
+<li>The mode is less useful when there are more than three modes.</li>
+</ul>
+</section>
+<section id="example-of-function-with-salary-variable" class="level4">
+<h4 class="anchored" data-anchor-id="example-of-function-with-salary-variable">Example of Function with Salary Variable</h4>
+<ul>
+<li><p>While this is a small vector, when working with a large dataset and a function like sort(x = table(salaries), decreasing = TRUE), appending [1:5] is a way to focus on the top results after the frequencies have been computed and sorted. Specifically, table(salaries) calculates the frequency of each unique salary, sort(…, decreasing = TRUE) orders these frequencies from highest to lowest, and [1:5] selects the first five entries in the sorted list. This is useful when the dataset contains many unique values, as it allows you to quickly identify and extract the top 5 most frequent salaries, providing a concise summary without being overwhelmed by the full distribution.</p></li>
+<li><p>Consider the salary of employees presented earlier. 40,000 appears 2 times and is the mode because that occurs most often.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try this command with and without it.</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="at">x =</span> <span class="fu">table</span>(salaries), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>salaries
+ 40000  65000  90000 145000 150000 
+     2      1      1      1      1 </code></pre>
+</div>
+</div>
+</section>
+<section id="finding-no-mode" class="level4">
+<h4 class="anchored" data-anchor-id="finding-no-mode">Finding No Mode</h4>
+<ul>
+<li>Look at the sort(table()) commands with the GrowthFund Vector we made earlier.</li>
+<li>I added a 1:5 in square brackets at the end of the statement to produce the 3 highest frequencies found in the vector.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(GrowthFund), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GrowthFund
+-38.32   1.71   3.17   5.99  12.56 
+     1      1      1      1      1 </code></pre>
+</div>
+</div>
+<ul>
+<li>Even if you use this command, you still need to evaluate the data more systematically to verify the mode. If the highest frequency of the sorted table is 1, then there is no mode.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="defining-and-calculating-spread" class="level2">
+<h2 class="anchored" data-anchor-id="defining-and-calculating-spread">Defining and Calculating Spread</h2>
+<ul>
+<li>Spread is a measure of distance values are from the central value.</li>
+<li>Each measure of central tendency has one or more corresponding measures of spread.</li>
+<li>Mean: use variance or standard deviation to measure spread.
+<ul>
+<li>skewness and kurtosis help measure spread as well.</li>
+</ul></li>
+<li>Median: use range or interquartile range (IQR) to measure spread.</li>
+<li>Mode: use the index of qualitative variation to measure spread.
+<ul>
+<li>Not formally testing here with a function.</li>
+</ul></li>
+</ul>
+<section id="spread-to-report-with-the-mean" class="level3">
+<h3 class="anchored" data-anchor-id="spread-to-report-with-the-mean">Spread to Report with the Mean</h3>
+<section id="evaluating-skewness" class="level4">
+<h4 class="anchored" data-anchor-id="evaluating-skewness">Evaluating Skewness</h4>
+<ul>
+<li>Skewness is a measure of the extent to which a distribution is skewed.</li>
+<li>Can evaluate skewness visually with histogram.
+<ul>
+<li>A histogram is a visual representation of a frequency or a relative frequency distribution.</li>
+<li>Bar height represents the respective class frequency (or relative frequency).</li>
+<li>Bar width represents the class width.</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch2/Skewness.png" title="Evaluating Skewness Visually" class="img-fluid figure-img"></p>
+<figcaption>Evaluating Skewness Visually</figcaption>
+</figure>
+</div>
+</section>
+<section id="skewed-distributions-median-not-same-as-mean" class="level4">
+<h4 class="anchored" data-anchor-id="skewed-distributions-median-not-same-as-mean">Skewed Distributions: Median Not Same as Mean</h4>
+<ul>
+<li>Sometimes, a histogram is difficult to tell if skewness is present or if the data is relatively normal or symmetric.</li>
+<li>If Mean is less than Median and Mode, then the variable is Left-Skewed.</li>
+<li>If the Mean is greater than the Median and Mode, then the variable is Right-Skewed.</li>
+<li>If the Mean is about equal to the Median and Mode, then the variable has a symmetric distribution.</li>
+<li>In R, we can easily look at mean and median with the summary() command.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch2/SkewMeanMedian.png" title="Evaluating Skewness Using Mean and Median" class="img-fluid figure-img"></p>
+<figcaption>Evaluating Skewness Using Mean and Median</figcaption>
+</figure>
+</div>
+<ul>
+<li>Mean is great when data are normally distributed (data is not skewed).</li>
+<li>Mean is not a good representation of skewed data where outliers are present.
+<ul>
+<li>Adding together a set of values that includes a few very large or very small values like those on the far left of a left-skewed distribution or the far right of the right-skewed distribution will result in a large or small total value in the numerator of Equation and therefore the mean will be a large or small value relative to the actual middle of the data.</li>
+</ul></li>
+<li>There are a number of ways to check for skewness, two functions are below.The skewness() function from the e1071 package and the skew() function from the semTools package both measure skewness, but they differ slightly in how they scale the result.</li>
+<li>By default, e1071::skewness() uses a sample-based formula (dividing by <span class="math inline">\(n\)</span>). In contrast, semTools::skew() uses Mardia’s definition and is more commonly applied in structural equation modeling contexts.</li>
+<li>As a result, the values may differ slightly, especially for small samples or skewed distributions. Both are valid but should be used consistently depending on the analytical context.</li>
+</ul>
+</section>
+<section id="using-skewness-command-from-e1071" class="level4">
+<h4 class="anchored" data-anchor-id="using-skewness-command-from-e1071">Using skewness command from e1071</h4>
+<ul>
+<li>A standard calculation of skewness using the mean is based on the third standardized moment of a distribution. The formula is:</li>
+</ul>
+<p><span class="math display">\[
+\text{Skewness} = \frac{1}{n} \sum_{i=1}^{n} \left( \frac{x_i - \bar{x}}{s} \right)^3
+\]</span> * where <span class="math inline">\(x_i\)</span> = each observation * <span class="math inline">\(\bar{x}\)</span> = sample mean * <span class="math inline">\(s\)</span> = sample standard deviation * <span class="math inline">\(n\)</span> = sample size * This formula measures the asymmetry of the distribution: + Positive skew (right-skewed): longer tail on the right + Negative skew (left-skewed): longer tail on the left + Zero skew: symmetric distribution</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>e1071<span class="sc">::</span><span class="fu">skewness</span>(salaries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.415062</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="do">## a positive number indicates a longer tail to the right.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="using-skew-command-from-semtools" class="level4">
+<h4 class="anchored" data-anchor-id="using-skew-command-from-semtools">Using skew() Command from semTools</h4>
+<ul>
+<li>We will use the skew() command is from the semTools package.</li>
+<li>The install.packages() command is commented out below, but install it one time on your R before commenting it out.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the semTools package if necessary.</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('semTools') Activate the library</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>After the package is installed and loaded, run the skew() command on the salaries vector made above.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skew</span>(salaries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>skew (g1)        se         z         p 
+    2.311     0.926     2.496     0.013 </code></pre>
+</div>
+</div>
+</section>
+<section id="interpreting-the-skew-command-results" class="level4">
+<h4 class="anchored" data-anchor-id="interpreting-the-skew-command-results">Interpreting the skew() Command Results</h4>
+<ul>
+<li><p>se = standard error</p></li>
+<li><p>z = skew/se</p></li>
+<li><p>If the sample size is small (n &lt; 50), z values outside the –2 to 2 range are a problem.</p></li>
+<li><p>If the sample size is between 50 and 300, z values outside the –3.29 to 3.29 range are a problem.</p></li>
+<li><p>For large samples (n &gt; 300), using a visual is recommended over the statistics, but generally z values outside the range of –7 to 7 can be considered problematic.</p></li>
+<li><p>Salary: Our sample size was small, &lt;50, so the z value of 2.496 in regards to the salary vector indicates there is a problem with skewness.</p></li>
+<li><p>GrowthFund: We can check the skew of GrowthFund.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skew</span>(GrowthFund)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>skew (g1)        se         z         p 
+   -1.381     0.775    -1.783     0.075 </code></pre>
+</div>
+</div>
+<ul>
+<li>GrowthFund was also considered a small sample size, so the same -2/2 thresholds are used. Here, our z value is -1.78250137, which is in normal range. This indicates there is no problem with skewness.</li>
+</ul>
+</section>
+</section>
+<section id="histograms" class="level3">
+<h3 class="anchored" data-anchor-id="histograms">Histograms</h3>
+<ul>
+<li>A histogram is a graphical representation of the distribution of numerical data.</li>
+<li>It consists of a series of contiguous rectangles, or bars, where the area of each bar corresponds to the frequency of observations within a particular range or bin of values.</li>
+<li>The x-axis typically represents the range of values being measured, while the y-axis represents the frequency or count of observations falling within each range.</li>
+<li>Histograms are commonly used in statistics and data analysis to visualize the distribution of a dataset and identify patterns or trends.</li>
+<li>They are particularly useful for understanding the central tendency, variability, and shape of the data distribution - this includes our observation of skewness.</li>
+<li>Works much better with larger datsets.</li>
+</ul>
+<section id="commands-to-make-a-histogram" class="level4">
+<h4 class="anchored" data-anchor-id="commands-to-make-a-histogram">Commands to Make a Histogram</h4>
+<ul>
+<li><p>hist() command in base R.</p></li>
+<li><p>geom_histogram() command in ggplot2 package.</p></li>
+<li><p>a hist using the GrowthFund dataset does not look that great because its sample size is so small.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(GrowthFund)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="descriptives_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hist-vs-geom_histogram" class="level4">
+<h4 class="anchored" data-anchor-id="hist-vs-geom_histogram">hist vs geom_histogram</h4>
+<ul>
+<li>In R, hist() and geom_histogram() are both used to create histograms, but they belong to different packages and have slightly different functionalities.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Making an appropriate data.frame to use the hist() command</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>HousePrice <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">430</span>, <span class="dv">520</span>, <span class="dv">460</span>, <span class="dv">475</span>, <span class="dv">670</span>, <span class="dv">521</span>, <span class="dv">670</span>, <span class="dv">417</span>, <span class="dv">533</span>, <span class="dv">525</span>, <span class="dv">538</span>,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">370</span>, <span class="dv">530</span>, <span class="dv">525</span>, <span class="dv">430</span>, <span class="dv">330</span>, <span class="dv">575</span>, <span class="dv">555</span>, <span class="dv">521</span>, <span class="dv">350</span>, <span class="dv">399</span>, <span class="dv">560</span>, <span class="dv">440</span>, <span class="dv">425</span>, <span class="dv">669</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">660</span>, <span class="dv">702</span>, <span class="dv">540</span>, <span class="dv">460</span>, <span class="dv">588</span>, <span class="dv">445</span>, <span class="dv">412</span>, <span class="dv">735</span>, <span class="dv">537</span>, <span class="dv">630</span>, <span class="dv">430</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>HousePrice <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(HousePrice)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>hist(): This function is from the base R graphics package and is used to create histograms. It provides a simple way to visualize the distribution of a single variable.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using base R to create the histogram.</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(HousePrice<span class="sc">$</span>HousePrice, <span class="at">breaks =</span> <span class="dv">5</span>, <span class="at">main =</span> <span class="st">"A Histogram"</span>, <span class="at">xlab =</span> <span class="st">"House Prices (in $1,000s)"</span>,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"yellow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="descriptives_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" alt="Histogram Generated by R" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>geom_histogram(): This function is from the ggplot2 package, which is part of the tidyverse. It is used to create histograms as part of a more flexible and powerful plotting system.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using geom_histogram() command to create the histogram.</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(HousePrice, <span class="fu">aes</span>(<span class="at">x =</span> HousePrice)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">100</span>,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">boundary =</span> <span class="dv">300</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"yellow"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"A Histogram"</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"House Prices (in $1,000s)"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="descriptives_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" alt="Histogram Generated by R Using ggplot2" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>We could add more parameters here to make the 2 histograms look identical, but this configuration of parameters is very close. Take note that there are a lot more parameters you can add to the geom_histogram() command than you can with base R to make it look more professional. Be sure to look them up and also check with the notes in the book, which focuses on geom_histogram instead of hist().</p></li>
+<li><p>Variance is a measure of spread for numeric variables that is essentially the average of the squared differences between each observation value on some variable and the mean for that variable with population variance. <span class="math display">\[Population Var(X) = \sigma^2 = \sum{(x_i-\mu)^2}/N\]</span> <span class="math display">\[Sample Var(x) = s^2 = \sum{(x_i-\bar{x})^2}/(n-1)\]</span></p></li>
+<li><p>Standard deviation is the square root of the variance.</p>
+<ul>
+<li>Use var() command and sd() command to calculate sample variance and sample standard deviation.<br>
+</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculated from Small Sample</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">5</span> <span class="sc">-</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">var</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.581139</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.581139</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(HousePrice<span class="sc">$</span>HousePrice)  <span class="co">#102.6059</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 102.6059</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(HousePrice<span class="sc">$</span>HousePrice)  <span class="co">#10527.97</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10527.97</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skew</span>(HousePrice<span class="sc">$</span>HousePrice)  <span class="co">#normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>skew (g1)        se         z         p 
+    0.317     0.408     0.777     0.437 </code></pre>
+</div>
+</div></li>
+<li><p>Looking at Spread for a Larger Dataset</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>customers <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/customers.csv"</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="co">#mean and median</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   50.0   383.8   662.0   659.6   962.2  1250.0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="co">#mean by itself</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 659.555</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="co">#median by itself</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 662</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Spread to Report with the Mean</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 350.2876</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 122701.4</code></pre>
+</div>
+</div>
+</section>
+<section id="kurtosis-in-evaluating-mean-spread" class="level4">
+<h4 class="anchored" data-anchor-id="kurtosis-in-evaluating-mean-spread">Kurtosis in Evaluating Mean Spread</h4>
+<ul>
+<li><p>Kurtosis is the sharpness of the peak of a frequency-distribution curve or more formally a measure of how many observations are in the tails of a distribution.</p></li>
+<li><p>The formula for kurtosis is as follows: Kurtosis = <span class="math inline">\(\frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum \left( \frac{(X_i - \bar{X})^4}{s^4} \right) - \frac{3(n-1)^2}{(n-2)(n-3)}\)</span></p></li>
+</ul>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(n\)</span> is the sample size</li>
+<li><span class="math inline">\(X_i\)</span> is each individual value</li>
+<li><span class="math inline">\(\bar{X}\)</span> is the mean of the data</li>
+<li><span class="math inline">\(s\)</span> is the standard deviation</li>
+<li>A normal distribution will have a kurtosis value of three, where distributions with kurtosis around 3 are described as mesokurtic, significantly higher than 3 indicate leptokurtic, and significantly under 3 indicate platykurtic.</li>
+<li>The kurtosis() command from the semTools package subtracts 3 from the kurtosis, so we can evaluate values by comparing them to 0. Positive values will be indicative to a leptokurtic distribution and negative will indicate a platykurtic distribution. To see if kurtosis (leptokurtic or platykurtic) is significant, we confirm them by first evaluating the z-score to see if the variable is normal or not. The same cutoff values from skew also apply for the z for small, medium, and large sample sizes in kurtosis. These are the same basic rules for the rules in judging skewness.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch2/Kurtosis.png" title="Evaluate Kurtosis" class="img-fluid figure-img"></p>
+<figcaption>Evaluate Kurtosis</figcaption>
+</figure>
+</div>
+<ul>
+<li>The rules of determining problematic distributions with regards to kurtosis are below.
+<ul>
+<li>If the sample size is small (n &lt; 50), z values outside the –2 to 2 range are a problem.</li>
+<li>If the sample size is between 50 and 300, z values outside the –3.29 to 3.29 range are a problem.</li>
+<li>For large samples (n &gt; 300), using a visual is recommended over the statistics, but generally z values outside the range of –7 to 7 can be considered problematic.</li>
+<li>If kurtosis is found, then evaluate the excess kur score to see if it is positive or negative to determine whether it is leptokurtic or platykurtic.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># z-value is 3.0398, which is &gt; 2 indicating leptokurtic Small sample</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="co"># size: range is -2 to 2</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(salaries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Excess Kur (g2)              se               z               p 
+          5.629           1.852           3.040           0.002 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># z-value is 2.20528007, which is &gt; 2 indicating leptokurtic Small</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sample size: range is -2 to 2</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(GrowthFund)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Excess Kur (g2)              se               z               p 
+          3.416           1.549           2.205           0.027 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Small sample size: range is -2 to 2 Skewness and kurtosis are both</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in range.</span></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">skew</span>(HousePrice<span class="sc">$</span>HousePrice)  <span class="co">#normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>skew (g1)        se         z         p 
+    0.317     0.408     0.777     0.437 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(HousePrice<span class="sc">$</span>HousePrice)  <span class="co">#normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Excess Kur (g2)              se               z               p 
+         -0.540           0.816          -0.661           0.508 </code></pre>
+</div>
+</div>
+<ul>
+<li>Let’s do a few more examples using the customers dataset.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Noted sample size at 200 observations or a medium sample size.</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Using threshold –3.29 to 3.29 to assess normality.</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co">#-3.4245446445 is below -3.29 so kurtosis is present</span></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative kurtosis value indicates platykurtic</span></span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(customers<span class="sc">$</span>Spending)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Excess Kur (g2)              se               z               p 
+         -1.186           0.346          -3.425           0.001 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">100</span>, <span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>geom_bar: na.rm = FALSE, orientation = NA
+stat_bin: binwidth = 100, bins = NULL, na.rm = FALSE, orientation = NA, pad = FALSE
+position_stack </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">skew</span>(customers<span class="sc">$</span>Spending)  <span class="do">##normal indicating no skewness</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>skew (g1)        se         z         p 
+   -0.018     0.173    -0.106     0.916 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal: 2.977622119 is in between -3.29 and 3.29</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(customers<span class="sc">$</span>Income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Excess Kur (g2)              se               z               p 
+          1.031           0.346           2.978           0.003 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(customers, <span class="fu">aes</span>(Income)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10000</span>, <span class="at">fill =</span> <span class="st">"pink"</span>,</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="descriptives_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">skew</span>(customers<span class="sc">$</span>Income)  <span class="co">#Skewed right</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>skew (g1)        se         z         p 
+    0.874     0.173     5.047     0.000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co">#-3.7251961028 is below -3.29 so kurtosis is present</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative kurtosis value indicates platykurtic</span></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(customers<span class="sc">$</span>HHSize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Excess Kur (g2)              se               z               p 
+         -1.290           0.346          -3.725           0.000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(customers, <span class="fu">aes</span>(HHSize)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"pink"</span>,</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="descriptives_files/figure-html/unnamed-chunk-29-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">skew</span>(customers<span class="sc">$</span>HHSize)  <span class="co">#normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>skew (g1)        se         z         p 
+   -0.089     0.173    -0.513     0.608 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal: -0.20056607 is in between -3.29 and 3.29</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(customers<span class="sc">$</span>Orders)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Excess Kur (g2)              se               z               p 
+         -0.069           0.346          -0.201           0.841 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>geom_bar: na.rm = FALSE, orientation = NA
+stat_bin: binwidth = 5, bins = NULL, na.rm = FALSE, orientation = NA, pad = FALSE
+position_stack </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">skew</span>(customers<span class="sc">$</span>Orders)  <span class="do">##skewed right</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>skew (g1)        se         z         p 
+    0.789     0.173     4.553     0.000 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="spread-to-report-with-the-median" class="level3">
+<h3 class="anchored" data-anchor-id="spread-to-report-with-the-median">Spread to Report with the Median</h3>
+<ul>
+<li><p>Range = Maximum Value – Minimum Value.</p>
+<ul>
+<li>Simplest measure.</li>
+<li>Focuses on Extreme values.</li>
+<li>Use commands diff(range()) or max() – min().</li>
+</ul></li>
+<li><p>IQR: Difference between the first and third quartiles.</p>
+<ul>
+<li>Use IQR() command or quantile() command.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   50.0   383.8   662.0   659.6   962.2  1250.0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">range</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1200</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1200</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(customers<span class="sc">$</span>Spending, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 578.5</code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="spread-to-report-with-the-mode" class="level3">
+<h3 class="anchored" data-anchor-id="spread-to-report-with-the-mode">Spread to Report with the Mode</h3>
+<ul>
+<li>While there is no great function to test for spread, you can look at the data and see if it is concentrated around 1 or 2 frequencies. If it is, then the spread is distorted towards those high frequency values.</li>
+</ul>
+</section>
+</section>
+<section id="evaluating-data-types" class="level1">
+<h1>Evaluating Data Types</h1>
+<ul>
+<li>A data type of a variable specifies the type of data that is stored inside that variable. R is Called a Dynamically Typed Language, meaning that a variable itself is not declared of any data type. Rather it receives the data type of the R object that is assigned to it. We can change a variable’s data type if we want through coercion, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.</li>
+<li>Evaluating data types in R is crucial for understanding and managing datasets effectively, as different data types require specific handling and operations. R provides several functions to identify and evaluate data types, such as class() to check an object’s class, typeof() to determine its internal storage mode, and is.numeric(), is.character(), or is.factor() to test for specific types. These functions help ensure that data is in the correct format for analysis or modeling tasks. For instance, numeric data types are essential for calculations, while factors or characters are used for categorical data.</li>
+<li>There are a number of data types in R that are common to programming and statistical analysis.
+<ul>
+<li>Factor (Nominal or Ordinal)</li>
+<li>Numeric (Real or Discrete (Integer))</li>
+<li>Character</li>
+<li>Logical</li>
+<li>Date</li>
+</ul></li>
+</ul>
+</section>
+<section id="coercing-data-types" class="level1">
+<h1>Coercing Data Types</h1>
+<ul>
+<li>In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, “A”), which results in c(“1”, “A”). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.</li>
+<li>To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as “numeric” or “factor”. Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like “Male” and “Female” would be a categorical (factor) variable.</li>
+<li>Sometimes when you read in a dataset all the variables are already in the correct type. Other times, you need to force it into the type you need to conduct the analysis through a process called coercion.</li>
+</ul>
+<section id="factor-data-type" class="level3">
+<h3 class="anchored" data-anchor-id="factor-data-type">Factor data type:</h3>
+<ul>
+<li>Factor data types can be ordinal or nominal. Ordinal and nominal variables are both types of categorical variables but differ in their characteristics. Ordinal variables have a meaningful order or ranking among categories (e.g., “low,” “medium,” “high”), but the intervals between ranks are not necessarily equal. Nominal variables, on the other hand, represent categories without any inherent order (e.g., “red,” “blue,” “green”). Understanding this distinction is essential for selecting appropriate statistical methods, as ordinal variables often allow for rank-based analyses, while nominal variables do not.
+<ul>
+<li>Ordinal: Contain categories that have some logical order (e.g.&nbsp;categories of age).</li>
+<li>Nominal: Have categories that have no logical order (e.g., religious affiliation and marital status).</li>
+</ul></li>
+<li>R will treat each unique value of a factor as a different level.</li>
+</ul>
+<section id="ordinal-variable" class="level4">
+<h4 class="anchored" data-anchor-id="ordinal-variable">Ordinal Variable</h4>
+<ul>
+<li>Ordinal data may be categorized and ranked with respect to some characteristic or trait.
+<ul>
+<li>For example, instructors are often evaluated on an ordinal scale (excellent, good, fair, poor).</li>
+<li>A scale allows us to code the data based on order, assuming equal distance between scale items (aka likert items).</li>
+<li>You can make an ordinal factor data type in R or you can convert the order to meaningful numbers.</li>
+</ul></li>
+<li>To recode numbers in R, we would code poor to excellent = 1, 2, 3, 4 respectively.</li>
+<li>The recode() function from the dplyr package within the tidyverse ecosystem is used to replace specific values in a vector or variable with new values.</li>
+<li>It allows you to map old values to new ones in a simple and readable manner.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a vector representing evaluation scores, named evaluate </span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>evaluate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"excellent"</span>, <span class="st">"good"</span>, <span class="st">"fair"</span>, <span class="st">"poor"</span>, <span class="st">"excellent"</span>, <span class="st">"good"</span>)</span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(evaluate)</span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">evaluate =</span> <span class="fu">recode</span>(evaluate,</span>
+<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"excellent"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb110-9"><a href="#cb110-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"good"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb110-10"><a href="#cb110-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"fair"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb110-11"><a href="#cb110-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"poor"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb110-12"><a href="#cb110-12" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  evaluate
+1        4
+2        3
+3        2
+4        1
+5        4
+6        3</code></pre>
+</div>
+</div>
+</section>
+<section id="nominal-variable" class="level4">
+<h4 class="anchored" data-anchor-id="nominal-variable">Nominal Variable</h4>
+<ul>
+<li>With nominal variables, data are simply categories for grouping.</li>
+<li>For example, coding race/ethnicity might have a category value of White, Black, Native American, Asian/Pacific Islander, Other.</li>
+<li>Qualitative values may be converted to quantitative values for analysis purposes. + White = 1, Black = 2, etc. This conversion to numerical representation of the category would be needed to run some analysis.
+<ul>
+<li>Sometimes, R does this on our behalf depending on commands used.</li>
+</ul></li>
+<li>We can force a variable into a factor data type using the as.factor() command.</li>
+<li>If we use the read.csv() command, we can sometimes do this by setting an argument <span class="math inline">\(stringsAsFactors=TRUE\)</span>. We will do this later in the lesson.</li>
+</ul>
+</section>
+</section>
+<section id="numerical-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-data-types">Numerical data types:</h3>
+<ul>
+<li><p>The as.numeric() function in R is used to convert data into numeric format, allowing for mathematical and statistical operations. It takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c(“1”, “2”, “3”)) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric(“abc”)), it results in NA with a warning.</p></li>
+<li><p>A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers.</p></li>
+<li><p>Two ways to create:</p>
+<ul>
+<li>We can create a numeric variable by ensuring our value we assign is a number!</li>
+<li>We can force a variable into an real number data type by using the as.numeric() command.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign Rhode Island limit for medical marijuana in ounces per</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="co"># person</span></span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>kOuncesRhode <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the data type</span></span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kOuncesRhode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div></li>
+<li><p>Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x &lt;- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant.</p></li>
+<li><p>For an example of a discrete variable, we could collect information on the number of children in a family or number of points scored in a basketball game.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the value of 4 to a constant called kTestInteger and set as</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="co"># an integer</span></span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>kTestInteger <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">4</span>)</span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(kTestInteger)  <span class="co">#Confirm the data type is an integer </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use as.integer() to truncate the variable ouncesRhode</span></span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>Trunc <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(kOuncesRhode)</span>
+<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>Trunc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</section>
+<section id="character-data-type" class="level3">
+<h3 class="anchored" data-anchor-id="character-data-type">Character data type</h3>
+<ul>
+<li>The character data type in R is used to store text or string data, making it essential for handling names, labels, descriptions, or any non-numeric information. Character data is represented as sequences of characters enclosed in quotes (e.g., “hello” or ‘world’).</li>
+<li>Character data types can be wrapped in either single or double quotation marks (e.g, “hello” or ‘hello’).</li>
+<li>Character data types can include letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).
+<ul>
+<li>A quick example is below that shows how to assign a character value to a variable.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make string constants</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="st">"A"</span></span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>Q2 <span class="ot">&lt;-</span> <span class="st">"B"</span></span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the data type</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> Q1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+</section>
+<section id="logical-data-type" class="level3">
+<h3 class="anchored" data-anchor-id="logical-data-type">Logical data type</h3>
+<ul>
+<li><p>Logical data types in R represent values that are either TRUE or FALSE, often used for conditional operations and data filtering. Logical values can be the result of comparisons (e.g., x &gt; 10) or explicitly assigned. Logical vectors are particularly useful in subsetting data; for instance, data[data$column &gt; 5, ] selects rows where the column values are greater than 5. Logical operators like &amp; (and), | (or), and ! (not) allow for more complex conditions. Logical data is also essential in control structures such as if, else, and loops. By enabling dynamic and conditional programming, logical types play a key role in efficient data manipulation and analysis.</p>
+<ul>
+<li>A quick example is below that shows how to assign a logical value to a variable.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the result of 6 &gt; 8 in a constant called kSixEight</span></span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>kSixEight <span class="ot">&lt;-</span> <span class="dv">6</span> <span class="sc">&gt;</span> <span class="dv">8</span></span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Can use comparison tests with the following == &gt;= &lt;= &gt; &lt; &lt;&gt; !=</span></span>
+<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a>kSixEight  <span class="co"># Print kSixEight</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine the data type of kSixEight</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kSixEight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "logical"</code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="nominal-example-with-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="nominal-example-with-dataset">Nominal Example with Dataset</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/gss2016.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine the variable types with summary and class functions.</span></span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    grass               age           
+ Length:2867        Length:2867       
+ Class :character   Class :character  
+ Mode  :character   Mode  :character  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Check the data type.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>grass <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Turn to a factor.</span></span>
+<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Confirming it is now correct.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+</section>
+<section id="numerical-example-with-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-example-with-dataset">Numerical Example with Dataset</h3>
+<ul>
+<li>We need to ensure data can be coded as numeric before using the as.numeric() command. For example, to handle the variable age, it seems like numerical values except one value of “89 OR OLDER”. If as.numeric() command was used on this variable, it would put all the 89 and older observations as NAs. To force it to be a numerical variable, and keep that the sample participants were the oldest value, we need to recode it and then use the as.numeric() command to coerce it into a number.</li>
+<li>Recoding the 89 and older to 89 does cause the data to lack integrity in its current form because it will treat the people over 89 years old as 89. But, we are limited here because this needs to be a numerical variable for us to proceed. We will learn a step later on in this section to transform the age variable into categories so that we bring back our data integrity.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode '89 OR OLDER' into just '89'</span></span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">recode</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age, <span class="st">`</span><span class="at">89 OR OLDER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"89"</span>)</span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to numeric data type</span></span>
+<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age)</span>
+<span id="cb133-5"><a href="#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)  <span class="co">#Conduct final check confirming correct data types</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       grass           age       
+ DK       : 110   Min.   :18.00  
+ IAP      : 911   1st Qu.:34.00  
+ LEGAL    :1126   Median :49.00  
+ NOT LEGAL: 717   Mean   :49.16  
+ NA's     :   3   3rd Qu.:62.00  
+                  Max.   :89.00  
+                  NA's   :10     </code></pre>
+</div>
+</div>
+</section>
+<section id="using-ai" class="level2">
+<h2 class="anchored" data-anchor-id="using-ai">Using AI</h2>
+<p>Use the following prompts on a generative AI, like chatGPT, to learn more about descriptive statistics.</p>
+<ul>
+<li><p>What is the difference between mean, median, and mode in describing data distributions, and how can each be used to understand the shape of a distribution? * How do mean and median help identify whether a distribution is skewed, and what does it tell us about the dataset?</p></li>
+<li><p>Can you explain how the mean, median, and mode behave in normal, positively skewed, and negatively skewed distributions?</p></li>
+<li><p>What are standard deviation (SD) and variance, and how do they measure the spread of data in a distribution?</p></li>
+<li><p>Explain the differences between range, interquartile range (IQR), and standard deviation in describing the variability in a dataset.</p></li>
+<li><p>How does a high standard deviation or variance affect the interpretation of a dataset compared to a low standard deviation?</p></li>
+<li><p>What is skewness, and how does it affect the shape of a distribution? How can we identify positive and negative skew?</p></li>
+<li><p>How is kurtosis defined in the semTools package in R, and what does it tell us about the tails of a distribution?</p></li>
+<li><p>How would you compare and contrast the roles of skewness and kurtosis in identifying the shape and behavior of a distribution?</p></li>
+</ul>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<ul>
+<li>In this lesson, we explored descriptive statistics, including measures such as skewness and kurtosis. We discussed variables and scales of measurement, and how to summarize both qualitative and quantitative data. We also covered data types, coercion, and techniques for transforming variables that do not follow a normal distribution.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./introR.html" class="pagination-link" aria-label="Introduction to R and RStudio">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Introduction to R and RStudio</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./dataprep.html" class="pagination-link" aria-label="Data Visualization">
+        <span class="nav-page-text"><span class="chapter-title">Data Visualization</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

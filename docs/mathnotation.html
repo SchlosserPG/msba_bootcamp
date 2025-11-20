@@ -187,7 +187,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dataprep.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Visualization</span></a>
+  <a href="./dataprep.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Data Preparation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -282,20 +282,15 @@ window.Quarto = {
   <li><a href="#distance-measures" id="toc-distance-measures" class="nav-link" data-scroll-target="#distance-measures">Distance Measures</a>
   <ul class="collapse">
   <li><a href="#euclidean-distance" id="toc-euclidean-distance" class="nav-link" data-scroll-target="#euclidean-distance">Euclidean Distance</a></li>
-  </ul></li>
-  <li><a href="#distance-measures-1" id="toc-distance-measures-1" class="nav-link" data-scroll-target="#distance-measures-1">Distance Measures</a>
-  <ul class="collapse">
   <li><a href="#manhattan-distance" id="toc-manhattan-distance" class="nav-link" data-scroll-target="#manhattan-distance">Manhattan Distance</a></li>
   </ul></li>
-  <li><a href="#sets" id="toc-sets" class="nav-link" data-scroll-target="#sets">Sets</a></li>
-  <li><a href="#set-operations" id="toc-set-operations" class="nav-link" data-scroll-target="#set-operations">Set Operations</a></li>
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
   <ul class="collapse">
   <li><a href="#function-basics" id="toc-function-basics" class="nav-link" data-scroll-target="#function-basics">Function Basics</a></li>
   </ul></li>
   <li><a href="#logic-basics" id="toc-logic-basics" class="nav-link" data-scroll-target="#logic-basics">Logic Basics</a>
   <ul class="collapse">
-  <li><a href="#odds-distance-measures" id="toc-odds-distance-measures" class="nav-link" data-scroll-target="#odds-distance-measures">Odds, distance measures</a></li>
+  <li><a href="#odds" id="toc-odds" class="nav-link" data-scroll-target="#odds">Odds</a></li>
   <li><a href="#implement-probability-calculations" id="toc-implement-probability-calculations" class="nav-link" data-scroll-target="#implement-probability-calculations">Implement probability calculations</a></li>
   </ul></li>
   </ul>
@@ -734,14 +729,11 @@ d_{\text{euclidean}}(x, y) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="pictures/EuclideanDistance.png" class="img-fluid figure-img"></p>
+<p><img src="Pictures/EuclideanDistance.png" class="img-fluid figure-img"></p>
 <figcaption>Euclidean Distance</figcaption>
 </figure>
 </div>
 </section>
-</section>
-<section id="distance-measures-1" class="level1">
-<h1>Distance Measures</h1>
 <section id="manhattan-distance" class="level2">
 <h2 class="anchored" data-anchor-id="manhattan-distance">Manhattan Distance</h2>
 <p><span class="math display">\[
@@ -754,31 +746,64 @@ d_{\text{manhattan}}(x, y) = \sum_{i=1}^n |x_i - y_i|
 <li><p>Example: <span class="math inline">\(d = |x_1 - y_1| + |x_2 - y_2|\)</span></p></li>
 <li><p><strong>Manhattan</strong>: <span class="math inline">\(|5 - 2| + |5 - 1| = 3 + 4 = 7\)</span></p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="pictures/ManhattanDistance.png" class="img-fluid figure-img"></p>
-<figcaption>Manhattan Distance</figcaption>
-</figure>
+<p><img src="Pictures/ManhattanDistance.png" class="img-fluid" alt="Manhattan Distance"> ## Looking at distance measures with a Dataset</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Universities.csv"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.5.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the School column (non-numeric) and type</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>numericData <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">-</span>School, <span class="sc">-</span>Type)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(numericData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   7 obs. of  5 variables:
+ $ Median.SAT          : int  1315 1220 1240 1176 1300 1281 1255
+ $ Acceptance.Rate     : num  0.22 0.53 0.36 0.37 0.24 0.24 0.56
+ $ Expenditures.Student: int  26636 17653 17554 23665 25703 24201 18847
+ $ Top.10..HS          : int  85 69 58 95 78 80 70
+ $ Graduation..        : int  93 80 88 86 90 90 84</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Euclidean distance</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>distance_matrix <span class="ot">&lt;-</span> <span class="fu">dist</span>(numericData, <span class="at">method =</span> <span class="st">"euclidean"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># View the result</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>distance_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          1         2         3         4         5         6
+2 8983.5260                                                  
+3 9082.3512  101.9119                                        
+4 2974.2749 6012.2202 6111.4475                              
+5  933.1516 8050.4088 8149.2457 2041.8435                    
+6 2435.2443 6548.3010 6647.1632  546.4083 1502.1215          
+7 7789.2507 1194.5200 1293.1489 4818.7129 6856.1550 5354.0758</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#compare to scaled</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>data_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(numericData)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>distance_matrix_scaled <span class="ot">&lt;-</span> <span class="fu">dist</span>(data_scaled, <span class="at">method =</span> <span class="st">"euclidean"</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>distance_matrix_scaled</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          1         2         3         4         5         6
+2 4.9783077                                                  
+3 3.8960487 2.4226692                                        
+4 3.6464470 3.3284720 3.7240741                              
+5 0.9940707 4.1405757 3.0998943 3.2511808                    
+6 1.2465444 3.8512824 2.8119917 2.8300258 0.5748688          
+7 4.1557883 1.2321260 2.0224459 3.2508826 3.3959798 3.1620968</code></pre>
+</div>
 </div>
 </section>
-</section>
-<section id="sets" class="level1">
-<h1>Sets</h1>
-<ul>
-<li>A set is a collection of distinct elements.</li>
-</ul>
-<p>Example: <span class="math inline">\(A = {1, 2, 3}\)</span> Common symbols: <span class="math inline">\(\in\)</span>: “is an element of” <span class="math inline">\(\subseteq\)</span>: “is a subset of” <span class="math inline">\(\cup\)</span>: union <span class="math inline">\(\cap\)</span>: intersection</p>
-<p>Example: If <span class="math inline">\(A = {1, 2}\)</span> and <span class="math inline">\(B = {2, 3}\)</span>: <span class="math inline">\(A \cup B = {1, 2, 3}\)</span> <span class="math inline">\(A \cap B = {2}\)</span></p>
-</section>
-<section id="set-operations" class="level1">
-<h1>Set Operations</h1>
-<ul>
-<li>Union: <span class="math inline">\(A \cup B\)</span></li>
-<li>Intersection: <span class="math inline">\(A \cap B\)</span></li>
-<li>Difference: <span class="math inline">\(A - B = {x \in A : x \notin B}\)</span></li>
-<li>Complement: <span class="math inline">\(A^c = U - A\)</span> where <span class="math inline">\(U\)</span> is the universal set</li>
-<li>Cardinality: <span class="math inline">\(|A|\)</span> = number of elements in set <span class="math inline">\(A\)</span></li>
-</ul>
 </section>
 <section id="functions" class="level1">
 <h1>Functions</h1>
@@ -822,11 +847,210 @@ d_{\text{manhattan}}(x, y) = \sum_{i=1}^n |x_i - y_i|
 <li><span class="math inline">\(p \rightarrow q\)</span>: If it is raining, then it is cloudy</li>
 </ul></li>
 </ul>
-<section id="odds-distance-measures" class="level2">
-<h2 class="anchored" data-anchor-id="odds-distance-measures">Odds, distance measures</h2>
+<section id="odds" class="level2">
+<h2 class="anchored" data-anchor-id="odds">Odds</h2>
 </section>
 <section id="implement-probability-calculations" class="level2">
 <h2 class="anchored" data-anchor-id="implement-probability-calculations">Implement probability calculations</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Distance to substance abuse facility with medication-assisted treatment</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>dist.mat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/opioidFacility.csv"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Review the data</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dist.mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    STATEFP         COUNTYFP          YEAR       INDICATOR        
+ Min.   : 1.00   Min.   :  1.0   Min.   :2017   Length:3214       
+ 1st Qu.:19.00   1st Qu.: 35.0   1st Qu.:2017   Class :character  
+ Median :30.00   Median : 79.0   Median :2017   Mode  :character  
+ Mean   :31.25   Mean   :101.9   Mean   :2017                     
+ 3rd Qu.:46.00   3rd Qu.:133.0   3rd Qu.:2017                     
+ Max.   :72.00   Max.   :840.0   Max.   :2017                     
+     VALUE           STATE           STATEABBREVIATION     COUNTY         
+ Min.   :  0.00   Length:3214        Length:3214        Length:3214       
+ 1st Qu.:  9.25   Class :character   Class :character   Class :character  
+ Median : 18.17   Mode  :character   Mode  :character   Mode  :character  
+ Mean   : 24.04                                                           
+ 3rd Qu.: 31.00                                                           
+ Max.   :414.86                                                           </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph the distance variable which is called Value but represents miles. </span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that this graph does not look normal - instead, it looks right or positive skewed. </span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dist.mat, <span class="fu">aes</span>(VALUE)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Miles to nearest substance abuse facility"</span>, <span class="at">y =</span> <span class="st">"Number of counties"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mathnotation_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>dist.mat.cleaned <span class="ot">&lt;-</span> dist.mat <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">miles.cube.root =</span> VALUE<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">miles.log =</span> <span class="fu">log</span>(<span class="at">x =</span> VALUE)) <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">miles.inverse =</span> <span class="dv">1</span><span class="sc">/</span>VALUE) <span class="sc">%&gt;%</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">miles.sqrt =</span> <span class="fu">sqrt</span>(<span class="at">x =</span> VALUE))</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(.<span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.65102</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="at">mean =</span> <span class="dv">500</span>, <span class="at">sd =</span> <span class="dv">10</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 483.5515</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">6</span>, <span class="fl">7.5</span>, .<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01606229</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">35</span>, <span class="at">mean =</span> <span class="dv">30</span>, <span class="at">sd =</span> <span class="dv">3</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">5</span>), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.00009697081</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>cuberoot <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(dist.mat.cleaned, <span class="fu">aes</span>(miles.cube.root)) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cube root"</span>, <span class="at">y =</span> <span class="st">"Number of counties"</span>); cuberoot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mathnotation_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>logged <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dist.mat.cleaned, <span class="fu">aes</span>(miles.log)) <span class="sc">+</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Log"</span>, <span class="at">y =</span> <span class="st">"Number of counties"</span>); logged</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 20 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mathnotation_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>inversed <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dist.mat.cleaned, <span class="fu">aes</span>(miles.inverse)) <span class="sc">+</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Inverse"</span>, <span class="at">y =</span> <span class="st">"Number of counties"</span>)<span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>); logged</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 20 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mathnotation_files/figure-html/unnamed-chunk-7-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>squareroot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dist.mat.cleaned, <span class="fu">aes</span>(miles.sqrt)) <span class="sc">+</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"SQRT"</span>, <span class="at">y =</span> <span class="st">"Number of counties"</span>); squareroot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mathnotation_files/figure-html/unnamed-chunk-7-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gridExtra")</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(cuberoot, logged, inversed, squareroot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 20 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 34 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mathnotation_files/figure-html/unnamed-chunk-7-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>dist.mat.cleaned <span class="sc">%&gt;%</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">drop_na</span>(miles.cube.root) <span class="sc">%&gt;%</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">summarize</span>(<span class="at">mean.tran.dist =</span> <span class="fu">mean</span>(<span class="at">x =</span> miles.cube.root),<span class="at">sd.tran.dist =</span> <span class="fu">sd</span>(<span class="at">x =</span> miles.cube.root))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  mean.tran.dist sd.tran.dist
+1       2.662915    0.7923114</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P(X &lt; 3)</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">3</span>, <span class="fl">2.66</span>, .<span class="dv">79</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6665403</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P(X &gt; 3)</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">3</span>, <span class="fl">2.66</span>, .<span class="dv">79</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3334597</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P(X &lt; 2)</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">2</span>, <span class="fl">2.66</span>, .<span class="dv">79</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2017342</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co">#* We can use the equation to calculate the z-score for a county where you have to drive 15 miles to a facility. </span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">15</span><span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>) <span class="sc">-</span> <span class="fl">2.66</span>)<span class="sc">/</span><span class="fl">0.79</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.2453012</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Next, we can calculate z for a county with residents who have to travel 50 miles to the nearest facility. In the transformed miles variable, this would be the cube root of 50, or a value of 3.68. </span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">50</span><span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">-</span><span class="fl">2.66</span>)<span class="sc">/</span><span class="fl">0.79</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.296242</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A clinical trial shows that 10% of patients develop mild side effects from a new medication.</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the probability of developing side effects?</span></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     + What are the odds in favor of developing side effects?</span></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    + What are the odds against developing side effects?</span></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Given</span></span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>p_side_effect <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Odds in favor</span></span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>odds_side_effect <span class="ot">&lt;-</span> p_side_effect <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p_side_effect)</span>
+<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>odds_side_effect</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1111111</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Odds against</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>odds_against <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> p_side_effect) <span class="sc">/</span> p_side_effect</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>odds_against</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Interpretation: Side effects are unlikely.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -1255,8 +1479,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./dataprep.html" class="pagination-link" aria-label="Data Visualization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Data Visualization</span></span>
+      <a href="./dataprep.html" class="pagination-link" aria-label="Data Preparation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Data Preparation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

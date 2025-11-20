@@ -21,6 +21,26 @@ use_condaenv("r-reticulate", required = TRUE)
 ## Dictionaries
 
 ## Sets
+* A set is a collection of distinct elements.
+
+Example: $A = {1, 2, 3}$
+Common symbols:
+    $\in$: "is an element of"
+    $\subseteq$: "is a subset of"
+    $\cup$: union
+    $\cap$: intersection
+
+Example: If $A = {1, 2}$ and $B = {2, 3}$:
+    $A \cup B = {1, 2, 3}$
+    $A \cap B = {2}$
+    
+## Set Operations
+
+* Union: $A \cup B$
+* Intersection: $A \cap B$
+* Difference: $A - B = {x \in A : x \notin B}$
+* Complement: $A^c = U - A$ where $U$ is the universal set
+* Cardinality: $|A|$ = number of elements in set $A$
 
 ## List Comprehension
 
