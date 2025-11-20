@@ -4,6 +4,8 @@ format: html
 runtime: python
 execute:
   echo: false
+  warning: false
+  error: false
 ---
 
 ```{r, warning=FALSE}

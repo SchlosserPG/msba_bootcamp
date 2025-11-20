@@ -1,8 +1,10 @@
 ---
-title: "If Statements and While Loops"
+title: "Numpy and Pandas"
 output: html
 execute:
   echo: false
+  warning: false
+  error: false
 ---
 
 ```{r, warning=FALSE, echo=FALSE}

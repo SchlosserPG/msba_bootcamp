@@ -1,10 +1,13 @@
 ---
 title: "Files, Functions, and Folders"
 format: html
+execute: 
+  warning: false
+  error: false
 ---
 
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(reticulate)
 use_condaenv("r-reticulate", required = TRUE)
 ```
